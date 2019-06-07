@@ -1,2 +1,2 @@
 # Experiments
-Experiments, models and more to come for the SMAUG project
+Experiments and model files for the SMAUG project.
