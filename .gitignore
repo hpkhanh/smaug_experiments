@@ -8,4 +8,5 @@ sims/smv/test/*
 *spad_stats.txt
 *summary
 *.con
+log
 
