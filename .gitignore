@@ -7,4 +7,5 @@ stderr
 sims/smv/test/*
 *spad_stats.txt
 *summary
+*.con
 
