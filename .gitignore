@@ -1,0 +1,7 @@
+outputs/
+*.gz
+out.csv
+dddg_parse_progress.out
+stdout
+stderr
+sims/smv/test/*
