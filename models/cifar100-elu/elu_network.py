@@ -4,7 +4,7 @@
 #
 
 import sys
-sys.path.append('../../nnet_lib/src/python/')
+sys.path.append('../../../nnet_lib/src/python/')
 import numpy as np
 from graph import *
 from tensor import *
