@@ -2,7 +2,7 @@
 
 cfg_home=`pwd`
 gem5_dir=${ALADDIN_HOME}/../..
-bmk_dir=`git rev-parse --show-toplevel`/nnet_lib/build
+bmk_dir=`git rev-parse --show-toplevel`/../nnet_lib/build
 model_dir=`git rev-parse --show-toplevel`/models
 
 ${gem5_dir}/build/X86/gem5.opt \
