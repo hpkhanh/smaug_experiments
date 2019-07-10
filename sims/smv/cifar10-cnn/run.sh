@@ -20,5 +20,4 @@ ${gem5_dir}/build/X86/gem5.opt \
   --accel_cfg_file=gem5.cfg \
   -c ${bmk_dir}/smaug \
   -o "${model_dir}/cifar10-cnn/cnn_smv_topo.pbtxt ${model_dir}/cifar10-cnn/cnn_smv_params.pb --gem5 --debug-level=0" \
-  | tee stdout
-  # | gzip -c > stdout.gz
+  > stdout 2> stderr
