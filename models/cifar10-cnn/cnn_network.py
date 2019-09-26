@@ -16,7 +16,7 @@ def generate_random_data(shape):
   return (r.rand(*shape) * 0.005).astype(np.float16)
 
 def create_cnn_model():
-  with Graph(name="cnn_smv", backend="SMV") as graph:
+  with Graph(name="cnn_smv_dma", backend="SMV", mem_policy=AllDma) as graph:
     input_tensor = Tensor(data_layout=NHWC, tensor_data=generate_random_data(
         (1, 32, 32, 3)))
     conv0_tensor = Tensor(data_layout=NHWC, tensor_data=generate_random_data(

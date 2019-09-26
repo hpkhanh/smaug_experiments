@@ -16,7 +16,7 @@ def generate_random_data(shape):
   return (r.rand(*shape) * 0.005).astype(np.float16)
 
 def create_elu_model():
-  with Graph(name="elu_smv", backend="SMV") as graph:
+  with Graph(name="elu_smv_dma", backend="SMV", mem_policy=AllDma) as graph:
     graph.disable_layout_transform()
     # Tensors and kernels are initialized as NCHW layout.
     input_tensor = Tensor(
