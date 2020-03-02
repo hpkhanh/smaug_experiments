@@ -1,0 +1,348 @@
+name: "minerva_smv"
+nodes {
+  name: "input"
+  op: Data
+  children: "input->fc0"
+  input_tensors {
+    name: "input"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 28
+      dims: 28
+      dims: 1
+      layout: NHWC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "input"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 28
+      dims: 28
+      dims: 1
+      layout: NHWC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "input->fc0"
+  op: Reorder
+  parents: "input"
+  children: "fc0"
+  input_tensors {
+    name: "input"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 28
+      dims: 28
+      dims: 1
+      layout: NHWC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "input->fc0"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 784
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "fc0/weights"
+  op: Data
+  children: "fc0"
+  input_tensors {
+    name: "fc0/weights"
+    data_type: Float16
+    shape {
+      dims: 256
+      dims: 784
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "fc0/weights"
+    data_type: Float16
+    shape {
+      dims: 256
+      dims: 784
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "fc0"
+  op: InnerProduct
+  parents: "input->fc0"
+  parents: "fc0/weights"
+  children: "fc1"
+  input_tensors {
+    name: "input->fc0"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 784
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "fc0/weights"
+    data_type: Float16
+    shape {
+      dims: 256
+      dims: 784
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "fc0"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 256
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    act_params {
+      activation: ReLU
+    }
+  }
+}
+nodes {
+  name: "fc1/weights"
+  op: Data
+  children: "fc1"
+  input_tensors {
+    name: "fc1/weights"
+    data_type: Float16
+    shape {
+      dims: 256
+      dims: 256
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "fc1/weights"
+    data_type: Float16
+    shape {
+      dims: 256
+      dims: 256
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "fc1"
+  op: InnerProduct
+  parents: "fc0"
+  parents: "fc1/weights"
+  children: "fc2"
+  input_tensors {
+    name: "fc0"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 256
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "fc1/weights"
+    data_type: Float16
+    shape {
+      dims: 256
+      dims: 256
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "fc1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 256
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    act_params {
+      activation: ReLU
+    }
+  }
+}
+nodes {
+  name: "fc2/weights"
+  op: Data
+  children: "fc2"
+  input_tensors {
+    name: "fc2/weights"
+    data_type: Float16
+    shape {
+      dims: 256
+      dims: 256
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "fc2/weights"
+    data_type: Float16
+    shape {
+      dims: 256
+      dims: 256
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "fc2"
+  op: InnerProduct
+  parents: "fc1"
+  parents: "fc2/weights"
+  children: "fc3"
+  input_tensors {
+    name: "fc1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 256
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "fc2/weights"
+    data_type: Float16
+    shape {
+      dims: 256
+      dims: 256
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "fc2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 256
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    act_params {
+      activation: ReLU
+    }
+  }
+}
+nodes {
+  name: "fc3/weights"
+  op: Data
+  children: "fc3"
+  input_tensors {
+    name: "fc3/weights"
+    data_type: Float16
+    shape {
+      dims: 10
+      dims: 256
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "fc3/weights"
+    data_type: Float16
+    shape {
+      dims: 10
+      dims: 256
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "fc3"
+  op: InnerProduct
+  parents: "fc2"
+  parents: "fc3/weights"
+  input_tensors {
+    name: "fc2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 256
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "fc3/weights"
+    data_type: Float16
+    shape {
+      dims: 10
+      dims: 256
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "fc3"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 10
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+backend: "SMV"
+mem_policy: AllDma
