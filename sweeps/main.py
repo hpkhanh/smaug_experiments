@@ -40,7 +40,7 @@ def main():
 
   # Start running simulations for all the generated configurations.
   # Use 20 threads to run the simulations in parallel.
-  sweeper.runAll(20)
+  sweeper.runAll(16)
 
 if __name__ == "__main__":
   main()
