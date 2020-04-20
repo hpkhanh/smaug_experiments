@@ -1,0 +1,4440 @@
+name: "lstm_smv"
+nodes {
+  name: "input"
+  op: Data
+  children: "lstm0:unstack:split"
+  input_tensors {
+    name: "input"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 4
+      dims: 32
+      layout: NTC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "input"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 4
+      dims: 32
+      layout: NTC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:unstack:split"
+  op: Split
+  parents: "input"
+  children: "lstm0:unstack:squeeze"
+  children: "lstm0:unstack:squeeze_1"
+  children: "lstm0:unstack:squeeze_2"
+  children: "lstm0:unstack:squeeze_3"
+  input_tensors {
+    name: "input"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 4
+      dims: 32
+      layout: NTC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:unstack:split0"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 1
+      dims: 32
+      layout: NTC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:unstack:split1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 1
+      dims: 32
+      layout: NTC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:unstack:split2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 1
+      dims: 32
+      layout: NTC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:unstack:split3"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 1
+      dims: 32
+      layout: NTC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    split_axis: 1
+  }
+}
+nodes {
+  name: "lstm0:unstack:squeeze"
+  op: Reshape
+  parents: "lstm0:unstack:split"
+  children: "lstm0:step0:concat"
+  input_tensors {
+    name: "lstm0:unstack:split0"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 1
+      dims: 32
+      layout: NTC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:unstack:squeeze"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:unstack:squeeze_1"
+  op: Reshape
+  parents: "lstm0:unstack:split|1"
+  children: "lstm0:step1:concat"
+  input_tensors {
+    name: "lstm0:unstack:split1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 1
+      dims: 32
+      layout: NTC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:unstack:squeeze_1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:unstack:squeeze_2"
+  op: Reshape
+  parents: "lstm0:unstack:split|2"
+  children: "lstm0:step2:concat"
+  input_tensors {
+    name: "lstm0:unstack:split2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 1
+      dims: 32
+      layout: NTC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:unstack:squeeze_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:unstack:squeeze_3"
+  op: Reshape
+  parents: "lstm0:unstack:split|3"
+  children: "lstm0:step3:concat"
+  input_tensors {
+    name: "lstm0:unstack:split3"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 1
+      dims: 32
+      layout: NTC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:unstack:squeeze_3"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step0:lstm0/h"
+  op: Data
+  children: "lstm0:step0:concat"
+  input_tensors {
+    name: "lstm0/h"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step0:lstm0/h"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step0:concat"
+  op: Concat
+  parents: "lstm0:unstack:squeeze"
+  parents: "lstm0:step0:lstm0/h"
+  children: "lstm0:step0:mm_f"
+  children: "lstm0:step0:mm_i"
+  children: "lstm0:step0:mm_c"
+  children: "lstm0:step0:mm_o"
+  input_tensors {
+    name: "lstm0:unstack:squeeze"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step0:lstm0/h"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step0:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    concat_axis: 1
+  }
+}
+nodes {
+  name: "lstm0:step0:lstm0/weights_f"
+  op: Data
+  children: "lstm0:step0:mm_f"
+  input_tensors {
+    name: "lstm0/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step0:lstm0/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step0:mm_f"
+  op: InnerProduct
+  parents: "lstm0:step0:concat"
+  parents: "lstm0:step0:lstm0/weights_f"
+  children: "lstm0:step0:mul"
+  input_tensors {
+    name: "lstm0:step0:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step0:lstm0/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step0:mm_f"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm0:step0:lstm0/weights_i"
+  op: Data
+  children: "lstm0:step0:mm_i"
+  input_tensors {
+    name: "lstm0/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step0:lstm0/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step0:mm_i"
+  op: InnerProduct
+  parents: "lstm0:step0:concat"
+  parents: "lstm0:step0:lstm0/weights_i"
+  children: "lstm0:step0:mul_1"
+  input_tensors {
+    name: "lstm0:step0:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step0:lstm0/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step0:mm_i"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm0:step0:lstm0/weights_c"
+  op: Data
+  children: "lstm0:step0:mm_c"
+  input_tensors {
+    name: "lstm0/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step0:lstm0/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step0:mm_c"
+  op: InnerProduct
+  parents: "lstm0:step0:concat"
+  parents: "lstm0:step0:lstm0/weights_c"
+  children: "lstm0:step0:mul_1"
+  input_tensors {
+    name: "lstm0:step0:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step0:lstm0/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step0:mm_c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    act_params {
+      activation: Tanh
+    }
+  }
+}
+nodes {
+  name: "lstm0:step0:lstm0/c"
+  op: Data
+  children: "lstm0:step0:mul"
+  input_tensors {
+    name: "lstm0/c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step0:lstm0/c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step0:mul"
+  op: EltwiseMul
+  parents: "lstm0:step0:mm_f"
+  parents: "lstm0:step0:lstm0/c"
+  children: "lstm0:step0:add"
+  input_tensors {
+    name: "lstm0:step0:mm_f"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step0:lstm0/c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step0:mul"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step0:mul_1"
+  op: EltwiseMul
+  parents: "lstm0:step0:mm_i"
+  parents: "lstm0:step0:mm_c"
+  children: "lstm0:step0:add"
+  input_tensors {
+    name: "lstm0:step0:mm_i"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step0:mm_c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step0:mul_1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step0:add"
+  op: EltwiseAdd
+  parents: "lstm0:step0:mul"
+  parents: "lstm0:step0:mul_1"
+  children: "lstm0:step0:tanh"
+  children: "lstm0:step1:mul"
+  input_tensors {
+    name: "lstm0:step0:mul"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step0:mul_1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step0:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step0:lstm0/weights_o"
+  op: Data
+  children: "lstm0:step0:mm_o"
+  input_tensors {
+    name: "lstm0/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step0:lstm0/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step0:mm_o"
+  op: InnerProduct
+  parents: "lstm0:step0:concat"
+  parents: "lstm0:step0:lstm0/weights_o"
+  children: "lstm0:step0:mul_2"
+  input_tensors {
+    name: "lstm0:step0:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step0:lstm0/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step0:mm_o"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm0:step0:tanh"
+  op: Tanh
+  parents: "lstm0:step0:add"
+  children: "lstm0:step0:mul_2"
+  input_tensors {
+    name: "lstm0:step0:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step0:tanh"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step0:mul_2"
+  op: EltwiseMul
+  parents: "lstm0:step0:mm_o"
+  parents: "lstm0:step0:tanh"
+  children: "lstm0:step1:concat"
+  children: "lstm1:step0:concat"
+  input_tensors {
+    name: "lstm0:step0:mm_o"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step0:tanh"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step0:mul_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step1:concat"
+  op: Concat
+  parents: "lstm0:unstack:squeeze_1"
+  parents: "lstm0:step0:mul_2"
+  children: "lstm0:step1:mm_f"
+  children: "lstm0:step1:mm_i"
+  children: "lstm0:step1:mm_c"
+  children: "lstm0:step1:mm_o"
+  input_tensors {
+    name: "lstm0:unstack:squeeze_1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step0:mul_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step1:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    concat_axis: 1
+  }
+}
+nodes {
+  name: "lstm0:step1:lstm0/weights_f"
+  op: Data
+  children: "lstm0:step1:mm_f"
+  input_tensors {
+    name: "lstm0/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step1:lstm0/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step1:mm_f"
+  op: InnerProduct
+  parents: "lstm0:step1:concat"
+  parents: "lstm0:step1:lstm0/weights_f"
+  children: "lstm0:step1:mul"
+  input_tensors {
+    name: "lstm0:step1:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step1:lstm0/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step1:mm_f"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm0:step1:lstm0/weights_i"
+  op: Data
+  children: "lstm0:step1:mm_i"
+  input_tensors {
+    name: "lstm0/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step1:lstm0/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step1:mm_i"
+  op: InnerProduct
+  parents: "lstm0:step1:concat"
+  parents: "lstm0:step1:lstm0/weights_i"
+  children: "lstm0:step1:mul_1"
+  input_tensors {
+    name: "lstm0:step1:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step1:lstm0/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step1:mm_i"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm0:step1:lstm0/weights_c"
+  op: Data
+  children: "lstm0:step1:mm_c"
+  input_tensors {
+    name: "lstm0/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step1:lstm0/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step1:mm_c"
+  op: InnerProduct
+  parents: "lstm0:step1:concat"
+  parents: "lstm0:step1:lstm0/weights_c"
+  children: "lstm0:step1:mul_1"
+  input_tensors {
+    name: "lstm0:step1:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step1:lstm0/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step1:mm_c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    act_params {
+      activation: Tanh
+    }
+  }
+}
+nodes {
+  name: "lstm0:step1:mul"
+  op: EltwiseMul
+  parents: "lstm0:step1:mm_f"
+  parents: "lstm0:step0:add"
+  children: "lstm0:step1:add"
+  input_tensors {
+    name: "lstm0:step1:mm_f"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step0:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step1:mul"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step1:mul_1"
+  op: EltwiseMul
+  parents: "lstm0:step1:mm_i"
+  parents: "lstm0:step1:mm_c"
+  children: "lstm0:step1:add"
+  input_tensors {
+    name: "lstm0:step1:mm_i"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step1:mm_c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step1:mul_1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step1:add"
+  op: EltwiseAdd
+  parents: "lstm0:step1:mul"
+  parents: "lstm0:step1:mul_1"
+  children: "lstm0:step1:tanh"
+  children: "lstm0:step2:mul"
+  input_tensors {
+    name: "lstm0:step1:mul"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step1:mul_1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step1:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step1:lstm0/weights_o"
+  op: Data
+  children: "lstm0:step1:mm_o"
+  input_tensors {
+    name: "lstm0/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step1:lstm0/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step1:mm_o"
+  op: InnerProduct
+  parents: "lstm0:step1:concat"
+  parents: "lstm0:step1:lstm0/weights_o"
+  children: "lstm0:step1:mul_2"
+  input_tensors {
+    name: "lstm0:step1:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step1:lstm0/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step1:mm_o"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm0:step1:tanh"
+  op: Tanh
+  parents: "lstm0:step1:add"
+  children: "lstm0:step1:mul_2"
+  input_tensors {
+    name: "lstm0:step1:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step1:tanh"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step1:mul_2"
+  op: EltwiseMul
+  parents: "lstm0:step1:mm_o"
+  parents: "lstm0:step1:tanh"
+  children: "lstm0:step2:concat"
+  children: "lstm1:step1:concat"
+  input_tensors {
+    name: "lstm0:step1:mm_o"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step1:tanh"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step1:mul_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step2:concat"
+  op: Concat
+  parents: "lstm0:unstack:squeeze_2"
+  parents: "lstm0:step1:mul_2"
+  children: "lstm0:step2:mm_f"
+  children: "lstm0:step2:mm_i"
+  children: "lstm0:step2:mm_c"
+  children: "lstm0:step2:mm_o"
+  input_tensors {
+    name: "lstm0:unstack:squeeze_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step1:mul_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step2:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    concat_axis: 1
+  }
+}
+nodes {
+  name: "lstm0:step2:lstm0/weights_f"
+  op: Data
+  children: "lstm0:step2:mm_f"
+  input_tensors {
+    name: "lstm0/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step2:lstm0/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step2:mm_f"
+  op: InnerProduct
+  parents: "lstm0:step2:concat"
+  parents: "lstm0:step2:lstm0/weights_f"
+  children: "lstm0:step2:mul"
+  input_tensors {
+    name: "lstm0:step2:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step2:lstm0/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step2:mm_f"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm0:step2:lstm0/weights_i"
+  op: Data
+  children: "lstm0:step2:mm_i"
+  input_tensors {
+    name: "lstm0/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step2:lstm0/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step2:mm_i"
+  op: InnerProduct
+  parents: "lstm0:step2:concat"
+  parents: "lstm0:step2:lstm0/weights_i"
+  children: "lstm0:step2:mul_1"
+  input_tensors {
+    name: "lstm0:step2:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step2:lstm0/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step2:mm_i"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm0:step2:lstm0/weights_c"
+  op: Data
+  children: "lstm0:step2:mm_c"
+  input_tensors {
+    name: "lstm0/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step2:lstm0/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step2:mm_c"
+  op: InnerProduct
+  parents: "lstm0:step2:concat"
+  parents: "lstm0:step2:lstm0/weights_c"
+  children: "lstm0:step2:mul_1"
+  input_tensors {
+    name: "lstm0:step2:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step2:lstm0/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step2:mm_c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    act_params {
+      activation: Tanh
+    }
+  }
+}
+nodes {
+  name: "lstm0:step2:mul"
+  op: EltwiseMul
+  parents: "lstm0:step2:mm_f"
+  parents: "lstm0:step1:add"
+  children: "lstm0:step2:add"
+  input_tensors {
+    name: "lstm0:step2:mm_f"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step1:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step2:mul"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step2:mul_1"
+  op: EltwiseMul
+  parents: "lstm0:step2:mm_i"
+  parents: "lstm0:step2:mm_c"
+  children: "lstm0:step2:add"
+  input_tensors {
+    name: "lstm0:step2:mm_i"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step2:mm_c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step2:mul_1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step2:add"
+  op: EltwiseAdd
+  parents: "lstm0:step2:mul"
+  parents: "lstm0:step2:mul_1"
+  children: "lstm0:step2:tanh"
+  children: "lstm0:step3:mul"
+  input_tensors {
+    name: "lstm0:step2:mul"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step2:mul_1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step2:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step2:lstm0/weights_o"
+  op: Data
+  children: "lstm0:step2:mm_o"
+  input_tensors {
+    name: "lstm0/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step2:lstm0/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step2:mm_o"
+  op: InnerProduct
+  parents: "lstm0:step2:concat"
+  parents: "lstm0:step2:lstm0/weights_o"
+  children: "lstm0:step2:mul_2"
+  input_tensors {
+    name: "lstm0:step2:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step2:lstm0/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step2:mm_o"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm0:step2:tanh"
+  op: Tanh
+  parents: "lstm0:step2:add"
+  children: "lstm0:step2:mul_2"
+  input_tensors {
+    name: "lstm0:step2:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step2:tanh"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step2:mul_2"
+  op: EltwiseMul
+  parents: "lstm0:step2:mm_o"
+  parents: "lstm0:step2:tanh"
+  children: "lstm0:step3:concat"
+  children: "lstm1:step2:concat"
+  input_tensors {
+    name: "lstm0:step2:mm_o"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step2:tanh"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step2:mul_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step3:concat"
+  op: Concat
+  parents: "lstm0:unstack:squeeze_3"
+  parents: "lstm0:step2:mul_2"
+  children: "lstm0:step3:mm_f"
+  children: "lstm0:step3:mm_i"
+  children: "lstm0:step3:mm_c"
+  children: "lstm0:step3:mm_o"
+  input_tensors {
+    name: "lstm0:unstack:squeeze_3"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step2:mul_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step3:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    concat_axis: 1
+  }
+}
+nodes {
+  name: "lstm0:step3:lstm0/weights_f"
+  op: Data
+  children: "lstm0:step3:mm_f"
+  input_tensors {
+    name: "lstm0/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step3:lstm0/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step3:mm_f"
+  op: InnerProduct
+  parents: "lstm0:step3:concat"
+  parents: "lstm0:step3:lstm0/weights_f"
+  children: "lstm0:step3:mul"
+  input_tensors {
+    name: "lstm0:step3:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step3:lstm0/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step3:mm_f"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm0:step3:lstm0/weights_i"
+  op: Data
+  children: "lstm0:step3:mm_i"
+  input_tensors {
+    name: "lstm0/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step3:lstm0/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step3:mm_i"
+  op: InnerProduct
+  parents: "lstm0:step3:concat"
+  parents: "lstm0:step3:lstm0/weights_i"
+  children: "lstm0:step3:mul_1"
+  input_tensors {
+    name: "lstm0:step3:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step3:lstm0/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step3:mm_i"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm0:step3:lstm0/weights_c"
+  op: Data
+  children: "lstm0:step3:mm_c"
+  input_tensors {
+    name: "lstm0/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step3:lstm0/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step3:mm_c"
+  op: InnerProduct
+  parents: "lstm0:step3:concat"
+  parents: "lstm0:step3:lstm0/weights_c"
+  children: "lstm0:step3:mul_1"
+  input_tensors {
+    name: "lstm0:step3:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step3:lstm0/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step3:mm_c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    act_params {
+      activation: Tanh
+    }
+  }
+}
+nodes {
+  name: "lstm0:step3:mul"
+  op: EltwiseMul
+  parents: "lstm0:step3:mm_f"
+  parents: "lstm0:step2:add"
+  children: "lstm0:step3:add"
+  input_tensors {
+    name: "lstm0:step3:mm_f"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step2:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step3:mul"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step3:mul_1"
+  op: EltwiseMul
+  parents: "lstm0:step3:mm_i"
+  parents: "lstm0:step3:mm_c"
+  children: "lstm0:step3:add"
+  input_tensors {
+    name: "lstm0:step3:mm_i"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step3:mm_c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step3:mul_1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step3:add"
+  op: EltwiseAdd
+  parents: "lstm0:step3:mul"
+  parents: "lstm0:step3:mul_1"
+  children: "lstm0:step3:tanh"
+  input_tensors {
+    name: "lstm0:step3:mul"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step3:mul_1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step3:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step3:lstm0/weights_o"
+  op: Data
+  children: "lstm0:step3:mm_o"
+  input_tensors {
+    name: "lstm0/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step3:lstm0/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step3:mm_o"
+  op: InnerProduct
+  parents: "lstm0:step3:concat"
+  parents: "lstm0:step3:lstm0/weights_o"
+  children: "lstm0:step3:mul_2"
+  input_tensors {
+    name: "lstm0:step3:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step3:lstm0/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step3:mm_o"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm0:step3:tanh"
+  op: Tanh
+  parents: "lstm0:step3:add"
+  children: "lstm0:step3:mul_2"
+  input_tensors {
+    name: "lstm0:step3:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step3:tanh"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm0:step3:mul_2"
+  op: EltwiseMul
+  parents: "lstm0:step3:mm_o"
+  parents: "lstm0:step3:tanh"
+  children: "lstm1:step3:concat"
+  input_tensors {
+    name: "lstm0:step3:mm_o"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm0:step3:tanh"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm0:step3:mul_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step0:lstm1/h"
+  op: Data
+  children: "lstm1:step0:concat"
+  input_tensors {
+    name: "lstm1/h"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step0:lstm1/h"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step0:concat"
+  op: Concat
+  parents: "lstm0:step0:mul_2"
+  parents: "lstm1:step0:lstm1/h"
+  children: "lstm1:step0:mm_f"
+  children: "lstm1:step0:mm_i"
+  children: "lstm1:step0:mm_c"
+  children: "lstm1:step0:mm_o"
+  input_tensors {
+    name: "lstm0:step0:mul_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step0:lstm1/h"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step0:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    concat_axis: 1
+  }
+}
+nodes {
+  name: "lstm1:step0:lstm1/weights_f"
+  op: Data
+  children: "lstm1:step0:mm_f"
+  input_tensors {
+    name: "lstm1/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step0:lstm1/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step0:mm_f"
+  op: InnerProduct
+  parents: "lstm1:step0:concat"
+  parents: "lstm1:step0:lstm1/weights_f"
+  children: "lstm1:step0:mul"
+  input_tensors {
+    name: "lstm1:step0:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step0:lstm1/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step0:mm_f"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm1:step0:lstm1/weights_i"
+  op: Data
+  children: "lstm1:step0:mm_i"
+  input_tensors {
+    name: "lstm1/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step0:lstm1/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step0:mm_i"
+  op: InnerProduct
+  parents: "lstm1:step0:concat"
+  parents: "lstm1:step0:lstm1/weights_i"
+  children: "lstm1:step0:mul_1"
+  input_tensors {
+    name: "lstm1:step0:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step0:lstm1/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step0:mm_i"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm1:step0:lstm1/weights_c"
+  op: Data
+  children: "lstm1:step0:mm_c"
+  input_tensors {
+    name: "lstm1/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step0:lstm1/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step0:mm_c"
+  op: InnerProduct
+  parents: "lstm1:step0:concat"
+  parents: "lstm1:step0:lstm1/weights_c"
+  children: "lstm1:step0:mul_1"
+  input_tensors {
+    name: "lstm1:step0:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step0:lstm1/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step0:mm_c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    act_params {
+      activation: Tanh
+    }
+  }
+}
+nodes {
+  name: "lstm1:step0:lstm1/c"
+  op: Data
+  children: "lstm1:step0:mul"
+  input_tensors {
+    name: "lstm1/c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step0:lstm1/c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step0:mul"
+  op: EltwiseMul
+  parents: "lstm1:step0:mm_f"
+  parents: "lstm1:step0:lstm1/c"
+  children: "lstm1:step0:add"
+  input_tensors {
+    name: "lstm1:step0:mm_f"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step0:lstm1/c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step0:mul"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step0:mul_1"
+  op: EltwiseMul
+  parents: "lstm1:step0:mm_i"
+  parents: "lstm1:step0:mm_c"
+  children: "lstm1:step0:add"
+  input_tensors {
+    name: "lstm1:step0:mm_i"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step0:mm_c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step0:mul_1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step0:add"
+  op: EltwiseAdd
+  parents: "lstm1:step0:mul"
+  parents: "lstm1:step0:mul_1"
+  children: "lstm1:step0:tanh"
+  children: "lstm1:step1:mul"
+  input_tensors {
+    name: "lstm1:step0:mul"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step0:mul_1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step0:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step0:lstm1/weights_o"
+  op: Data
+  children: "lstm1:step0:mm_o"
+  input_tensors {
+    name: "lstm1/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step0:lstm1/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step0:mm_o"
+  op: InnerProduct
+  parents: "lstm1:step0:concat"
+  parents: "lstm1:step0:lstm1/weights_o"
+  children: "lstm1:step0:mul_2"
+  input_tensors {
+    name: "lstm1:step0:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step0:lstm1/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step0:mm_o"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm1:step0:tanh"
+  op: Tanh
+  parents: "lstm1:step0:add"
+  children: "lstm1:step0:mul_2"
+  input_tensors {
+    name: "lstm1:step0:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step0:tanh"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step0:mul_2"
+  op: EltwiseMul
+  parents: "lstm1:step0:mm_o"
+  parents: "lstm1:step0:tanh"
+  children: "lstm1:step1:concat"
+  input_tensors {
+    name: "lstm1:step0:mm_o"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step0:tanh"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step0:mul_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step1:concat"
+  op: Concat
+  parents: "lstm0:step1:mul_2"
+  parents: "lstm1:step0:mul_2"
+  children: "lstm1:step1:mm_f"
+  children: "lstm1:step1:mm_i"
+  children: "lstm1:step1:mm_c"
+  children: "lstm1:step1:mm_o"
+  input_tensors {
+    name: "lstm0:step1:mul_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step0:mul_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step1:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    concat_axis: 1
+  }
+}
+nodes {
+  name: "lstm1:step1:lstm1/weights_f"
+  op: Data
+  children: "lstm1:step1:mm_f"
+  input_tensors {
+    name: "lstm1/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step1:lstm1/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step1:mm_f"
+  op: InnerProduct
+  parents: "lstm1:step1:concat"
+  parents: "lstm1:step1:lstm1/weights_f"
+  children: "lstm1:step1:mul"
+  input_tensors {
+    name: "lstm1:step1:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step1:lstm1/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step1:mm_f"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm1:step1:lstm1/weights_i"
+  op: Data
+  children: "lstm1:step1:mm_i"
+  input_tensors {
+    name: "lstm1/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step1:lstm1/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step1:mm_i"
+  op: InnerProduct
+  parents: "lstm1:step1:concat"
+  parents: "lstm1:step1:lstm1/weights_i"
+  children: "lstm1:step1:mul_1"
+  input_tensors {
+    name: "lstm1:step1:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step1:lstm1/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step1:mm_i"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm1:step1:lstm1/weights_c"
+  op: Data
+  children: "lstm1:step1:mm_c"
+  input_tensors {
+    name: "lstm1/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step1:lstm1/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step1:mm_c"
+  op: InnerProduct
+  parents: "lstm1:step1:concat"
+  parents: "lstm1:step1:lstm1/weights_c"
+  children: "lstm1:step1:mul_1"
+  input_tensors {
+    name: "lstm1:step1:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step1:lstm1/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step1:mm_c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    act_params {
+      activation: Tanh
+    }
+  }
+}
+nodes {
+  name: "lstm1:step1:mul"
+  op: EltwiseMul
+  parents: "lstm1:step1:mm_f"
+  parents: "lstm1:step0:add"
+  children: "lstm1:step1:add"
+  input_tensors {
+    name: "lstm1:step1:mm_f"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step0:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step1:mul"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step1:mul_1"
+  op: EltwiseMul
+  parents: "lstm1:step1:mm_i"
+  parents: "lstm1:step1:mm_c"
+  children: "lstm1:step1:add"
+  input_tensors {
+    name: "lstm1:step1:mm_i"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step1:mm_c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step1:mul_1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step1:add"
+  op: EltwiseAdd
+  parents: "lstm1:step1:mul"
+  parents: "lstm1:step1:mul_1"
+  children: "lstm1:step1:tanh"
+  children: "lstm1:step2:mul"
+  input_tensors {
+    name: "lstm1:step1:mul"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step1:mul_1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step1:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step1:lstm1/weights_o"
+  op: Data
+  children: "lstm1:step1:mm_o"
+  input_tensors {
+    name: "lstm1/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step1:lstm1/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step1:mm_o"
+  op: InnerProduct
+  parents: "lstm1:step1:concat"
+  parents: "lstm1:step1:lstm1/weights_o"
+  children: "lstm1:step1:mul_2"
+  input_tensors {
+    name: "lstm1:step1:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step1:lstm1/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step1:mm_o"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm1:step1:tanh"
+  op: Tanh
+  parents: "lstm1:step1:add"
+  children: "lstm1:step1:mul_2"
+  input_tensors {
+    name: "lstm1:step1:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step1:tanh"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step1:mul_2"
+  op: EltwiseMul
+  parents: "lstm1:step1:mm_o"
+  parents: "lstm1:step1:tanh"
+  children: "lstm1:step2:concat"
+  input_tensors {
+    name: "lstm1:step1:mm_o"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step1:tanh"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step1:mul_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step2:concat"
+  op: Concat
+  parents: "lstm0:step2:mul_2"
+  parents: "lstm1:step1:mul_2"
+  children: "lstm1:step2:mm_f"
+  children: "lstm1:step2:mm_i"
+  children: "lstm1:step2:mm_c"
+  children: "lstm1:step2:mm_o"
+  input_tensors {
+    name: "lstm0:step2:mul_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step1:mul_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step2:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    concat_axis: 1
+  }
+}
+nodes {
+  name: "lstm1:step2:lstm1/weights_f"
+  op: Data
+  children: "lstm1:step2:mm_f"
+  input_tensors {
+    name: "lstm1/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step2:lstm1/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step2:mm_f"
+  op: InnerProduct
+  parents: "lstm1:step2:concat"
+  parents: "lstm1:step2:lstm1/weights_f"
+  children: "lstm1:step2:mul"
+  input_tensors {
+    name: "lstm1:step2:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step2:lstm1/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step2:mm_f"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm1:step2:lstm1/weights_i"
+  op: Data
+  children: "lstm1:step2:mm_i"
+  input_tensors {
+    name: "lstm1/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step2:lstm1/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step2:mm_i"
+  op: InnerProduct
+  parents: "lstm1:step2:concat"
+  parents: "lstm1:step2:lstm1/weights_i"
+  children: "lstm1:step2:mul_1"
+  input_tensors {
+    name: "lstm1:step2:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step2:lstm1/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step2:mm_i"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm1:step2:lstm1/weights_c"
+  op: Data
+  children: "lstm1:step2:mm_c"
+  input_tensors {
+    name: "lstm1/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step2:lstm1/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step2:mm_c"
+  op: InnerProduct
+  parents: "lstm1:step2:concat"
+  parents: "lstm1:step2:lstm1/weights_c"
+  children: "lstm1:step2:mul_1"
+  input_tensors {
+    name: "lstm1:step2:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step2:lstm1/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step2:mm_c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    act_params {
+      activation: Tanh
+    }
+  }
+}
+nodes {
+  name: "lstm1:step2:mul"
+  op: EltwiseMul
+  parents: "lstm1:step2:mm_f"
+  parents: "lstm1:step1:add"
+  children: "lstm1:step2:add"
+  input_tensors {
+    name: "lstm1:step2:mm_f"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step1:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step2:mul"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step2:mul_1"
+  op: EltwiseMul
+  parents: "lstm1:step2:mm_i"
+  parents: "lstm1:step2:mm_c"
+  children: "lstm1:step2:add"
+  input_tensors {
+    name: "lstm1:step2:mm_i"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step2:mm_c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step2:mul_1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step2:add"
+  op: EltwiseAdd
+  parents: "lstm1:step2:mul"
+  parents: "lstm1:step2:mul_1"
+  children: "lstm1:step2:tanh"
+  children: "lstm1:step3:mul"
+  input_tensors {
+    name: "lstm1:step2:mul"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step2:mul_1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step2:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step2:lstm1/weights_o"
+  op: Data
+  children: "lstm1:step2:mm_o"
+  input_tensors {
+    name: "lstm1/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step2:lstm1/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step2:mm_o"
+  op: InnerProduct
+  parents: "lstm1:step2:concat"
+  parents: "lstm1:step2:lstm1/weights_o"
+  children: "lstm1:step2:mul_2"
+  input_tensors {
+    name: "lstm1:step2:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step2:lstm1/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step2:mm_o"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm1:step2:tanh"
+  op: Tanh
+  parents: "lstm1:step2:add"
+  children: "lstm1:step2:mul_2"
+  input_tensors {
+    name: "lstm1:step2:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step2:tanh"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step2:mul_2"
+  op: EltwiseMul
+  parents: "lstm1:step2:mm_o"
+  parents: "lstm1:step2:tanh"
+  children: "lstm1:step3:concat"
+  input_tensors {
+    name: "lstm1:step2:mm_o"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step2:tanh"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step2:mul_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step3:concat"
+  op: Concat
+  parents: "lstm0:step3:mul_2"
+  parents: "lstm1:step2:mul_2"
+  children: "lstm1:step3:mm_f"
+  children: "lstm1:step3:mm_i"
+  children: "lstm1:step3:mm_c"
+  children: "lstm1:step3:mm_o"
+  input_tensors {
+    name: "lstm0:step3:mul_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step2:mul_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step3:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    concat_axis: 1
+  }
+}
+nodes {
+  name: "lstm1:step3:lstm1/weights_f"
+  op: Data
+  children: "lstm1:step3:mm_f"
+  input_tensors {
+    name: "lstm1/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step3:lstm1/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step3:mm_f"
+  op: InnerProduct
+  parents: "lstm1:step3:concat"
+  parents: "lstm1:step3:lstm1/weights_f"
+  children: "lstm1:step3:mul"
+  input_tensors {
+    name: "lstm1:step3:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step3:lstm1/weights_f"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step3:mm_f"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm1:step3:lstm1/weights_i"
+  op: Data
+  children: "lstm1:step3:mm_i"
+  input_tensors {
+    name: "lstm1/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step3:lstm1/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step3:mm_i"
+  op: InnerProduct
+  parents: "lstm1:step3:concat"
+  parents: "lstm1:step3:lstm1/weights_i"
+  children: "lstm1:step3:mul_1"
+  input_tensors {
+    name: "lstm1:step3:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step3:lstm1/weights_i"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step3:mm_i"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm1:step3:lstm1/weights_c"
+  op: Data
+  children: "lstm1:step3:mm_c"
+  input_tensors {
+    name: "lstm1/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step3:lstm1/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step3:mm_c"
+  op: InnerProduct
+  parents: "lstm1:step3:concat"
+  parents: "lstm1:step3:lstm1/weights_c"
+  children: "lstm1:step3:mul_1"
+  input_tensors {
+    name: "lstm1:step3:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step3:lstm1/weights_c"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step3:mm_c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+    act_params {
+      activation: Tanh
+    }
+  }
+}
+nodes {
+  name: "lstm1:step3:mul"
+  op: EltwiseMul
+  parents: "lstm1:step3:mm_f"
+  parents: "lstm1:step2:add"
+  children: "lstm1:step3:add"
+  input_tensors {
+    name: "lstm1:step3:mm_f"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step2:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step3:mul"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step3:mul_1"
+  op: EltwiseMul
+  parents: "lstm1:step3:mm_i"
+  parents: "lstm1:step3:mm_c"
+  children: "lstm1:step3:add"
+  input_tensors {
+    name: "lstm1:step3:mm_i"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step3:mm_c"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step3:mul_1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step3:add"
+  op: EltwiseAdd
+  parents: "lstm1:step3:mul"
+  parents: "lstm1:step3:mul_1"
+  children: "lstm1:step3:tanh"
+  input_tensors {
+    name: "lstm1:step3:mul"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step3:mul_1"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step3:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step3:lstm1/weights_o"
+  op: Data
+  children: "lstm1:step3:mm_o"
+  input_tensors {
+    name: "lstm1/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step3:lstm1/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step3:mm_o"
+  op: InnerProduct
+  parents: "lstm1:step3:concat"
+  parents: "lstm1:step3:lstm1/weights_o"
+  children: "lstm1:step3:mul_2"
+  input_tensors {
+    name: "lstm1:step3:concat"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step3:lstm1/weights_o"
+    data_type: Float16
+    shape {
+      dims: 32
+      dims: 64
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step3:mm_o"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  params {
+  }
+}
+nodes {
+  name: "lstm1:step3:tanh"
+  op: Tanh
+  parents: "lstm1:step3:add"
+  children: "lstm1:step3:mul_2"
+  input_tensors {
+    name: "lstm1:step3:add"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step3:tanh"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "lstm1:step3:mul_2"
+  op: EltwiseMul
+  parents: "lstm1:step3:mm_o"
+  parents: "lstm1:step3:tanh"
+  input_tensors {
+    name: "lstm1:step3:mm_o"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "lstm1:step3:tanh"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "lstm1:step3:mul_2"
+    data_type: Float16
+    shape {
+      dims: 1
+      dims: 32
+      layout: NC
+      alignment: 8
+    }
+    data_format: Uncompressed
+  }
+}
+backend: "SMV"
+mem_policy: AllDma
