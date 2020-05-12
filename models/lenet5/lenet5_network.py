@@ -13,10 +13,10 @@ from types_pb2 import *
 
 def generate_random_data(shape):
   r = np.random.RandomState(1234)
-  return (r.rand(*shape) * 0.005).astype(np.float16)
+  return (r.rand(*shape) * 0.005).astype(np.float32)
 
 def create_lenet5_model():
-  with Graph(name="lenet5_smv", backend="SMV") as graph:
+  with Graph(name="lenet5_ref", backend="Reference") as graph:
     # Tensors and kernels are initialized as NCHW layout.
     input_tensor = Tensor(
         data_layout=NHWC,
@@ -31,14 +31,14 @@ def create_lenet5_model():
     fc1_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
         (10, 128)))
 
-    act = input_data("input", input_tensor)
-    act = convolution("conv0", act, conv0_tensor, stride=[1, 1],
-                      padding="valid", activation=ReLU)
-    act = convolution("conv1", act, conv1_tensor, stride=[1, 1],
-                      padding="valid", activation=ReLU)
-    act = max_pool("pool", act, pool_size=[2, 2], stride=[2, 2])
-    act = mat_mul("fc0", act, fc0_tensor, activation=ReLU)
-    act = mat_mul("fc1", act, fc1_tensor)
+    act = input_data(input_tensor, name="input")
+    act = convolution(act, conv0_tensor, stride=[1, 1],
+                      padding="valid", activation=ReLU, name="conv0")
+    act = convolution(act, conv1_tensor, stride=[1, 1],
+                      padding="valid", activation=ReLU, name="conv1")
+    act = max_pool(act, pool_size=[2, 2], stride=[2, 2], name="pool")
+    act = mat_mul(act, fc0_tensor, activation=ReLU, name="fc0")
+    act = mat_mul(act, fc1_tensor, name="fc1")
     return graph
 
 if __name__ != "main":

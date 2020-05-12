@@ -4,7 +4,7 @@ nodes {
   op: Data
   children: "conv0_stack0"
   input_tensors {
-    name: "input"
+    name: "input/input0"
     data_type: Float16
     shape {
       dims: 1
@@ -17,7 +17,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "input"
+    name: "input/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -31,11 +31,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv0_stack0/kernels"
+  name: "data"
   op: Data
   children: "conv0_stack0"
   input_tensors {
-    name: "conv0_stack0/kernels"
+    name: "data/input0"
     data_type: Float16
     shape {
       dims: 384
@@ -48,7 +48,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv0_stack0/kernels"
+    name: "data/output0"
     data_type: Float16
     shape {
       dims: 384
@@ -65,10 +65,12 @@ nodes {
   name: "conv0_stack0"
   op: Convolution3d
   parents: "input"
-  parents: "conv0_stack0/kernels"
+  parents: "data"
   children: "pool_stack0"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "input"
+    name: "input/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -81,7 +83,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv0_stack0/kernels"
+    name: "data/output0"
     data_type: Float16
     shape {
       dims: 384
@@ -94,7 +96,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv0_stack0"
+    name: "conv0_stack0/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -125,8 +127,9 @@ nodes {
   op: MaxPooling
   parents: "conv0_stack0"
   children: "conv0_stack1"
+  src_tensors_indices: 0
   input_tensors {
-    name: "conv0_stack0"
+    name: "conv0_stack0/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -139,7 +142,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "pool_stack0"
+    name: "pool_stack0/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -161,11 +164,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv0_stack1/kernels"
+  name: "data_1"
   op: Data
   children: "conv0_stack1"
   input_tensors {
-    name: "conv0_stack1/kernels"
+    name: "data_1/input0"
     data_type: Float16
     shape {
       dims: 384
@@ -178,7 +181,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv0_stack1/kernels"
+    name: "data_1/output0"
     data_type: Float16
     shape {
       dims: 384
@@ -195,10 +198,12 @@ nodes {
   name: "conv0_stack1"
   op: Convolution3d
   parents: "pool_stack0"
-  parents: "conv0_stack1/kernels"
+  parents: "data_1"
   children: "conv1_stack1"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "pool_stack0"
+    name: "pool_stack0/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -211,7 +216,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv0_stack1/kernels"
+    name: "data_1/output0"
     data_type: Float16
     shape {
       dims: 384
@@ -224,7 +229,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv0_stack1"
+    name: "conv0_stack1/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -251,11 +256,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv1_stack1/kernels"
+  name: "data_2"
   op: Data
   children: "conv1_stack1"
   input_tensors {
-    name: "conv1_stack1/kernels"
+    name: "data_2/input0"
     data_type: Float16
     shape {
       dims: 384
@@ -268,7 +273,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv1_stack1/kernels"
+    name: "data_2/output0"
     data_type: Float16
     shape {
       dims: 384
@@ -285,10 +290,12 @@ nodes {
   name: "conv1_stack1"
   op: Convolution3d
   parents: "conv0_stack1"
-  parents: "conv1_stack1/kernels"
+  parents: "data_2"
   children: "conv2_stack1"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "conv0_stack1"
+    name: "conv0_stack1/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -301,7 +308,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv1_stack1/kernels"
+    name: "data_2/output0"
     data_type: Float16
     shape {
       dims: 384
@@ -314,7 +321,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv1_stack1"
+    name: "conv1_stack1/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -341,11 +348,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv2_stack1/kernels"
+  name: "data_3"
   op: Data
   children: "conv2_stack1"
   input_tensors {
-    name: "conv2_stack1/kernels"
+    name: "data_3/input0"
     data_type: Float16
     shape {
       dims: 640
@@ -358,7 +365,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv2_stack1/kernels"
+    name: "data_3/output0"
     data_type: Float16
     shape {
       dims: 640
@@ -375,10 +382,12 @@ nodes {
   name: "conv2_stack1"
   op: Convolution3d
   parents: "conv1_stack1"
-  parents: "conv2_stack1/kernels"
+  parents: "data_3"
   children: "conv3_stack1"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "conv1_stack1"
+    name: "conv1_stack1/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -391,7 +400,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv2_stack1/kernels"
+    name: "data_3/output0"
     data_type: Float16
     shape {
       dims: 640
@@ -404,7 +413,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv2_stack1"
+    name: "conv2_stack1/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -431,11 +440,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv3_stack1/kernels"
+  name: "data_4"
   op: Data
   children: "conv3_stack1"
   input_tensors {
-    name: "conv3_stack1/kernels"
+    name: "data_4/input0"
     data_type: Float16
     shape {
       dims: 640
@@ -448,7 +457,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv3_stack1/kernels"
+    name: "data_4/output0"
     data_type: Float16
     shape {
       dims: 640
@@ -465,10 +474,12 @@ nodes {
   name: "conv3_stack1"
   op: Convolution3d
   parents: "conv2_stack1"
-  parents: "conv3_stack1/kernels"
+  parents: "data_4"
   children: "pool_stack1"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "conv2_stack1"
+    name: "conv2_stack1/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -481,7 +492,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv3_stack1/kernels"
+    name: "data_4/output0"
     data_type: Float16
     shape {
       dims: 640
@@ -494,7 +505,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv3_stack1"
+    name: "conv3_stack1/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -525,8 +536,9 @@ nodes {
   op: MaxPooling
   parents: "conv3_stack1"
   children: "conv0_stack2"
+  src_tensors_indices: 0
   input_tensors {
-    name: "conv3_stack1"
+    name: "conv3_stack1/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -539,7 +551,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "pool_stack1"
+    name: "pool_stack1/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -561,11 +573,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv0_stack2/kernels"
+  name: "data_5"
   op: Data
   children: "conv0_stack2"
   input_tensors {
-    name: "conv0_stack2/kernels"
+    name: "data_5/input0"
     data_type: Float16
     shape {
       dims: 640
@@ -578,7 +590,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv0_stack2/kernels"
+    name: "data_5/output0"
     data_type: Float16
     shape {
       dims: 640
@@ -595,10 +607,12 @@ nodes {
   name: "conv0_stack2"
   op: Convolution3d
   parents: "pool_stack1"
-  parents: "conv0_stack2/kernels"
+  parents: "data_5"
   children: "conv1_stack2"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "pool_stack1"
+    name: "pool_stack1/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -611,7 +625,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv0_stack2/kernels"
+    name: "data_5/output0"
     data_type: Float16
     shape {
       dims: 640
@@ -624,7 +638,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv0_stack2"
+    name: "conv0_stack2/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -651,11 +665,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv1_stack2/kernels"
+  name: "data_6"
   op: Data
   children: "conv1_stack2"
   input_tensors {
-    name: "conv1_stack2/kernels"
+    name: "data_6/input0"
     data_type: Float16
     shape {
       dims: 768
@@ -668,7 +682,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv1_stack2/kernels"
+    name: "data_6/output0"
     data_type: Float16
     shape {
       dims: 768
@@ -685,10 +699,12 @@ nodes {
   name: "conv1_stack2"
   op: Convolution3d
   parents: "conv0_stack2"
-  parents: "conv1_stack2/kernels"
+  parents: "data_6"
   children: "conv2_stack2"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "conv0_stack2"
+    name: "conv0_stack2/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -701,7 +717,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv1_stack2/kernels"
+    name: "data_6/output0"
     data_type: Float16
     shape {
       dims: 768
@@ -714,7 +730,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv1_stack2"
+    name: "conv1_stack2/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -741,11 +757,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv2_stack2/kernels"
+  name: "data_7"
   op: Data
   children: "conv2_stack2"
   input_tensors {
-    name: "conv2_stack2/kernels"
+    name: "data_7/input0"
     data_type: Float16
     shape {
       dims: 768
@@ -758,7 +774,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv2_stack2/kernels"
+    name: "data_7/output0"
     data_type: Float16
     shape {
       dims: 768
@@ -775,10 +791,12 @@ nodes {
   name: "conv2_stack2"
   op: Convolution3d
   parents: "conv1_stack2"
-  parents: "conv2_stack2/kernels"
+  parents: "data_7"
   children: "conv3_stack2"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "conv1_stack2"
+    name: "conv1_stack2/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -791,7 +809,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv2_stack2/kernels"
+    name: "data_7/output0"
     data_type: Float16
     shape {
       dims: 768
@@ -804,7 +822,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv2_stack2"
+    name: "conv2_stack2/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -831,11 +849,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv3_stack2/kernels"
+  name: "data_8"
   op: Data
   children: "conv3_stack2"
   input_tensors {
-    name: "conv3_stack2/kernels"
+    name: "data_8/input0"
     data_type: Float16
     shape {
       dims: 768
@@ -848,7 +866,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv3_stack2/kernels"
+    name: "data_8/output0"
     data_type: Float16
     shape {
       dims: 768
@@ -865,10 +883,12 @@ nodes {
   name: "conv3_stack2"
   op: Convolution3d
   parents: "conv2_stack2"
-  parents: "conv3_stack2/kernels"
+  parents: "data_8"
   children: "pool_stack2"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "conv2_stack2"
+    name: "conv2_stack2/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -881,7 +901,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv3_stack2/kernels"
+    name: "data_8/output0"
     data_type: Float16
     shape {
       dims: 768
@@ -894,7 +914,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv3_stack2"
+    name: "conv3_stack2/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -925,8 +945,9 @@ nodes {
   op: MaxPooling
   parents: "conv3_stack2"
   children: "conv0_stack3"
+  src_tensors_indices: 0
   input_tensors {
-    name: "conv3_stack2"
+    name: "conv3_stack2/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -939,7 +960,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "pool_stack2"
+    name: "pool_stack2/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -961,11 +982,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv0_stack3/kernels"
+  name: "data_9"
   op: Data
   children: "conv0_stack3"
   input_tensors {
-    name: "conv0_stack3/kernels"
+    name: "data_9/input0"
     data_type: Float16
     shape {
       dims: 768
@@ -978,7 +999,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv0_stack3/kernels"
+    name: "data_9/output0"
     data_type: Float16
     shape {
       dims: 768
@@ -995,10 +1016,12 @@ nodes {
   name: "conv0_stack3"
   op: Convolution3d
   parents: "pool_stack2"
-  parents: "conv0_stack3/kernels"
+  parents: "data_9"
   children: "conv1_stack3"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "pool_stack2"
+    name: "pool_stack2/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1011,7 +1034,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv0_stack3/kernels"
+    name: "data_9/output0"
     data_type: Float16
     shape {
       dims: 768
@@ -1024,7 +1047,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv0_stack3"
+    name: "conv0_stack3/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1051,11 +1074,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv1_stack3/kernels"
+  name: "data_10"
   op: Data
   children: "conv1_stack3"
   input_tensors {
-    name: "conv1_stack3/kernels"
+    name: "data_10/input0"
     data_type: Float16
     shape {
       dims: 896
@@ -1068,7 +1091,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv1_stack3/kernels"
+    name: "data_10/output0"
     data_type: Float16
     shape {
       dims: 896
@@ -1085,10 +1108,12 @@ nodes {
   name: "conv1_stack3"
   op: Convolution3d
   parents: "conv0_stack3"
-  parents: "conv1_stack3/kernels"
+  parents: "data_10"
   children: "conv2_stack3"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "conv0_stack3"
+    name: "conv0_stack3/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1101,7 +1126,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv1_stack3/kernels"
+    name: "data_10/output0"
     data_type: Float16
     shape {
       dims: 896
@@ -1114,7 +1139,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv1_stack3"
+    name: "conv1_stack3/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1141,11 +1166,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv2_stack3/kernels"
+  name: "data_11"
   op: Data
   children: "conv2_stack3"
   input_tensors {
-    name: "conv2_stack3/kernels"
+    name: "data_11/input0"
     data_type: Float16
     shape {
       dims: 896
@@ -1158,7 +1183,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv2_stack3/kernels"
+    name: "data_11/output0"
     data_type: Float16
     shape {
       dims: 896
@@ -1175,10 +1200,12 @@ nodes {
   name: "conv2_stack3"
   op: Convolution3d
   parents: "conv1_stack3"
-  parents: "conv2_stack3/kernels"
+  parents: "data_11"
   children: "pool_stack3"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "conv1_stack3"
+    name: "conv1_stack3/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1191,7 +1218,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv2_stack3/kernels"
+    name: "data_11/output0"
     data_type: Float16
     shape {
       dims: 896
@@ -1204,7 +1231,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv2_stack3"
+    name: "conv2_stack3/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1235,8 +1262,9 @@ nodes {
   op: MaxPooling
   parents: "conv2_stack3"
   children: "conv0_stack4"
+  src_tensors_indices: 0
   input_tensors {
-    name: "conv2_stack3"
+    name: "conv2_stack3/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1249,7 +1277,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "pool_stack3"
+    name: "pool_stack3/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1271,11 +1299,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv0_stack4/kernels"
+  name: "data_12"
   op: Data
   children: "conv0_stack4"
   input_tensors {
-    name: "conv0_stack4/kernels"
+    name: "data_12/input0"
     data_type: Float16
     shape {
       dims: 896
@@ -1288,7 +1316,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv0_stack4/kernels"
+    name: "data_12/output0"
     data_type: Float16
     shape {
       dims: 896
@@ -1305,10 +1333,12 @@ nodes {
   name: "conv0_stack4"
   op: Convolution3d
   parents: "pool_stack3"
-  parents: "conv0_stack4/kernels"
+  parents: "data_12"
   children: "conv1_stack4"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "pool_stack3"
+    name: "pool_stack3/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1321,7 +1351,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv0_stack4/kernels"
+    name: "data_12/output0"
     data_type: Float16
     shape {
       dims: 896
@@ -1334,7 +1364,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv0_stack4"
+    name: "conv0_stack4/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1361,11 +1391,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv1_stack4/kernels"
+  name: "data_13"
   op: Data
   children: "conv1_stack4"
   input_tensors {
-    name: "conv1_stack4/kernels"
+    name: "data_13/input0"
     data_type: Float16
     shape {
       dims: 1024
@@ -1378,7 +1408,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv1_stack4/kernels"
+    name: "data_13/output0"
     data_type: Float16
     shape {
       dims: 1024
@@ -1395,10 +1425,12 @@ nodes {
   name: "conv1_stack4"
   op: Convolution3d
   parents: "conv0_stack4"
-  parents: "conv1_stack4/kernels"
+  parents: "data_13"
   children: "conv2_stack4"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "conv0_stack4"
+    name: "conv0_stack4/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1411,7 +1443,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv1_stack4/kernels"
+    name: "data_13/output0"
     data_type: Float16
     shape {
       dims: 1024
@@ -1424,7 +1456,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv1_stack4"
+    name: "conv1_stack4/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1451,11 +1483,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv2_stack4/kernels"
+  name: "data_14"
   op: Data
   children: "conv2_stack4"
   input_tensors {
-    name: "conv2_stack4/kernels"
+    name: "data_14/input0"
     data_type: Float16
     shape {
       dims: 1024
@@ -1468,7 +1500,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv2_stack4/kernels"
+    name: "data_14/output0"
     data_type: Float16
     shape {
       dims: 1024
@@ -1485,10 +1517,12 @@ nodes {
   name: "conv2_stack4"
   op: Convolution3d
   parents: "conv1_stack4"
-  parents: "conv2_stack4/kernels"
+  parents: "data_14"
   children: "pool_stack4"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "conv1_stack4"
+    name: "conv1_stack4/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1501,7 +1535,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv2_stack4/kernels"
+    name: "data_14/output0"
     data_type: Float16
     shape {
       dims: 1024
@@ -1514,7 +1548,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv2_stack4"
+    name: "conv2_stack4/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1545,8 +1579,9 @@ nodes {
   op: MaxPooling
   parents: "conv2_stack4"
   children: "conv0_stack5"
+  src_tensors_indices: 0
   input_tensors {
-    name: "conv2_stack4"
+    name: "conv2_stack4/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1559,7 +1594,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "pool_stack4"
+    name: "pool_stack4/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1581,11 +1616,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv0_stack5/kernels"
+  name: "data_15"
   op: Data
   children: "conv0_stack5"
   input_tensors {
-    name: "conv0_stack5/kernels"
+    name: "data_15/input0"
     data_type: Float16
     shape {
       dims: 1024
@@ -1598,7 +1633,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv0_stack5/kernels"
+    name: "data_15/output0"
     data_type: Float16
     shape {
       dims: 1024
@@ -1615,10 +1650,12 @@ nodes {
   name: "conv0_stack5"
   op: Convolution3d
   parents: "pool_stack4"
-  parents: "conv0_stack5/kernels"
+  parents: "data_15"
   children: "conv1_stack5"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "pool_stack4"
+    name: "pool_stack4/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1631,7 +1668,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv0_stack5/kernels"
+    name: "data_15/output0"
     data_type: Float16
     shape {
       dims: 1024
@@ -1644,7 +1681,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv0_stack5"
+    name: "conv0_stack5/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1671,11 +1708,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv1_stack5/kernels"
+  name: "data_16"
   op: Data
   children: "conv1_stack5"
   input_tensors {
-    name: "conv1_stack5/kernels"
+    name: "data_16/input0"
     data_type: Float16
     shape {
       dims: 1152
@@ -1688,7 +1725,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv1_stack5/kernels"
+    name: "data_16/output0"
     data_type: Float16
     shape {
       dims: 1152
@@ -1705,10 +1742,12 @@ nodes {
   name: "conv1_stack5"
   op: Convolution3d
   parents: "conv0_stack5"
-  parents: "conv1_stack5/kernels"
+  parents: "data_16"
   children: "conv0_stack6"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "conv0_stack5"
+    name: "conv0_stack5/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1721,7 +1760,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv1_stack5/kernels"
+    name: "data_16/output0"
     data_type: Float16
     shape {
       dims: 1152
@@ -1734,7 +1773,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv1_stack5"
+    name: "conv1_stack5/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1761,11 +1800,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv0_stack6/kernels"
+  name: "data_17"
   op: Data
   children: "conv0_stack6"
   input_tensors {
-    name: "conv0_stack6/kernels"
+    name: "data_17/input0"
     data_type: Float16
     shape {
       dims: 1152
@@ -1778,7 +1817,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv0_stack6/kernels"
+    name: "data_17/output0"
     data_type: Float16
     shape {
       dims: 1152
@@ -1795,10 +1834,12 @@ nodes {
   name: "conv0_stack6"
   op: Convolution3d
   parents: "conv1_stack5"
-  parents: "conv0_stack6/kernels"
+  parents: "data_17"
   children: "conv0_stack7"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "conv1_stack5"
+    name: "conv1_stack5/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1811,7 +1852,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv0_stack6/kernels"
+    name: "data_17/output0"
     data_type: Float16
     shape {
       dims: 1152
@@ -1824,7 +1865,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv0_stack6"
+    name: "conv0_stack6/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1851,11 +1892,11 @@ nodes {
   }
 }
 nodes {
-  name: "conv0_stack7/kernels"
+  name: "data_18"
   op: Data
   children: "conv0_stack7"
   input_tensors {
-    name: "conv0_stack7/kernels"
+    name: "data_18/input0"
     data_type: Float16
     shape {
       dims: 100
@@ -1868,7 +1909,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv0_stack7/kernels"
+    name: "data_18/output0"
     data_type: Float16
     shape {
       dims: 100
@@ -1885,9 +1926,11 @@ nodes {
   name: "conv0_stack7"
   op: Convolution3d
   parents: "conv0_stack6"
-  parents: "conv0_stack7/kernels"
+  parents: "data_18"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "conv0_stack6"
+    name: "conv0_stack6/output0"
     data_type: Float16
     shape {
       dims: 1
@@ -1900,7 +1943,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "conv0_stack7/kernels"
+    name: "data_18/output0"
     data_type: Float16
     shape {
       dims: 100
@@ -1913,7 +1956,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "conv0_stack7"
+    name: "conv0_stack7/output0"
     data_type: Float16
     shape {
       dims: 1

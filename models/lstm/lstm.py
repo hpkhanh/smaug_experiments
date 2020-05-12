@@ -14,10 +14,10 @@ from recurrent import *
 
 def generate_random_data(shape):
   r = np.random.RandomState(1234)
-  return (r.rand(*shape) * 0.005).astype(np.float32)
+  return (r.rand(*shape) * 0.005).astype(np.float16)
 
 def create_lstm_model():
-  with Graph(name="lstm_ref", backend="Reference") as graph:
+  with Graph(name="lstm_smv", backend="SMV") as graph:
     input_tensor = Tensor(
         data_layout=NTC, tensor_data=generate_random_data((1, 4, 32)))
     # Tensors and kernels are initialized as NC layout.

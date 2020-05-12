@@ -30,11 +30,11 @@ def create_minerva_model():
     fc3_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
         (10, 256)))
 
-    act = input_data("input", input_tensor)
-    act = mat_mul("fc0", act, fc0_tensor, activation=ReLU)
-    act = mat_mul("fc1", act, fc1_tensor, activation=ReLU)
-    act = mat_mul("fc2", act, fc2_tensor, activation=ReLU)
-    act = mat_mul("fc3", act, fc3_tensor)
+    act = input_data(input_tensor, "input")
+    act = mat_mul(act, fc0_tensor, activation=ReLU, name="fc0")
+    act = mat_mul(act, fc1_tensor, activation=ReLU, name="fc1")
+    act = mat_mul(act, fc2_tensor, activation=ReLU, name="fc2")
+    act = mat_mul(act, fc3_tensor, name="fc3")
     return graph
 
 if __name__ != "main":

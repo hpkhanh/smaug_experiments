@@ -2,9 +2,9 @@ name: "minerva_ref"
 nodes {
   name: "input"
   op: Data
-  children: "input->fc0"
+  children: "reorder"
   input_tensors {
-    name: "input"
+    name: "input/input0"
     data_type: Float32
     shape {
       dims: 1
@@ -16,7 +16,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "input"
+    name: "input/output0"
     data_type: Float32
     shape {
       dims: 1
@@ -29,12 +29,13 @@ nodes {
   }
 }
 nodes {
-  name: "input->fc0"
+  name: "reorder"
   op: Reorder
   parents: "input"
   children: "fc0"
+  src_tensors_indices: 0
   input_tensors {
-    name: "input"
+    name: "input/output0"
     data_type: Float32
     shape {
       dims: 1
@@ -46,7 +47,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "input->fc0"
+    name: "reorder/output0"
     data_type: Float32
     shape {
       dims: 1
@@ -57,11 +58,11 @@ nodes {
   }
 }
 nodes {
-  name: "fc0/weights"
+  name: "data"
   op: Data
-  children: "fc0/weights->fc0"
+  children: "reorder_1"
   input_tensors {
-    name: "fc0/weights"
+    name: "data/input0"
     data_type: Float32
     shape {
       dims: 256
@@ -71,7 +72,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "fc0/weights"
+    name: "data/output0"
     data_type: Float32
     shape {
       dims: 256
@@ -82,12 +83,13 @@ nodes {
   }
 }
 nodes {
-  name: "fc0/weights->fc0"
+  name: "reorder_1"
   op: Reorder
-  parents: "fc0/weights"
+  parents: "data"
   children: "fc0"
+  src_tensors_indices: 0
   input_tensors {
-    name: "fc0/weights"
+    name: "data/output0"
     data_type: Float32
     shape {
       dims: 256
@@ -97,7 +99,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "fc0/weights->fc0"
+    name: "reorder_1/output0"
     data_type: Float32
     shape {
       dims: 784
@@ -110,11 +112,13 @@ nodes {
 nodes {
   name: "fc0"
   op: InnerProduct
-  parents: "input->fc0"
-  parents: "fc0/weights->fc0"
+  parents: "reorder"
+  parents: "reorder_1"
   children: "fc1"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "input->fc0"
+    name: "reorder/output0"
     data_type: Float32
     shape {
       dims: 1
@@ -124,7 +128,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "fc0/weights->fc0"
+    name: "reorder_1/output0"
     data_type: Float32
     shape {
       dims: 784
@@ -134,7 +138,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "fc0"
+    name: "fc0/output0"
     data_type: Float32
     shape {
       dims: 1
@@ -150,11 +154,11 @@ nodes {
   }
 }
 nodes {
-  name: "fc1/weights"
+  name: "data_1"
   op: Data
-  children: "fc1/weights->fc1"
+  children: "reorder_2"
   input_tensors {
-    name: "fc1/weights"
+    name: "data_1/input0"
     data_type: Float32
     shape {
       dims: 256
@@ -164,7 +168,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "fc1/weights"
+    name: "data_1/output0"
     data_type: Float32
     shape {
       dims: 256
@@ -175,12 +179,13 @@ nodes {
   }
 }
 nodes {
-  name: "fc1/weights->fc1"
+  name: "reorder_2"
   op: Reorder
-  parents: "fc1/weights"
+  parents: "data_1"
   children: "fc1"
+  src_tensors_indices: 0
   input_tensors {
-    name: "fc1/weights"
+    name: "data_1/output0"
     data_type: Float32
     shape {
       dims: 256
@@ -190,7 +195,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "fc1/weights->fc1"
+    name: "reorder_2/output0"
     data_type: Float32
     shape {
       dims: 256
@@ -204,10 +209,12 @@ nodes {
   name: "fc1"
   op: InnerProduct
   parents: "fc0"
-  parents: "fc1/weights->fc1"
+  parents: "reorder_2"
   children: "fc2"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "fc0"
+    name: "fc0/output0"
     data_type: Float32
     shape {
       dims: 1
@@ -217,7 +224,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "fc1/weights->fc1"
+    name: "reorder_2/output0"
     data_type: Float32
     shape {
       dims: 256
@@ -227,7 +234,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "fc1"
+    name: "fc1/output0"
     data_type: Float32
     shape {
       dims: 1
@@ -243,11 +250,11 @@ nodes {
   }
 }
 nodes {
-  name: "fc2/weights"
+  name: "data_2"
   op: Data
-  children: "fc2/weights->fc2"
+  children: "reorder_3"
   input_tensors {
-    name: "fc2/weights"
+    name: "data_2/input0"
     data_type: Float32
     shape {
       dims: 256
@@ -257,7 +264,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "fc2/weights"
+    name: "data_2/output0"
     data_type: Float32
     shape {
       dims: 256
@@ -268,12 +275,13 @@ nodes {
   }
 }
 nodes {
-  name: "fc2/weights->fc2"
+  name: "reorder_3"
   op: Reorder
-  parents: "fc2/weights"
+  parents: "data_2"
   children: "fc2"
+  src_tensors_indices: 0
   input_tensors {
-    name: "fc2/weights"
+    name: "data_2/output0"
     data_type: Float32
     shape {
       dims: 256
@@ -283,7 +291,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "fc2/weights->fc2"
+    name: "reorder_3/output0"
     data_type: Float32
     shape {
       dims: 256
@@ -297,10 +305,12 @@ nodes {
   name: "fc2"
   op: InnerProduct
   parents: "fc1"
-  parents: "fc2/weights->fc2"
+  parents: "reorder_3"
   children: "fc3"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "fc1"
+    name: "fc1/output0"
     data_type: Float32
     shape {
       dims: 1
@@ -310,7 +320,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "fc2/weights->fc2"
+    name: "reorder_3/output0"
     data_type: Float32
     shape {
       dims: 256
@@ -320,7 +330,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "fc2"
+    name: "fc2/output0"
     data_type: Float32
     shape {
       dims: 1
@@ -336,11 +346,11 @@ nodes {
   }
 }
 nodes {
-  name: "fc3/weights"
+  name: "data_3"
   op: Data
-  children: "fc3/weights->fc3"
+  children: "reorder_4"
   input_tensors {
-    name: "fc3/weights"
+    name: "data_3/input0"
     data_type: Float32
     shape {
       dims: 10
@@ -350,7 +360,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "fc3/weights"
+    name: "data_3/output0"
     data_type: Float32
     shape {
       dims: 10
@@ -361,12 +371,13 @@ nodes {
   }
 }
 nodes {
-  name: "fc3/weights->fc3"
+  name: "reorder_4"
   op: Reorder
-  parents: "fc3/weights"
+  parents: "data_3"
   children: "fc3"
+  src_tensors_indices: 0
   input_tensors {
-    name: "fc3/weights"
+    name: "data_3/output0"
     data_type: Float32
     shape {
       dims: 10
@@ -376,7 +387,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "fc3/weights->fc3"
+    name: "reorder_4/output0"
     data_type: Float32
     shape {
       dims: 256
@@ -390,9 +401,11 @@ nodes {
   name: "fc3"
   op: InnerProduct
   parents: "fc2"
-  parents: "fc3/weights->fc3"
+  parents: "reorder_4"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
   input_tensors {
-    name: "fc2"
+    name: "fc2/output0"
     data_type: Float32
     shape {
       dims: 1
@@ -402,7 +415,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "fc3/weights->fc3"
+    name: "reorder_4/output0"
     data_type: Float32
     shape {
       dims: 256
@@ -412,7 +425,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "fc3"
+    name: "fc3/output0"
     data_type: Float32
     shape {
       dims: 1
