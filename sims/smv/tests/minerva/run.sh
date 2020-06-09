@@ -4,7 +4,7 @@ source ./model_files
 
 cfg_home=`pwd`
 gem5_dir=${ALADDIN_HOME}/../..
-bmk_dir=`git rev-parse --show-toplevel`/../nnet_lib/build
+bmk_dir=`git rev-parse --show-toplevel`/../build/bin
 
 ${gem5_dir}/build/X86/gem5.opt \
   --debug-flags=Aladdin,HybridDatapath \
