@@ -4,13 +4,13 @@
 #
 
 import sys
-sys.path.append('../../../nnet_lib/src/python/')
 import numpy as np
-from graph import *
-from tensor import *
-from ops import *
-from types_pb2 import *
-from recurrent import *
+
+from smaug.python.graph import *
+from smaug.python.tensor import *
+from smaug.python.ops import *
+from smaug.python.recurrent import *
+from smaug.core.types_pb2 import *
 
 def generate_random_data(shape):
   r = np.random.RandomState(1234)

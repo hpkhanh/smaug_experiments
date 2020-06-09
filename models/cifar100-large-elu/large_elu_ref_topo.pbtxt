@@ -172,7 +172,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -329,7 +329,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -447,7 +447,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -565,7 +565,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -683,7 +683,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -840,7 +840,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -958,7 +958,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -1076,7 +1076,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -1194,7 +1194,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -1351,7 +1351,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -1469,7 +1469,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -1587,7 +1587,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -1744,7 +1744,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -1862,7 +1862,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -1980,7 +1980,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -2137,7 +2137,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -2255,7 +2255,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -2373,7 +2373,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -2490,7 +2490,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }

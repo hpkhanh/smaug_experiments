@@ -2,21 +2,25 @@
 #
 # Examples for creating the CIFAR100-Large-ELU network.
 #
-
 import sys
-sys.path.append('../../../nnet_lib/src/python/')
 import numpy as np
-from graph import *
-from tensor import *
-from ops import *
-from types_pb2 import *
+
+from smaug.python.graph import Graph
+from smaug.python.tensor import Tensor
+from smaug.python.ops.nn_ops import *
+from smaug.python.ops.data_op import *
+from smaug.core.types_pb2 import *
+
+BACKEND="Reference"
 
 def generate_random_data(shape):
+  #return np.random.normal(
+  #    loc=0, scale=0.01, size=shape).astype(backend_datatype[BACKEND])
   r = np.random.RandomState(1234)
-  return (r.rand(*shape) * 0.003).astype(np.float32)
+  return (r.rand(*shape) * 0.003).astype(backend_datatype[BACKEND])
 
 def create_elu_model():
-  with Graph(name="large_elu_ref", backend="Reference", mem_policy=AllDma) as graph:
+  with Graph(name="large_elu_ref", backend=BACKEND, mem_policy=AllDma) as graph:
     # Tensors and kernels are initialized as NCHW layout.
     input_tensor = Tensor(
         data_layout=NHWC,
