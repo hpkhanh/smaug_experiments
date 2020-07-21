@@ -2,7 +2,6 @@ name: "large_elu_ref"
 nodes {
   name: "input"
   op: Data
-  children: "reorder"
   input_tensors {
     name: "input/input0"
     data_type: Float32
@@ -32,7 +31,6 @@ nodes {
   name: "reorder"
   op: Reorder
   parents: "input"
-  children: "conv0_stack0"
   src_tensors_indices: 0
   input_tensors {
     name: "input/output0"
@@ -62,7 +60,6 @@ nodes {
 nodes {
   name: "data"
   op: Data
-  children: "reorder_1"
   input_tensors {
     name: "data/input0"
     data_type: Float32
@@ -92,7 +89,6 @@ nodes {
   name: "reorder_1"
   op: Reorder
   parents: "data"
-  children: "conv0_stack0"
   src_tensors_indices: 0
   input_tensors {
     name: "data/output0"
@@ -124,7 +120,6 @@ nodes {
   op: Convolution3d
   parents: "reorder"
   parents: "reorder_1"
-  children: "pool_stack0"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -181,7 +176,6 @@ nodes {
   name: "pool_stack0"
   op: MaxPooling
   parents: "conv0_stack0"
-  children: "conv0_stack1"
   src_tensors_indices: 0
   input_tensors {
     name: "conv0_stack0/output0"
@@ -219,7 +213,6 @@ nodes {
 nodes {
   name: "data_1"
   op: Data
-  children: "reorder_2"
   input_tensors {
     name: "data_1/input0"
     data_type: Float32
@@ -249,7 +242,6 @@ nodes {
   name: "reorder_2"
   op: Reorder
   parents: "data_1"
-  children: "conv0_stack1"
   src_tensors_indices: 0
   input_tensors {
     name: "data_1/output0"
@@ -281,7 +273,6 @@ nodes {
   op: Convolution3d
   parents: "pool_stack0"
   parents: "reorder_2"
-  children: "conv1_stack1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -337,7 +328,6 @@ nodes {
 nodes {
   name: "data_2"
   op: Data
-  children: "reorder_3"
   input_tensors {
     name: "data_2/input0"
     data_type: Float32
@@ -367,7 +357,6 @@ nodes {
   name: "reorder_3"
   op: Reorder
   parents: "data_2"
-  children: "conv1_stack1"
   src_tensors_indices: 0
   input_tensors {
     name: "data_2/output0"
@@ -399,7 +388,6 @@ nodes {
   op: Convolution3d
   parents: "conv0_stack1"
   parents: "reorder_3"
-  children: "conv2_stack1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -455,7 +443,6 @@ nodes {
 nodes {
   name: "data_3"
   op: Data
-  children: "reorder_4"
   input_tensors {
     name: "data_3/input0"
     data_type: Float32
@@ -485,7 +472,6 @@ nodes {
   name: "reorder_4"
   op: Reorder
   parents: "data_3"
-  children: "conv2_stack1"
   src_tensors_indices: 0
   input_tensors {
     name: "data_3/output0"
@@ -517,7 +503,6 @@ nodes {
   op: Convolution3d
   parents: "conv1_stack1"
   parents: "reorder_4"
-  children: "conv3_stack1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -573,7 +558,6 @@ nodes {
 nodes {
   name: "data_4"
   op: Data
-  children: "reorder_5"
   input_tensors {
     name: "data_4/input0"
     data_type: Float32
@@ -603,7 +587,6 @@ nodes {
   name: "reorder_5"
   op: Reorder
   parents: "data_4"
-  children: "conv3_stack1"
   src_tensors_indices: 0
   input_tensors {
     name: "data_4/output0"
@@ -635,7 +618,6 @@ nodes {
   op: Convolution3d
   parents: "conv2_stack1"
   parents: "reorder_5"
-  children: "pool_stack1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -692,7 +674,6 @@ nodes {
   name: "pool_stack1"
   op: MaxPooling
   parents: "conv3_stack1"
-  children: "conv0_stack2"
   src_tensors_indices: 0
   input_tensors {
     name: "conv3_stack1/output0"
@@ -730,7 +711,6 @@ nodes {
 nodes {
   name: "data_5"
   op: Data
-  children: "reorder_6"
   input_tensors {
     name: "data_5/input0"
     data_type: Float32
@@ -760,7 +740,6 @@ nodes {
   name: "reorder_6"
   op: Reorder
   parents: "data_5"
-  children: "conv0_stack2"
   src_tensors_indices: 0
   input_tensors {
     name: "data_5/output0"
@@ -792,7 +771,6 @@ nodes {
   op: Convolution3d
   parents: "pool_stack1"
   parents: "reorder_6"
-  children: "conv1_stack2"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -848,7 +826,6 @@ nodes {
 nodes {
   name: "data_6"
   op: Data
-  children: "reorder_7"
   input_tensors {
     name: "data_6/input0"
     data_type: Float32
@@ -878,7 +855,6 @@ nodes {
   name: "reorder_7"
   op: Reorder
   parents: "data_6"
-  children: "conv1_stack2"
   src_tensors_indices: 0
   input_tensors {
     name: "data_6/output0"
@@ -910,7 +886,6 @@ nodes {
   op: Convolution3d
   parents: "conv0_stack2"
   parents: "reorder_7"
-  children: "conv2_stack2"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -966,7 +941,6 @@ nodes {
 nodes {
   name: "data_7"
   op: Data
-  children: "reorder_8"
   input_tensors {
     name: "data_7/input0"
     data_type: Float32
@@ -996,7 +970,6 @@ nodes {
   name: "reorder_8"
   op: Reorder
   parents: "data_7"
-  children: "conv2_stack2"
   src_tensors_indices: 0
   input_tensors {
     name: "data_7/output0"
@@ -1028,7 +1001,6 @@ nodes {
   op: Convolution3d
   parents: "conv1_stack2"
   parents: "reorder_8"
-  children: "conv3_stack2"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1084,7 +1056,6 @@ nodes {
 nodes {
   name: "data_8"
   op: Data
-  children: "reorder_9"
   input_tensors {
     name: "data_8/input0"
     data_type: Float32
@@ -1114,7 +1085,6 @@ nodes {
   name: "reorder_9"
   op: Reorder
   parents: "data_8"
-  children: "conv3_stack2"
   src_tensors_indices: 0
   input_tensors {
     name: "data_8/output0"
@@ -1146,7 +1116,6 @@ nodes {
   op: Convolution3d
   parents: "conv2_stack2"
   parents: "reorder_9"
-  children: "pool_stack2"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1203,7 +1172,6 @@ nodes {
   name: "pool_stack2"
   op: MaxPooling
   parents: "conv3_stack2"
-  children: "conv0_stack3"
   src_tensors_indices: 0
   input_tensors {
     name: "conv3_stack2/output0"
@@ -1241,7 +1209,6 @@ nodes {
 nodes {
   name: "data_9"
   op: Data
-  children: "reorder_10"
   input_tensors {
     name: "data_9/input0"
     data_type: Float32
@@ -1271,7 +1238,6 @@ nodes {
   name: "reorder_10"
   op: Reorder
   parents: "data_9"
-  children: "conv0_stack3"
   src_tensors_indices: 0
   input_tensors {
     name: "data_9/output0"
@@ -1303,7 +1269,6 @@ nodes {
   op: Convolution3d
   parents: "pool_stack2"
   parents: "reorder_10"
-  children: "conv1_stack3"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1359,7 +1324,6 @@ nodes {
 nodes {
   name: "data_10"
   op: Data
-  children: "reorder_11"
   input_tensors {
     name: "data_10/input0"
     data_type: Float32
@@ -1389,7 +1353,6 @@ nodes {
   name: "reorder_11"
   op: Reorder
   parents: "data_10"
-  children: "conv1_stack3"
   src_tensors_indices: 0
   input_tensors {
     name: "data_10/output0"
@@ -1421,7 +1384,6 @@ nodes {
   op: Convolution3d
   parents: "conv0_stack3"
   parents: "reorder_11"
-  children: "conv2_stack3"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1477,7 +1439,6 @@ nodes {
 nodes {
   name: "data_11"
   op: Data
-  children: "reorder_12"
   input_tensors {
     name: "data_11/input0"
     data_type: Float32
@@ -1507,7 +1468,6 @@ nodes {
   name: "reorder_12"
   op: Reorder
   parents: "data_11"
-  children: "conv2_stack3"
   src_tensors_indices: 0
   input_tensors {
     name: "data_11/output0"
@@ -1539,7 +1499,6 @@ nodes {
   op: Convolution3d
   parents: "conv1_stack3"
   parents: "reorder_12"
-  children: "pool_stack3"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1596,7 +1555,6 @@ nodes {
   name: "pool_stack3"
   op: MaxPooling
   parents: "conv2_stack3"
-  children: "conv0_stack4"
   src_tensors_indices: 0
   input_tensors {
     name: "conv2_stack3/output0"
@@ -1634,7 +1592,6 @@ nodes {
 nodes {
   name: "data_12"
   op: Data
-  children: "reorder_13"
   input_tensors {
     name: "data_12/input0"
     data_type: Float32
@@ -1664,7 +1621,6 @@ nodes {
   name: "reorder_13"
   op: Reorder
   parents: "data_12"
-  children: "conv0_stack4"
   src_tensors_indices: 0
   input_tensors {
     name: "data_12/output0"
@@ -1696,7 +1652,6 @@ nodes {
   op: Convolution3d
   parents: "pool_stack3"
   parents: "reorder_13"
-  children: "conv1_stack4"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1752,7 +1707,6 @@ nodes {
 nodes {
   name: "data_13"
   op: Data
-  children: "reorder_14"
   input_tensors {
     name: "data_13/input0"
     data_type: Float32
@@ -1782,7 +1736,6 @@ nodes {
   name: "reorder_14"
   op: Reorder
   parents: "data_13"
-  children: "conv1_stack4"
   src_tensors_indices: 0
   input_tensors {
     name: "data_13/output0"
@@ -1814,7 +1767,6 @@ nodes {
   op: Convolution3d
   parents: "conv0_stack4"
   parents: "reorder_14"
-  children: "conv2_stack4"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1870,7 +1822,6 @@ nodes {
 nodes {
   name: "data_14"
   op: Data
-  children: "reorder_15"
   input_tensors {
     name: "data_14/input0"
     data_type: Float32
@@ -1900,7 +1851,6 @@ nodes {
   name: "reorder_15"
   op: Reorder
   parents: "data_14"
-  children: "conv2_stack4"
   src_tensors_indices: 0
   input_tensors {
     name: "data_14/output0"
@@ -1932,7 +1882,6 @@ nodes {
   op: Convolution3d
   parents: "conv1_stack4"
   parents: "reorder_15"
-  children: "pool_stack4"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1989,7 +1938,6 @@ nodes {
   name: "pool_stack4"
   op: MaxPooling
   parents: "conv2_stack4"
-  children: "conv0_stack5"
   src_tensors_indices: 0
   input_tensors {
     name: "conv2_stack4/output0"
@@ -2027,7 +1975,6 @@ nodes {
 nodes {
   name: "data_15"
   op: Data
-  children: "reorder_16"
   input_tensors {
     name: "data_15/input0"
     data_type: Float32
@@ -2057,7 +2004,6 @@ nodes {
   name: "reorder_16"
   op: Reorder
   parents: "data_15"
-  children: "conv0_stack5"
   src_tensors_indices: 0
   input_tensors {
     name: "data_15/output0"
@@ -2089,7 +2035,6 @@ nodes {
   op: Convolution3d
   parents: "pool_stack4"
   parents: "reorder_16"
-  children: "conv1_stack5"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2145,7 +2090,6 @@ nodes {
 nodes {
   name: "data_16"
   op: Data
-  children: "reorder_17"
   input_tensors {
     name: "data_16/input0"
     data_type: Float32
@@ -2175,7 +2119,6 @@ nodes {
   name: "reorder_17"
   op: Reorder
   parents: "data_16"
-  children: "conv1_stack5"
   src_tensors_indices: 0
   input_tensors {
     name: "data_16/output0"
@@ -2207,7 +2150,6 @@ nodes {
   op: Convolution3d
   parents: "conv0_stack5"
   parents: "reorder_17"
-  children: "conv0_stack6"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2263,7 +2205,6 @@ nodes {
 nodes {
   name: "data_17"
   op: Data
-  children: "reorder_18"
   input_tensors {
     name: "data_17/input0"
     data_type: Float32
@@ -2293,7 +2234,6 @@ nodes {
   name: "reorder_18"
   op: Reorder
   parents: "data_17"
-  children: "conv0_stack6"
   src_tensors_indices: 0
   input_tensors {
     name: "data_17/output0"
@@ -2325,7 +2265,6 @@ nodes {
   op: Convolution3d
   parents: "conv1_stack5"
   parents: "reorder_18"
-  children: "conv0_stack7"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2381,7 +2320,6 @@ nodes {
 nodes {
   name: "data_18"
   op: Data
-  children: "reorder_19"
   input_tensors {
     name: "data_18/input0"
     data_type: Float32
@@ -2411,7 +2349,6 @@ nodes {
   name: "reorder_19"
   op: Reorder
   parents: "data_18"
-  children: "conv0_stack7"
   src_tensors_indices: 0
   input_tensors {
     name: "data_18/output0"

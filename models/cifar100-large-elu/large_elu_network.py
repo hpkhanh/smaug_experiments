@@ -5,22 +5,21 @@
 import sys
 import numpy as np
 
+from smaug.python import global_vars
 from smaug.python.graph import Graph
 from smaug.python.tensor import Tensor
 from smaug.python.ops.nn_ops import *
 from smaug.python.ops.data_op import *
 from smaug.core.types_pb2 import *
 
-BACKEND="Reference"
+BACKEND="SMV"
 
 def generate_random_data(shape):
-  #return np.random.normal(
-  #    loc=0, scale=0.01, size=shape).astype(backend_datatype[BACKEND])
   r = np.random.RandomState(1234)
-  return (r.rand(*shape) * 0.003).astype(backend_datatype[BACKEND])
+  return (r.rand(*shape) * 0.003).astype(global_vars.backend_datatype[BACKEND])
 
 def create_elu_model():
-  with Graph(name="large_elu_ref", backend=BACKEND, mem_policy=AllDma) as graph:
+  with Graph(name="large_elu_smv", backend=BACKEND, mem_policy=AllDma) as graph:
     # Tensors and kernels are initialized as NCHW layout.
     input_tensor = Tensor(
         data_layout=NHWC,
