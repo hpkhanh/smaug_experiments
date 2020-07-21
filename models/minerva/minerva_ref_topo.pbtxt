@@ -2,7 +2,6 @@ name: "minerva_ref"
 nodes {
   name: "input"
   op: Data
-  children: "reorder"
   input_tensors {
     name: "input/input0"
     data_type: Float32
@@ -32,7 +31,6 @@ nodes {
   name: "reorder"
   op: Reorder
   parents: "input"
-  children: "fc0"
   src_tensors_indices: 0
   input_tensors {
     name: "input/output0"
@@ -60,7 +58,6 @@ nodes {
 nodes {
   name: "data"
   op: Data
-  children: "reorder_1"
   input_tensors {
     name: "data/input0"
     data_type: Float32
@@ -86,7 +83,6 @@ nodes {
   name: "reorder_1"
   op: Reorder
   parents: "data"
-  children: "fc0"
   src_tensors_indices: 0
   input_tensors {
     name: "data/output0"
@@ -114,7 +110,6 @@ nodes {
   op: InnerProduct
   parents: "reorder"
   parents: "reorder_1"
-  children: "fc1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -156,7 +151,6 @@ nodes {
 nodes {
   name: "data_1"
   op: Data
-  children: "reorder_2"
   input_tensors {
     name: "data_1/input0"
     data_type: Float32
@@ -182,7 +176,6 @@ nodes {
   name: "reorder_2"
   op: Reorder
   parents: "data_1"
-  children: "fc1"
   src_tensors_indices: 0
   input_tensors {
     name: "data_1/output0"
@@ -210,7 +203,6 @@ nodes {
   op: InnerProduct
   parents: "fc0"
   parents: "reorder_2"
-  children: "fc2"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -252,7 +244,6 @@ nodes {
 nodes {
   name: "data_2"
   op: Data
-  children: "reorder_3"
   input_tensors {
     name: "data_2/input0"
     data_type: Float32
@@ -278,7 +269,6 @@ nodes {
   name: "reorder_3"
   op: Reorder
   parents: "data_2"
-  children: "fc2"
   src_tensors_indices: 0
   input_tensors {
     name: "data_2/output0"
@@ -306,7 +296,6 @@ nodes {
   op: InnerProduct
   parents: "fc1"
   parents: "reorder_3"
-  children: "fc3"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -348,7 +337,6 @@ nodes {
 nodes {
   name: "data_3"
   op: Data
-  children: "reorder_4"
   input_tensors {
     name: "data_3/input0"
     data_type: Float32
@@ -374,7 +362,6 @@ nodes {
   name: "reorder_4"
   op: Reorder
   parents: "data_3"
-  children: "fc3"
   src_tensors_indices: 0
   input_tensors {
     name: "data_3/output0"
