@@ -2,7 +2,6 @@ name: "lstm_ref"
 nodes {
   name: "input"
   op: Data
-  children: "lstm0:unstack:split"
   input_tensors {
     name: "input/input0"
     data_type: Float32
@@ -30,10 +29,6 @@ nodes {
   name: "lstm0:unstack:split"
   op: Split
   parents: "input"
-  children: "lstm0:unstack:squeeze"
-  children: "lstm0:unstack:squeeze_1"
-  children: "lstm0:unstack:squeeze_2"
-  children: "lstm0:unstack:squeeze_3"
   src_tensors_indices: 0
   input_tensors {
     name: "input/output0"
@@ -100,7 +95,6 @@ nodes {
   name: "lstm0:unstack:squeeze"
   op: Reshape
   parents: "lstm0:unstack:split"
-  children: "lstm0:step0:mm_f"
   src_tensors_indices: 0
   input_tensors {
     name: "lstm0:unstack:split/output0"
@@ -128,7 +122,6 @@ nodes {
   name: "lstm0:unstack:squeeze_1"
   op: Reshape
   parents: "lstm0:unstack:split"
-  children: "lstm0:step1:mm_f"
   src_tensors_indices: 1
   input_tensors {
     name: "lstm0:unstack:split/output1"
@@ -156,7 +149,6 @@ nodes {
   name: "lstm0:unstack:squeeze_2"
   op: Reshape
   parents: "lstm0:unstack:split"
-  children: "lstm0:step2:mm_f"
   src_tensors_indices: 2
   input_tensors {
     name: "lstm0:unstack:split/output2"
@@ -184,7 +176,6 @@ nodes {
   name: "lstm0:unstack:squeeze_3"
   op: Reshape
   parents: "lstm0:unstack:split"
-  children: "lstm0:step3:mm_f"
   src_tensors_indices: 3
   input_tensors {
     name: "lstm0:unstack:split/output3"
@@ -211,7 +202,6 @@ nodes {
 nodes {
   name: "data"
   op: Data
-  children: "reorder"
   input_tensors {
     name: "data/input0"
     data_type: Float32
@@ -237,10 +227,6 @@ nodes {
   name: "reorder"
   op: Reorder
   parents: "data"
-  children: "lstm0:step0:mm_f"
-  children: "lstm0:step1:mm_f"
-  children: "lstm0:step2:mm_f"
-  children: "lstm0:step3:mm_f"
   src_tensors_indices: 0
   input_tensors {
     name: "data/output0"
@@ -268,7 +254,6 @@ nodes {
   op: InnerProduct
   parents: "lstm0:unstack:squeeze"
   parents: "reorder"
-  children: "lstm0:step0:add_z"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -307,7 +292,6 @@ nodes {
 nodes {
   name: "data_1"
   op: Data
-  children: "reorder_1"
   input_tensors {
     name: "data_1/input0"
     data_type: Float32
@@ -333,10 +317,6 @@ nodes {
   name: "reorder_1"
   op: Reorder
   parents: "data_1"
-  children: "mm_u"
-  children: "mm_u_1"
-  children: "mm_u_2"
-  children: "mm_u_3"
   src_tensors_indices: 0
   input_tensors {
     name: "data_1/output0"
@@ -362,7 +342,6 @@ nodes {
 nodes {
   name: "data_2"
   op: Data
-  children: "mm_u"
   input_tensors {
     name: "lstm0:/h"
     data_type: Float32
@@ -389,7 +368,6 @@ nodes {
   op: InnerProduct
   parents: "data_2"
   parents: "reorder_1"
-  children: "lstm0:step0:add_z"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -430,7 +408,6 @@ nodes {
   op: EltwiseAdd
   parents: "lstm0:step0:mm_f"
   parents: "mm_u"
-  children: "split"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -468,10 +445,6 @@ nodes {
   name: "split"
   op: Split
   parents: "lstm0:step0:add_z"
-  children: "lstm0:step0:sigmoid_i"
-  children: "lstm0:step0:sigmoid_f"
-  children: "lstm0:step0:act0"
-  children: "lstm0:step0:sigmoid_o"
   src_tensors_indices: 0
   input_tensors {
     name: "lstm0:step0:add_z/output0"
@@ -533,7 +506,6 @@ nodes {
   name: "lstm0:step0:sigmoid_i"
   op: Sigmoid
   parents: "split"
-  children: "lstm0:step0:mul_i"
   src_tensors_indices: 0
   input_tensors {
     name: "split/output0"
@@ -560,7 +532,6 @@ nodes {
   name: "lstm0:step0:sigmoid_f"
   op: Sigmoid
   parents: "split"
-  children: "lstm0:step0:mul_f"
   src_tensors_indices: 1
   input_tensors {
     name: "split/output1"
@@ -586,7 +557,6 @@ nodes {
 nodes {
   name: "data_3"
   op: Data
-  children: "lstm0:step0:mul_f"
   input_tensors {
     name: "lstm0:/c"
     data_type: Float32
@@ -613,7 +583,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm0:step0:sigmoid_f"
   parents: "data_3"
-  children: "lstm0:step0:add_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -651,7 +620,6 @@ nodes {
   name: "lstm0:step0:act0"
   op: Tanh
   parents: "split"
-  children: "lstm0:step0:mul_i"
   src_tensors_indices: 2
   input_tensors {
     name: "split/output2"
@@ -679,7 +647,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm0:step0:sigmoid_i"
   parents: "lstm0:step0:act0"
-  children: "lstm0:step0:add_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -718,8 +685,6 @@ nodes {
   op: EltwiseAdd
   parents: "lstm0:step0:mul_f"
   parents: "lstm0:step0:mul_i"
-  children: "lstm0:step0:act1"
-  children: "lstm0:step1:mul_f"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -757,7 +722,6 @@ nodes {
   name: "lstm0:step0:sigmoid_o"
   op: Sigmoid
   parents: "split"
-  children: "lstm0:step0:mul_h"
   src_tensors_indices: 3
   input_tensors {
     name: "split/output3"
@@ -784,7 +748,6 @@ nodes {
   name: "lstm0:step0:act1"
   op: Tanh
   parents: "lstm0:step0:add_c"
-  children: "lstm0:step0:mul_h"
   src_tensors_indices: 0
   input_tensors {
     name: "lstm0:step0:add_c/output0"
@@ -812,8 +775,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm0:step0:sigmoid_o"
   parents: "lstm0:step0:act1"
-  children: "mm_u_1"
-  children: "lstm1:step0:mm_f"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -848,11 +809,36 @@ nodes {
   }
 }
 nodes {
+  name: "reorder_2"
+  op: Reorder
+  parents: "data"
+  src_tensors_indices: 0
+  input_tensors {
+    name: "data/output0"
+    data_type: Float32
+    shape {
+      dims: 128
+      dims: 32
+      layout: NC
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "reorder_2/output0"
+    data_type: Float32
+    shape {
+      dims: 32
+      dims: 128
+      layout: CN
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
   name: "lstm0:step1:mm_f"
   op: InnerProduct
   parents: "lstm0:unstack:squeeze_1"
-  parents: "reorder"
-  children: "lstm0:step1:add_z"
+  parents: "reorder_2"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -889,11 +875,36 @@ nodes {
   }
 }
 nodes {
+  name: "reorder_3"
+  op: Reorder
+  parents: "data_1"
+  src_tensors_indices: 0
+  input_tensors {
+    name: "data_1/output0"
+    data_type: Float32
+    shape {
+      dims: 128
+      dims: 32
+      layout: NC
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "reorder_3/output0"
+    data_type: Float32
+    shape {
+      dims: 32
+      dims: 128
+      layout: CN
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
   name: "mm_u_1"
   op: InnerProduct
   parents: "lstm0:step0:mul_h"
-  parents: "reorder_1"
-  children: "lstm0:step1:add_z"
+  parents: "reorder_3"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -934,7 +945,6 @@ nodes {
   op: EltwiseAdd
   parents: "lstm0:step1:mm_f"
   parents: "mm_u_1"
-  children: "split_1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -972,10 +982,6 @@ nodes {
   name: "split_1"
   op: Split
   parents: "lstm0:step1:add_z"
-  children: "lstm0:step1:sigmoid_i"
-  children: "lstm0:step1:sigmoid_f"
-  children: "lstm0:step1:act0"
-  children: "lstm0:step1:sigmoid_o"
   src_tensors_indices: 0
   input_tensors {
     name: "lstm0:step1:add_z/output0"
@@ -1037,7 +1043,6 @@ nodes {
   name: "lstm0:step1:sigmoid_i"
   op: Sigmoid
   parents: "split_1"
-  children: "lstm0:step1:mul_i"
   src_tensors_indices: 0
   input_tensors {
     name: "split_1/output0"
@@ -1064,7 +1069,6 @@ nodes {
   name: "lstm0:step1:sigmoid_f"
   op: Sigmoid
   parents: "split_1"
-  children: "lstm0:step1:mul_f"
   src_tensors_indices: 1
   input_tensors {
     name: "split_1/output1"
@@ -1092,7 +1096,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm0:step1:sigmoid_f"
   parents: "lstm0:step0:add_c"
-  children: "lstm0:step1:add_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1130,7 +1133,6 @@ nodes {
   name: "lstm0:step1:act0"
   op: Tanh
   parents: "split_1"
-  children: "lstm0:step1:mul_i"
   src_tensors_indices: 2
   input_tensors {
     name: "split_1/output2"
@@ -1158,7 +1160,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm0:step1:sigmoid_i"
   parents: "lstm0:step1:act0"
-  children: "lstm0:step1:add_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1197,8 +1198,6 @@ nodes {
   op: EltwiseAdd
   parents: "lstm0:step1:mul_f"
   parents: "lstm0:step1:mul_i"
-  children: "lstm0:step1:act1"
-  children: "lstm0:step2:mul_f"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1236,7 +1235,6 @@ nodes {
   name: "lstm0:step1:sigmoid_o"
   op: Sigmoid
   parents: "split_1"
-  children: "lstm0:step1:mul_h"
   src_tensors_indices: 3
   input_tensors {
     name: "split_1/output3"
@@ -1263,7 +1261,6 @@ nodes {
   name: "lstm0:step1:act1"
   op: Tanh
   parents: "lstm0:step1:add_c"
-  children: "lstm0:step1:mul_h"
   src_tensors_indices: 0
   input_tensors {
     name: "lstm0:step1:add_c/output0"
@@ -1291,8 +1288,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm0:step1:sigmoid_o"
   parents: "lstm0:step1:act1"
-  children: "mm_u_2"
-  children: "lstm1:step1:mm_f"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1327,11 +1322,36 @@ nodes {
   }
 }
 nodes {
+  name: "reorder_4"
+  op: Reorder
+  parents: "data"
+  src_tensors_indices: 0
+  input_tensors {
+    name: "data/output0"
+    data_type: Float32
+    shape {
+      dims: 128
+      dims: 32
+      layout: NC
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "reorder_4/output0"
+    data_type: Float32
+    shape {
+      dims: 32
+      dims: 128
+      layout: CN
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
   name: "lstm0:step2:mm_f"
   op: InnerProduct
   parents: "lstm0:unstack:squeeze_2"
-  parents: "reorder"
-  children: "lstm0:step2:add_z"
+  parents: "reorder_4"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1368,11 +1388,36 @@ nodes {
   }
 }
 nodes {
+  name: "reorder_5"
+  op: Reorder
+  parents: "data_1"
+  src_tensors_indices: 0
+  input_tensors {
+    name: "data_1/output0"
+    data_type: Float32
+    shape {
+      dims: 128
+      dims: 32
+      layout: NC
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "reorder_5/output0"
+    data_type: Float32
+    shape {
+      dims: 32
+      dims: 128
+      layout: CN
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
   name: "mm_u_2"
   op: InnerProduct
   parents: "lstm0:step1:mul_h"
-  parents: "reorder_1"
-  children: "lstm0:step2:add_z"
+  parents: "reorder_5"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1413,7 +1458,6 @@ nodes {
   op: EltwiseAdd
   parents: "lstm0:step2:mm_f"
   parents: "mm_u_2"
-  children: "split_2"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1451,10 +1495,6 @@ nodes {
   name: "split_2"
   op: Split
   parents: "lstm0:step2:add_z"
-  children: "lstm0:step2:sigmoid_i"
-  children: "lstm0:step2:sigmoid_f"
-  children: "lstm0:step2:act0"
-  children: "lstm0:step2:sigmoid_o"
   src_tensors_indices: 0
   input_tensors {
     name: "lstm0:step2:add_z/output0"
@@ -1516,7 +1556,6 @@ nodes {
   name: "lstm0:step2:sigmoid_i"
   op: Sigmoid
   parents: "split_2"
-  children: "lstm0:step2:mul_i"
   src_tensors_indices: 0
   input_tensors {
     name: "split_2/output0"
@@ -1543,7 +1582,6 @@ nodes {
   name: "lstm0:step2:sigmoid_f"
   op: Sigmoid
   parents: "split_2"
-  children: "lstm0:step2:mul_f"
   src_tensors_indices: 1
   input_tensors {
     name: "split_2/output1"
@@ -1571,7 +1609,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm0:step2:sigmoid_f"
   parents: "lstm0:step1:add_c"
-  children: "lstm0:step2:add_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1609,7 +1646,6 @@ nodes {
   name: "lstm0:step2:act0"
   op: Tanh
   parents: "split_2"
-  children: "lstm0:step2:mul_i"
   src_tensors_indices: 2
   input_tensors {
     name: "split_2/output2"
@@ -1637,7 +1673,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm0:step2:sigmoid_i"
   parents: "lstm0:step2:act0"
-  children: "lstm0:step2:add_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1676,8 +1711,6 @@ nodes {
   op: EltwiseAdd
   parents: "lstm0:step2:mul_f"
   parents: "lstm0:step2:mul_i"
-  children: "lstm0:step2:act1"
-  children: "lstm0:step3:mul_f"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1715,7 +1748,6 @@ nodes {
   name: "lstm0:step2:sigmoid_o"
   op: Sigmoid
   parents: "split_2"
-  children: "lstm0:step2:mul_h"
   src_tensors_indices: 3
   input_tensors {
     name: "split_2/output3"
@@ -1742,7 +1774,6 @@ nodes {
   name: "lstm0:step2:act1"
   op: Tanh
   parents: "lstm0:step2:add_c"
-  children: "lstm0:step2:mul_h"
   src_tensors_indices: 0
   input_tensors {
     name: "lstm0:step2:add_c/output0"
@@ -1770,8 +1801,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm0:step2:sigmoid_o"
   parents: "lstm0:step2:act1"
-  children: "mm_u_3"
-  children: "lstm1:step2:mm_f"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1806,11 +1835,36 @@ nodes {
   }
 }
 nodes {
+  name: "reorder_6"
+  op: Reorder
+  parents: "data"
+  src_tensors_indices: 0
+  input_tensors {
+    name: "data/output0"
+    data_type: Float32
+    shape {
+      dims: 128
+      dims: 32
+      layout: NC
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "reorder_6/output0"
+    data_type: Float32
+    shape {
+      dims: 32
+      dims: 128
+      layout: CN
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
   name: "lstm0:step3:mm_f"
   op: InnerProduct
   parents: "lstm0:unstack:squeeze_3"
-  parents: "reorder"
-  children: "lstm0:step3:add_z"
+  parents: "reorder_6"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1847,11 +1901,36 @@ nodes {
   }
 }
 nodes {
+  name: "reorder_7"
+  op: Reorder
+  parents: "data_1"
+  src_tensors_indices: 0
+  input_tensors {
+    name: "data_1/output0"
+    data_type: Float32
+    shape {
+      dims: 128
+      dims: 32
+      layout: NC
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "reorder_7/output0"
+    data_type: Float32
+    shape {
+      dims: 32
+      dims: 128
+      layout: CN
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
   name: "mm_u_3"
   op: InnerProduct
   parents: "lstm0:step2:mul_h"
-  parents: "reorder_1"
-  children: "lstm0:step3:add_z"
+  parents: "reorder_7"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1892,7 +1971,6 @@ nodes {
   op: EltwiseAdd
   parents: "lstm0:step3:mm_f"
   parents: "mm_u_3"
-  children: "split_3"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1930,10 +2008,6 @@ nodes {
   name: "split_3"
   op: Split
   parents: "lstm0:step3:add_z"
-  children: "lstm0:step3:sigmoid_i"
-  children: "lstm0:step3:sigmoid_f"
-  children: "lstm0:step3:act0"
-  children: "lstm0:step3:sigmoid_o"
   src_tensors_indices: 0
   input_tensors {
     name: "lstm0:step3:add_z/output0"
@@ -1995,7 +2069,6 @@ nodes {
   name: "lstm0:step3:sigmoid_i"
   op: Sigmoid
   parents: "split_3"
-  children: "lstm0:step3:mul_i"
   src_tensors_indices: 0
   input_tensors {
     name: "split_3/output0"
@@ -2022,7 +2095,6 @@ nodes {
   name: "lstm0:step3:sigmoid_f"
   op: Sigmoid
   parents: "split_3"
-  children: "lstm0:step3:mul_f"
   src_tensors_indices: 1
   input_tensors {
     name: "split_3/output1"
@@ -2050,7 +2122,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm0:step3:sigmoid_f"
   parents: "lstm0:step2:add_c"
-  children: "lstm0:step3:add_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2088,7 +2159,6 @@ nodes {
   name: "lstm0:step3:act0"
   op: Tanh
   parents: "split_3"
-  children: "lstm0:step3:mul_i"
   src_tensors_indices: 2
   input_tensors {
     name: "split_3/output2"
@@ -2116,7 +2186,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm0:step3:sigmoid_i"
   parents: "lstm0:step3:act0"
-  children: "lstm0:step3:add_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2155,7 +2224,6 @@ nodes {
   op: EltwiseAdd
   parents: "lstm0:step3:mul_f"
   parents: "lstm0:step3:mul_i"
-  children: "lstm0:step3:act1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2193,7 +2261,6 @@ nodes {
   name: "lstm0:step3:sigmoid_o"
   op: Sigmoid
   parents: "split_3"
-  children: "lstm0:step3:mul_h"
   src_tensors_indices: 3
   input_tensors {
     name: "split_3/output3"
@@ -2220,7 +2287,6 @@ nodes {
   name: "lstm0:step3:act1"
   op: Tanh
   parents: "lstm0:step3:add_c"
-  children: "lstm0:step3:mul_h"
   src_tensors_indices: 0
   input_tensors {
     name: "lstm0:step3:add_c/output0"
@@ -2248,7 +2314,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm0:step3:sigmoid_o"
   parents: "lstm0:step3:act1"
-  children: "lstm1:step3:mm_f"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2285,7 +2350,6 @@ nodes {
 nodes {
   name: "data_4"
   op: Data
-  children: "reorder_8"
   input_tensors {
     name: "data_4/input0"
     data_type: Float32
@@ -2311,10 +2375,6 @@ nodes {
   name: "reorder_8"
   op: Reorder
   parents: "data_4"
-  children: "lstm1:step0:mm_f"
-  children: "lstm1:step1:mm_f"
-  children: "lstm1:step2:mm_f"
-  children: "lstm1:step3:mm_f"
   src_tensors_indices: 0
   input_tensors {
     name: "data_4/output0"
@@ -2342,7 +2402,6 @@ nodes {
   op: InnerProduct
   parents: "lstm0:step0:mul_h"
   parents: "reorder_8"
-  children: "lstm1:step0:add_z"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2381,7 +2440,6 @@ nodes {
 nodes {
   name: "data_5"
   op: Data
-  children: "reorder_9"
   input_tensors {
     name: "data_5/input0"
     data_type: Float32
@@ -2407,10 +2465,6 @@ nodes {
   name: "reorder_9"
   op: Reorder
   parents: "data_5"
-  children: "mm_u_4"
-  children: "mm_u_5"
-  children: "mm_u_6"
-  children: "mm_u_7"
   src_tensors_indices: 0
   input_tensors {
     name: "data_5/output0"
@@ -2436,7 +2490,6 @@ nodes {
 nodes {
   name: "data_6"
   op: Data
-  children: "mm_u_4"
   input_tensors {
     name: "lstm1:/h"
     data_type: Float32
@@ -2463,7 +2516,6 @@ nodes {
   op: InnerProduct
   parents: "data_6"
   parents: "reorder_9"
-  children: "lstm1:step0:add_z"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2504,7 +2556,6 @@ nodes {
   op: EltwiseAdd
   parents: "lstm1:step0:mm_f"
   parents: "mm_u_4"
-  children: "split_4"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2542,10 +2593,6 @@ nodes {
   name: "split_4"
   op: Split
   parents: "lstm1:step0:add_z"
-  children: "lstm1:step0:sigmoid_i"
-  children: "lstm1:step0:sigmoid_f"
-  children: "lstm1:step0:act0"
-  children: "lstm1:step0:sigmoid_o"
   src_tensors_indices: 0
   input_tensors {
     name: "lstm1:step0:add_z/output0"
@@ -2607,7 +2654,6 @@ nodes {
   name: "lstm1:step0:sigmoid_i"
   op: Sigmoid
   parents: "split_4"
-  children: "lstm1:step0:mul_i"
   src_tensors_indices: 0
   input_tensors {
     name: "split_4/output0"
@@ -2634,7 +2680,6 @@ nodes {
   name: "lstm1:step0:sigmoid_f"
   op: Sigmoid
   parents: "split_4"
-  children: "lstm1:step0:mul_f"
   src_tensors_indices: 1
   input_tensors {
     name: "split_4/output1"
@@ -2660,7 +2705,6 @@ nodes {
 nodes {
   name: "data_7"
   op: Data
-  children: "lstm1:step0:mul_f"
   input_tensors {
     name: "lstm1:/c"
     data_type: Float32
@@ -2687,7 +2731,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm1:step0:sigmoid_f"
   parents: "data_7"
-  children: "lstm1:step0:add_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2725,7 +2768,6 @@ nodes {
   name: "lstm1:step0:act0"
   op: Tanh
   parents: "split_4"
-  children: "lstm1:step0:mul_i"
   src_tensors_indices: 2
   input_tensors {
     name: "split_4/output2"
@@ -2753,7 +2795,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm1:step0:sigmoid_i"
   parents: "lstm1:step0:act0"
-  children: "lstm1:step0:add_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2792,8 +2833,6 @@ nodes {
   op: EltwiseAdd
   parents: "lstm1:step0:mul_f"
   parents: "lstm1:step0:mul_i"
-  children: "lstm1:step0:act1"
-  children: "lstm1:step1:mul_f"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2831,7 +2870,6 @@ nodes {
   name: "lstm1:step0:sigmoid_o"
   op: Sigmoid
   parents: "split_4"
-  children: "lstm1:step0:mul_h"
   src_tensors_indices: 3
   input_tensors {
     name: "split_4/output3"
@@ -2858,7 +2896,6 @@ nodes {
   name: "lstm1:step0:act1"
   op: Tanh
   parents: "lstm1:step0:add_c"
-  children: "lstm1:step0:mul_h"
   src_tensors_indices: 0
   input_tensors {
     name: "lstm1:step0:add_c/output0"
@@ -2886,7 +2923,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm1:step0:sigmoid_o"
   parents: "lstm1:step0:act1"
-  children: "mm_u_5"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2921,11 +2957,36 @@ nodes {
   }
 }
 nodes {
+  name: "reorder_10"
+  op: Reorder
+  parents: "data_4"
+  src_tensors_indices: 0
+  input_tensors {
+    name: "data_4/output0"
+    data_type: Float32
+    shape {
+      dims: 128
+      dims: 32
+      layout: NC
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "reorder_10/output0"
+    data_type: Float32
+    shape {
+      dims: 32
+      dims: 128
+      layout: CN
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
   name: "lstm1:step1:mm_f"
   op: InnerProduct
   parents: "lstm0:step1:mul_h"
-  parents: "reorder_8"
-  children: "lstm1:step1:add_z"
+  parents: "reorder_10"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2962,11 +3023,36 @@ nodes {
   }
 }
 nodes {
+  name: "reorder_11"
+  op: Reorder
+  parents: "data_5"
+  src_tensors_indices: 0
+  input_tensors {
+    name: "data_5/output0"
+    data_type: Float32
+    shape {
+      dims: 128
+      dims: 32
+      layout: NC
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "reorder_11/output0"
+    data_type: Float32
+    shape {
+      dims: 32
+      dims: 128
+      layout: CN
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
   name: "mm_u_5"
   op: InnerProduct
   parents: "lstm1:step0:mul_h"
-  parents: "reorder_9"
-  children: "lstm1:step1:add_z"
+  parents: "reorder_11"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3007,7 +3093,6 @@ nodes {
   op: EltwiseAdd
   parents: "lstm1:step1:mm_f"
   parents: "mm_u_5"
-  children: "split_5"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3045,10 +3130,6 @@ nodes {
   name: "split_5"
   op: Split
   parents: "lstm1:step1:add_z"
-  children: "lstm1:step1:sigmoid_i"
-  children: "lstm1:step1:sigmoid_f"
-  children: "lstm1:step1:act0"
-  children: "lstm1:step1:sigmoid_o"
   src_tensors_indices: 0
   input_tensors {
     name: "lstm1:step1:add_z/output0"
@@ -3110,7 +3191,6 @@ nodes {
   name: "lstm1:step1:sigmoid_i"
   op: Sigmoid
   parents: "split_5"
-  children: "lstm1:step1:mul_i"
   src_tensors_indices: 0
   input_tensors {
     name: "split_5/output0"
@@ -3137,7 +3217,6 @@ nodes {
   name: "lstm1:step1:sigmoid_f"
   op: Sigmoid
   parents: "split_5"
-  children: "lstm1:step1:mul_f"
   src_tensors_indices: 1
   input_tensors {
     name: "split_5/output1"
@@ -3165,7 +3244,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm1:step1:sigmoid_f"
   parents: "lstm1:step0:add_c"
-  children: "lstm1:step1:add_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3203,7 +3281,6 @@ nodes {
   name: "lstm1:step1:act0"
   op: Tanh
   parents: "split_5"
-  children: "lstm1:step1:mul_i"
   src_tensors_indices: 2
   input_tensors {
     name: "split_5/output2"
@@ -3231,7 +3308,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm1:step1:sigmoid_i"
   parents: "lstm1:step1:act0"
-  children: "lstm1:step1:add_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3270,8 +3346,6 @@ nodes {
   op: EltwiseAdd
   parents: "lstm1:step1:mul_f"
   parents: "lstm1:step1:mul_i"
-  children: "lstm1:step1:act1"
-  children: "lstm1:step2:mul_f"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3309,7 +3383,6 @@ nodes {
   name: "lstm1:step1:sigmoid_o"
   op: Sigmoid
   parents: "split_5"
-  children: "lstm1:step1:mul_h"
   src_tensors_indices: 3
   input_tensors {
     name: "split_5/output3"
@@ -3336,7 +3409,6 @@ nodes {
   name: "lstm1:step1:act1"
   op: Tanh
   parents: "lstm1:step1:add_c"
-  children: "lstm1:step1:mul_h"
   src_tensors_indices: 0
   input_tensors {
     name: "lstm1:step1:add_c/output0"
@@ -3364,7 +3436,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm1:step1:sigmoid_o"
   parents: "lstm1:step1:act1"
-  children: "mm_u_6"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3399,11 +3470,36 @@ nodes {
   }
 }
 nodes {
+  name: "reorder_12"
+  op: Reorder
+  parents: "data_4"
+  src_tensors_indices: 0
+  input_tensors {
+    name: "data_4/output0"
+    data_type: Float32
+    shape {
+      dims: 128
+      dims: 32
+      layout: NC
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "reorder_12/output0"
+    data_type: Float32
+    shape {
+      dims: 32
+      dims: 128
+      layout: CN
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
   name: "lstm1:step2:mm_f"
   op: InnerProduct
   parents: "lstm0:step2:mul_h"
-  parents: "reorder_8"
-  children: "lstm1:step2:add_z"
+  parents: "reorder_12"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3440,11 +3536,36 @@ nodes {
   }
 }
 nodes {
+  name: "reorder_13"
+  op: Reorder
+  parents: "data_5"
+  src_tensors_indices: 0
+  input_tensors {
+    name: "data_5/output0"
+    data_type: Float32
+    shape {
+      dims: 128
+      dims: 32
+      layout: NC
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "reorder_13/output0"
+    data_type: Float32
+    shape {
+      dims: 32
+      dims: 128
+      layout: CN
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
   name: "mm_u_6"
   op: InnerProduct
   parents: "lstm1:step1:mul_h"
-  parents: "reorder_9"
-  children: "lstm1:step2:add_z"
+  parents: "reorder_13"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3485,7 +3606,6 @@ nodes {
   op: EltwiseAdd
   parents: "lstm1:step2:mm_f"
   parents: "mm_u_6"
-  children: "split_6"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3523,10 +3643,6 @@ nodes {
   name: "split_6"
   op: Split
   parents: "lstm1:step2:add_z"
-  children: "lstm1:step2:sigmoid_i"
-  children: "lstm1:step2:sigmoid_f"
-  children: "lstm1:step2:act0"
-  children: "lstm1:step2:sigmoid_o"
   src_tensors_indices: 0
   input_tensors {
     name: "lstm1:step2:add_z/output0"
@@ -3588,7 +3704,6 @@ nodes {
   name: "lstm1:step2:sigmoid_i"
   op: Sigmoid
   parents: "split_6"
-  children: "lstm1:step2:mul_i"
   src_tensors_indices: 0
   input_tensors {
     name: "split_6/output0"
@@ -3615,7 +3730,6 @@ nodes {
   name: "lstm1:step2:sigmoid_f"
   op: Sigmoid
   parents: "split_6"
-  children: "lstm1:step2:mul_f"
   src_tensors_indices: 1
   input_tensors {
     name: "split_6/output1"
@@ -3643,7 +3757,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm1:step2:sigmoid_f"
   parents: "lstm1:step1:add_c"
-  children: "lstm1:step2:add_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3681,7 +3794,6 @@ nodes {
   name: "lstm1:step2:act0"
   op: Tanh
   parents: "split_6"
-  children: "lstm1:step2:mul_i"
   src_tensors_indices: 2
   input_tensors {
     name: "split_6/output2"
@@ -3709,7 +3821,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm1:step2:sigmoid_i"
   parents: "lstm1:step2:act0"
-  children: "lstm1:step2:add_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3748,8 +3859,6 @@ nodes {
   op: EltwiseAdd
   parents: "lstm1:step2:mul_f"
   parents: "lstm1:step2:mul_i"
-  children: "lstm1:step2:act1"
-  children: "lstm1:step3:mul_f"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3787,7 +3896,6 @@ nodes {
   name: "lstm1:step2:sigmoid_o"
   op: Sigmoid
   parents: "split_6"
-  children: "lstm1:step2:mul_h"
   src_tensors_indices: 3
   input_tensors {
     name: "split_6/output3"
@@ -3814,7 +3922,6 @@ nodes {
   name: "lstm1:step2:act1"
   op: Tanh
   parents: "lstm1:step2:add_c"
-  children: "lstm1:step2:mul_h"
   src_tensors_indices: 0
   input_tensors {
     name: "lstm1:step2:add_c/output0"
@@ -3842,7 +3949,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm1:step2:sigmoid_o"
   parents: "lstm1:step2:act1"
-  children: "mm_u_7"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3877,11 +3983,36 @@ nodes {
   }
 }
 nodes {
+  name: "reorder_14"
+  op: Reorder
+  parents: "data_4"
+  src_tensors_indices: 0
+  input_tensors {
+    name: "data_4/output0"
+    data_type: Float32
+    shape {
+      dims: 128
+      dims: 32
+      layout: NC
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "reorder_14/output0"
+    data_type: Float32
+    shape {
+      dims: 32
+      dims: 128
+      layout: CN
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
   name: "lstm1:step3:mm_f"
   op: InnerProduct
   parents: "lstm0:step3:mul_h"
-  parents: "reorder_8"
-  children: "lstm1:step3:add_z"
+  parents: "reorder_14"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3918,11 +4049,36 @@ nodes {
   }
 }
 nodes {
+  name: "reorder_15"
+  op: Reorder
+  parents: "data_5"
+  src_tensors_indices: 0
+  input_tensors {
+    name: "data_5/output0"
+    data_type: Float32
+    shape {
+      dims: 128
+      dims: 32
+      layout: NC
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "reorder_15/output0"
+    data_type: Float32
+    shape {
+      dims: 32
+      dims: 128
+      layout: CN
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
   name: "mm_u_7"
   op: InnerProduct
   parents: "lstm1:step2:mul_h"
-  parents: "reorder_9"
-  children: "lstm1:step3:add_z"
+  parents: "reorder_15"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3963,7 +4119,6 @@ nodes {
   op: EltwiseAdd
   parents: "lstm1:step3:mm_f"
   parents: "mm_u_7"
-  children: "split_7"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -4001,10 +4156,6 @@ nodes {
   name: "split_7"
   op: Split
   parents: "lstm1:step3:add_z"
-  children: "lstm1:step3:sigmoid_i"
-  children: "lstm1:step3:sigmoid_f"
-  children: "lstm1:step3:act0"
-  children: "lstm1:step3:sigmoid_o"
   src_tensors_indices: 0
   input_tensors {
     name: "lstm1:step3:add_z/output0"
@@ -4066,7 +4217,6 @@ nodes {
   name: "lstm1:step3:sigmoid_i"
   op: Sigmoid
   parents: "split_7"
-  children: "lstm1:step3:mul_i"
   src_tensors_indices: 0
   input_tensors {
     name: "split_7/output0"
@@ -4093,7 +4243,6 @@ nodes {
   name: "lstm1:step3:sigmoid_f"
   op: Sigmoid
   parents: "split_7"
-  children: "lstm1:step3:mul_f"
   src_tensors_indices: 1
   input_tensors {
     name: "split_7/output1"
@@ -4121,7 +4270,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm1:step3:sigmoid_f"
   parents: "lstm1:step2:add_c"
-  children: "lstm1:step3:add_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -4159,7 +4307,6 @@ nodes {
   name: "lstm1:step3:act0"
   op: Tanh
   parents: "split_7"
-  children: "lstm1:step3:mul_i"
   src_tensors_indices: 2
   input_tensors {
     name: "split_7/output2"
@@ -4187,7 +4334,6 @@ nodes {
   op: EltwiseMul
   parents: "lstm1:step3:sigmoid_i"
   parents: "lstm1:step3:act0"
-  children: "lstm1:step3:add_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -4226,7 +4372,6 @@ nodes {
   op: EltwiseAdd
   parents: "lstm1:step3:mul_f"
   parents: "lstm1:step3:mul_i"
-  children: "lstm1:step3:act1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -4264,7 +4409,6 @@ nodes {
   name: "lstm1:step3:sigmoid_o"
   op: Sigmoid
   parents: "split_7"
-  children: "lstm1:step3:mul_h"
   src_tensors_indices: 3
   input_tensors {
     name: "split_7/output3"
@@ -4291,7 +4435,6 @@ nodes {
   name: "lstm1:step3:act1"
   op: Tanh
   parents: "lstm1:step3:add_c"
-  children: "lstm1:step3:mul_h"
   src_tensors_indices: 0
   input_tensors {
     name: "lstm1:step3:add_c/output0"
