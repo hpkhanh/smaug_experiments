@@ -2,7 +2,6 @@ name: "resnet_smv"
 nodes {
   name: "input"
   op: Data
-  children: "conv0"
   input_tensors {
     name: "input/input0"
     data_type: Float16
@@ -33,7 +32,6 @@ nodes {
 nodes {
   name: "data"
   op: Data
-  children: "conv0"
   input_tensors {
     name: "data/input0"
     data_type: Float16
@@ -66,7 +64,6 @@ nodes {
   op: Convolution3d
   parents: "input"
   parents: "data"
-  children: "bn0"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -119,7 +116,6 @@ nodes {
 nodes {
   name: "data_1"
   op: Data
-  children: "bn0"
   input_tensors {
     name: "data_1/input0"
     data_type: Float16
@@ -146,7 +142,6 @@ nodes {
 nodes {
   name: "data_2"
   op: Data
-  children: "bn0"
   input_tensors {
     name: "data_2/input0"
     data_type: Float16
@@ -173,7 +168,6 @@ nodes {
 nodes {
   name: "data_3"
   op: Data
-  children: "bn0"
   input_tensors {
     name: "data_3/input0"
     data_type: Float16
@@ -200,7 +194,6 @@ nodes {
 nodes {
   name: "data_4"
   op: Data
-  children: "bn0"
   input_tensors {
     name: "data_4/input0"
     data_type: Float16
@@ -232,7 +225,6 @@ nodes {
   parents: "data_2"
   parents: "data_3"
   parents: "data_4"
-  children: "pool"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -318,8 +310,6 @@ nodes {
   name: "pool"
   op: MaxPooling
   parents: "bn0"
-  children: "res2a_2a"
-  children: "res2a_1"
   src_tensors_indices: 0
   input_tensors {
     name: "bn0/output0"
@@ -359,7 +349,6 @@ nodes {
 nodes {
   name: "data_5"
   op: Data
-  children: "res2a_2a"
   input_tensors {
     name: "data_5/input0"
     data_type: Float16
@@ -392,7 +381,6 @@ nodes {
   op: Convolution3d
   parents: "pool"
   parents: "data_5"
-  children: "batch_norm"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -445,7 +433,6 @@ nodes {
 nodes {
   name: "data_6"
   op: Data
-  children: "batch_norm"
   input_tensors {
     name: "data_6/input0"
     data_type: Float16
@@ -472,7 +459,6 @@ nodes {
 nodes {
   name: "data_7"
   op: Data
-  children: "batch_norm"
   input_tensors {
     name: "data_7/input0"
     data_type: Float16
@@ -499,7 +485,6 @@ nodes {
 nodes {
   name: "data_8"
   op: Data
-  children: "batch_norm"
   input_tensors {
     name: "data_8/input0"
     data_type: Float16
@@ -526,7 +511,6 @@ nodes {
 nodes {
   name: "data_9"
   op: Data
-  children: "batch_norm"
   input_tensors {
     name: "data_9/input0"
     data_type: Float16
@@ -558,7 +542,6 @@ nodes {
   parents: "data_7"
   parents: "data_8"
   parents: "data_9"
-  children: "res2a_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -643,7 +626,6 @@ nodes {
 nodes {
   name: "data_10"
   op: Data
-  children: "res2a_2b"
   input_tensors {
     name: "data_10/input0"
     data_type: Float16
@@ -676,7 +658,6 @@ nodes {
   op: Convolution3d
   parents: "batch_norm"
   parents: "data_10"
-  children: "bn2a_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -729,7 +710,6 @@ nodes {
 nodes {
   name: "data_11"
   op: Data
-  children: "bn2a_2b"
   input_tensors {
     name: "data_11/input0"
     data_type: Float16
@@ -756,7 +736,6 @@ nodes {
 nodes {
   name: "data_12"
   op: Data
-  children: "bn2a_2b"
   input_tensors {
     name: "data_12/input0"
     data_type: Float16
@@ -783,7 +762,6 @@ nodes {
 nodes {
   name: "data_13"
   op: Data
-  children: "bn2a_2b"
   input_tensors {
     name: "data_13/input0"
     data_type: Float16
@@ -810,7 +788,6 @@ nodes {
 nodes {
   name: "data_14"
   op: Data
-  children: "bn2a_2b"
   input_tensors {
     name: "data_14/input0"
     data_type: Float16
@@ -842,7 +819,6 @@ nodes {
   parents: "data_12"
   parents: "data_13"
   parents: "data_14"
-  children: "res2a_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -927,7 +903,6 @@ nodes {
 nodes {
   name: "data_15"
   op: Data
-  children: "res2a_2c"
   input_tensors {
     name: "data_15/input0"
     data_type: Float16
@@ -960,7 +935,6 @@ nodes {
   op: Convolution3d
   parents: "bn2a_2b"
   parents: "data_15"
-  children: "bn2a_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1013,7 +987,6 @@ nodes {
 nodes {
   name: "data_16"
   op: Data
-  children: "bn2a_2c"
   input_tensors {
     name: "data_16/input0"
     data_type: Float16
@@ -1040,7 +1013,6 @@ nodes {
 nodes {
   name: "data_17"
   op: Data
-  children: "bn2a_2c"
   input_tensors {
     name: "data_17/input0"
     data_type: Float16
@@ -1067,7 +1039,6 @@ nodes {
 nodes {
   name: "data_18"
   op: Data
-  children: "bn2a_2c"
   input_tensors {
     name: "data_18/input0"
     data_type: Float16
@@ -1094,7 +1065,6 @@ nodes {
 nodes {
   name: "data_19"
   op: Data
-  children: "bn2a_2c"
   input_tensors {
     name: "data_19/input0"
     data_type: Float16
@@ -1126,7 +1096,6 @@ nodes {
   parents: "data_17"
   parents: "data_18"
   parents: "data_19"
-  children: "add2_a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -1208,7 +1177,6 @@ nodes {
 nodes {
   name: "data_20"
   op: Data
-  children: "res2a_1"
   input_tensors {
     name: "data_20/input0"
     data_type: Float16
@@ -1241,7 +1209,6 @@ nodes {
   op: Convolution3d
   parents: "pool"
   parents: "data_20"
-  children: "bn2a_1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1294,7 +1261,6 @@ nodes {
 nodes {
   name: "data_21"
   op: Data
-  children: "bn2a_1"
   input_tensors {
     name: "data_21/input0"
     data_type: Float16
@@ -1321,7 +1287,6 @@ nodes {
 nodes {
   name: "data_22"
   op: Data
-  children: "bn2a_1"
   input_tensors {
     name: "data_22/input0"
     data_type: Float16
@@ -1348,7 +1313,6 @@ nodes {
 nodes {
   name: "data_23"
   op: Data
-  children: "bn2a_1"
   input_tensors {
     name: "data_23/input0"
     data_type: Float16
@@ -1375,7 +1339,6 @@ nodes {
 nodes {
   name: "data_24"
   op: Data
-  children: "bn2a_1"
   input_tensors {
     name: "data_24/input0"
     data_type: Float16
@@ -1407,7 +1370,6 @@ nodes {
   parents: "data_22"
   parents: "data_23"
   parents: "data_24"
-  children: "add2_a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -1491,7 +1453,6 @@ nodes {
   op: EltwiseAdd
   parents: "bn2a_2c"
   parents: "bn2a_1"
-  children: "relu2_a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1538,8 +1499,6 @@ nodes {
   name: "relu2_a"
   op: ReLU
   parents: "add2_a"
-  children: "res2b_2a"
-  children: "add2_b"
   src_tensors_indices: 0
   input_tensors {
     name: "add2_a/output0"
@@ -1571,7 +1530,6 @@ nodes {
 nodes {
   name: "data_25"
   op: Data
-  children: "res2b_2a"
   input_tensors {
     name: "data_25/input0"
     data_type: Float16
@@ -1604,7 +1562,6 @@ nodes {
   op: Convolution3d
   parents: "relu2_a"
   parents: "data_25"
-  children: "bn2b_2a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1657,7 +1614,6 @@ nodes {
 nodes {
   name: "data_26"
   op: Data
-  children: "bn2b_2a"
   input_tensors {
     name: "data_26/input0"
     data_type: Float16
@@ -1684,7 +1640,6 @@ nodes {
 nodes {
   name: "data_27"
   op: Data
-  children: "bn2b_2a"
   input_tensors {
     name: "data_27/input0"
     data_type: Float16
@@ -1711,7 +1666,6 @@ nodes {
 nodes {
   name: "data_28"
   op: Data
-  children: "bn2b_2a"
   input_tensors {
     name: "data_28/input0"
     data_type: Float16
@@ -1738,7 +1692,6 @@ nodes {
 nodes {
   name: "data_29"
   op: Data
-  children: "bn2b_2a"
   input_tensors {
     name: "data_29/input0"
     data_type: Float16
@@ -1770,7 +1723,6 @@ nodes {
   parents: "data_27"
   parents: "data_28"
   parents: "data_29"
-  children: "res2b_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -1855,7 +1807,6 @@ nodes {
 nodes {
   name: "data_30"
   op: Data
-  children: "res2b_2b"
   input_tensors {
     name: "data_30/input0"
     data_type: Float16
@@ -1888,7 +1839,6 @@ nodes {
   op: Convolution3d
   parents: "bn2b_2a"
   parents: "data_30"
-  children: "bn2b_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1941,7 +1891,6 @@ nodes {
 nodes {
   name: "data_31"
   op: Data
-  children: "bn2b_2b"
   input_tensors {
     name: "data_31/input0"
     data_type: Float16
@@ -1968,7 +1917,6 @@ nodes {
 nodes {
   name: "data_32"
   op: Data
-  children: "bn2b_2b"
   input_tensors {
     name: "data_32/input0"
     data_type: Float16
@@ -1995,7 +1943,6 @@ nodes {
 nodes {
   name: "data_33"
   op: Data
-  children: "bn2b_2b"
   input_tensors {
     name: "data_33/input0"
     data_type: Float16
@@ -2022,7 +1969,6 @@ nodes {
 nodes {
   name: "data_34"
   op: Data
-  children: "bn2b_2b"
   input_tensors {
     name: "data_34/input0"
     data_type: Float16
@@ -2054,7 +2000,6 @@ nodes {
   parents: "data_32"
   parents: "data_33"
   parents: "data_34"
-  children: "res2b_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -2139,7 +2084,6 @@ nodes {
 nodes {
   name: "data_35"
   op: Data
-  children: "res2b_2c"
   input_tensors {
     name: "data_35/input0"
     data_type: Float16
@@ -2172,7 +2116,6 @@ nodes {
   op: Convolution3d
   parents: "bn2b_2b"
   parents: "data_35"
-  children: "bn2b_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2225,7 +2168,6 @@ nodes {
 nodes {
   name: "data_36"
   op: Data
-  children: "bn2b_2c"
   input_tensors {
     name: "data_36/input0"
     data_type: Float16
@@ -2252,7 +2194,6 @@ nodes {
 nodes {
   name: "data_37"
   op: Data
-  children: "bn2b_2c"
   input_tensors {
     name: "data_37/input0"
     data_type: Float16
@@ -2279,7 +2220,6 @@ nodes {
 nodes {
   name: "data_38"
   op: Data
-  children: "bn2b_2c"
   input_tensors {
     name: "data_38/input0"
     data_type: Float16
@@ -2306,7 +2246,6 @@ nodes {
 nodes {
   name: "data_39"
   op: Data
-  children: "bn2b_2c"
   input_tensors {
     name: "data_39/input0"
     data_type: Float16
@@ -2338,7 +2277,6 @@ nodes {
   parents: "data_37"
   parents: "data_38"
   parents: "data_39"
-  children: "add2_b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -2422,7 +2360,6 @@ nodes {
   op: EltwiseAdd
   parents: "bn2b_2c"
   parents: "relu2_a"
-  children: "relu2_b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2469,8 +2406,6 @@ nodes {
   name: "relu2_b"
   op: ReLU
   parents: "add2_b"
-  children: "res2c_2a"
-  children: "add2_c"
   src_tensors_indices: 0
   input_tensors {
     name: "add2_b/output0"
@@ -2502,7 +2437,6 @@ nodes {
 nodes {
   name: "data_40"
   op: Data
-  children: "res2c_2a"
   input_tensors {
     name: "data_40/input0"
     data_type: Float16
@@ -2535,7 +2469,6 @@ nodes {
   op: Convolution3d
   parents: "relu2_b"
   parents: "data_40"
-  children: "bn2c_2a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2588,7 +2521,6 @@ nodes {
 nodes {
   name: "data_41"
   op: Data
-  children: "bn2c_2a"
   input_tensors {
     name: "data_41/input0"
     data_type: Float16
@@ -2615,7 +2547,6 @@ nodes {
 nodes {
   name: "data_42"
   op: Data
-  children: "bn2c_2a"
   input_tensors {
     name: "data_42/input0"
     data_type: Float16
@@ -2642,7 +2573,6 @@ nodes {
 nodes {
   name: "data_43"
   op: Data
-  children: "bn2c_2a"
   input_tensors {
     name: "data_43/input0"
     data_type: Float16
@@ -2669,7 +2599,6 @@ nodes {
 nodes {
   name: "data_44"
   op: Data
-  children: "bn2c_2a"
   input_tensors {
     name: "data_44/input0"
     data_type: Float16
@@ -2701,7 +2630,6 @@ nodes {
   parents: "data_42"
   parents: "data_43"
   parents: "data_44"
-  children: "res2c_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -2786,7 +2714,6 @@ nodes {
 nodes {
   name: "data_45"
   op: Data
-  children: "res2c_2b"
   input_tensors {
     name: "data_45/input0"
     data_type: Float16
@@ -2819,7 +2746,6 @@ nodes {
   op: Convolution3d
   parents: "bn2c_2a"
   parents: "data_45"
-  children: "bn2c_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -2872,7 +2798,6 @@ nodes {
 nodes {
   name: "data_46"
   op: Data
-  children: "bn2c_2b"
   input_tensors {
     name: "data_46/input0"
     data_type: Float16
@@ -2899,7 +2824,6 @@ nodes {
 nodes {
   name: "data_47"
   op: Data
-  children: "bn2c_2b"
   input_tensors {
     name: "data_47/input0"
     data_type: Float16
@@ -2926,7 +2850,6 @@ nodes {
 nodes {
   name: "data_48"
   op: Data
-  children: "bn2c_2b"
   input_tensors {
     name: "data_48/input0"
     data_type: Float16
@@ -2953,7 +2876,6 @@ nodes {
 nodes {
   name: "data_49"
   op: Data
-  children: "bn2c_2b"
   input_tensors {
     name: "data_49/input0"
     data_type: Float16
@@ -2985,7 +2907,6 @@ nodes {
   parents: "data_47"
   parents: "data_48"
   parents: "data_49"
-  children: "res2c_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -3070,7 +2991,6 @@ nodes {
 nodes {
   name: "data_50"
   op: Data
-  children: "res2c_2c"
   input_tensors {
     name: "data_50/input0"
     data_type: Float16
@@ -3103,7 +3023,6 @@ nodes {
   op: Convolution3d
   parents: "bn2c_2b"
   parents: "data_50"
-  children: "bn2c_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3156,7 +3075,6 @@ nodes {
 nodes {
   name: "data_51"
   op: Data
-  children: "bn2c_2c"
   input_tensors {
     name: "data_51/input0"
     data_type: Float16
@@ -3183,7 +3101,6 @@ nodes {
 nodes {
   name: "data_52"
   op: Data
-  children: "bn2c_2c"
   input_tensors {
     name: "data_52/input0"
     data_type: Float16
@@ -3210,7 +3127,6 @@ nodes {
 nodes {
   name: "data_53"
   op: Data
-  children: "bn2c_2c"
   input_tensors {
     name: "data_53/input0"
     data_type: Float16
@@ -3237,7 +3153,6 @@ nodes {
 nodes {
   name: "data_54"
   op: Data
-  children: "bn2c_2c"
   input_tensors {
     name: "data_54/input0"
     data_type: Float16
@@ -3269,7 +3184,6 @@ nodes {
   parents: "data_52"
   parents: "data_53"
   parents: "data_54"
-  children: "add2_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -3353,7 +3267,6 @@ nodes {
   op: EltwiseAdd
   parents: "bn2c_2c"
   parents: "relu2_b"
-  children: "relu2_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3400,8 +3313,6 @@ nodes {
   name: "relu2_c"
   op: ReLU
   parents: "add2_c"
-  children: "res3a_2a"
-  children: "res3a_1"
   src_tensors_indices: 0
   input_tensors {
     name: "add2_c/output0"
@@ -3433,7 +3344,6 @@ nodes {
 nodes {
   name: "data_55"
   op: Data
-  children: "res3a_2a"
   input_tensors {
     name: "data_55/input0"
     data_type: Float16
@@ -3466,7 +3376,6 @@ nodes {
   op: Convolution3d
   parents: "relu2_c"
   parents: "data_55"
-  children: "batch_norm_1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3519,7 +3428,6 @@ nodes {
 nodes {
   name: "data_56"
   op: Data
-  children: "batch_norm_1"
   input_tensors {
     name: "data_56/input0"
     data_type: Float16
@@ -3546,7 +3454,6 @@ nodes {
 nodes {
   name: "data_57"
   op: Data
-  children: "batch_norm_1"
   input_tensors {
     name: "data_57/input0"
     data_type: Float16
@@ -3573,7 +3480,6 @@ nodes {
 nodes {
   name: "data_58"
   op: Data
-  children: "batch_norm_1"
   input_tensors {
     name: "data_58/input0"
     data_type: Float16
@@ -3600,7 +3506,6 @@ nodes {
 nodes {
   name: "data_59"
   op: Data
-  children: "batch_norm_1"
   input_tensors {
     name: "data_59/input0"
     data_type: Float16
@@ -3632,7 +3537,6 @@ nodes {
   parents: "data_57"
   parents: "data_58"
   parents: "data_59"
-  children: "res3a_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -3717,7 +3621,6 @@ nodes {
 nodes {
   name: "data_60"
   op: Data
-  children: "res3a_2b"
   input_tensors {
     name: "data_60/input0"
     data_type: Float16
@@ -3750,7 +3653,6 @@ nodes {
   op: Convolution3d
   parents: "batch_norm_1"
   parents: "data_60"
-  children: "bn3a_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -3803,7 +3705,6 @@ nodes {
 nodes {
   name: "data_61"
   op: Data
-  children: "bn3a_2b"
   input_tensors {
     name: "data_61/input0"
     data_type: Float16
@@ -3830,7 +3731,6 @@ nodes {
 nodes {
   name: "data_62"
   op: Data
-  children: "bn3a_2b"
   input_tensors {
     name: "data_62/input0"
     data_type: Float16
@@ -3857,7 +3757,6 @@ nodes {
 nodes {
   name: "data_63"
   op: Data
-  children: "bn3a_2b"
   input_tensors {
     name: "data_63/input0"
     data_type: Float16
@@ -3884,7 +3783,6 @@ nodes {
 nodes {
   name: "data_64"
   op: Data
-  children: "bn3a_2b"
   input_tensors {
     name: "data_64/input0"
     data_type: Float16
@@ -3916,7 +3814,6 @@ nodes {
   parents: "data_62"
   parents: "data_63"
   parents: "data_64"
-  children: "res3a_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -4001,7 +3898,6 @@ nodes {
 nodes {
   name: "data_65"
   op: Data
-  children: "res3a_2c"
   input_tensors {
     name: "data_65/input0"
     data_type: Float16
@@ -4034,7 +3930,6 @@ nodes {
   op: Convolution3d
   parents: "bn3a_2b"
   parents: "data_65"
-  children: "bn3a_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -4087,7 +3982,6 @@ nodes {
 nodes {
   name: "data_66"
   op: Data
-  children: "bn3a_2c"
   input_tensors {
     name: "data_66/input0"
     data_type: Float16
@@ -4114,7 +4008,6 @@ nodes {
 nodes {
   name: "data_67"
   op: Data
-  children: "bn3a_2c"
   input_tensors {
     name: "data_67/input0"
     data_type: Float16
@@ -4141,7 +4034,6 @@ nodes {
 nodes {
   name: "data_68"
   op: Data
-  children: "bn3a_2c"
   input_tensors {
     name: "data_68/input0"
     data_type: Float16
@@ -4168,7 +4060,6 @@ nodes {
 nodes {
   name: "data_69"
   op: Data
-  children: "bn3a_2c"
   input_tensors {
     name: "data_69/input0"
     data_type: Float16
@@ -4200,7 +4091,6 @@ nodes {
   parents: "data_67"
   parents: "data_68"
   parents: "data_69"
-  children: "add3_a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -4282,7 +4172,6 @@ nodes {
 nodes {
   name: "data_70"
   op: Data
-  children: "res3a_1"
   input_tensors {
     name: "data_70/input0"
     data_type: Float16
@@ -4315,7 +4204,6 @@ nodes {
   op: Convolution3d
   parents: "relu2_c"
   parents: "data_70"
-  children: "bn3a_1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -4368,7 +4256,6 @@ nodes {
 nodes {
   name: "data_71"
   op: Data
-  children: "bn3a_1"
   input_tensors {
     name: "data_71/input0"
     data_type: Float16
@@ -4395,7 +4282,6 @@ nodes {
 nodes {
   name: "data_72"
   op: Data
-  children: "bn3a_1"
   input_tensors {
     name: "data_72/input0"
     data_type: Float16
@@ -4422,7 +4308,6 @@ nodes {
 nodes {
   name: "data_73"
   op: Data
-  children: "bn3a_1"
   input_tensors {
     name: "data_73/input0"
     data_type: Float16
@@ -4449,7 +4334,6 @@ nodes {
 nodes {
   name: "data_74"
   op: Data
-  children: "bn3a_1"
   input_tensors {
     name: "data_74/input0"
     data_type: Float16
@@ -4481,7 +4365,6 @@ nodes {
   parents: "data_72"
   parents: "data_73"
   parents: "data_74"
-  children: "add3_a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -4565,7 +4448,6 @@ nodes {
   op: EltwiseAdd
   parents: "bn3a_2c"
   parents: "bn3a_1"
-  children: "relu3_a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -4612,8 +4494,6 @@ nodes {
   name: "relu3_a"
   op: ReLU
   parents: "add3_a"
-  children: "res3b_2a"
-  children: "add3_b"
   src_tensors_indices: 0
   input_tensors {
     name: "add3_a/output0"
@@ -4645,7 +4525,6 @@ nodes {
 nodes {
   name: "data_75"
   op: Data
-  children: "res3b_2a"
   input_tensors {
     name: "data_75/input0"
     data_type: Float16
@@ -4678,7 +4557,6 @@ nodes {
   op: Convolution3d
   parents: "relu3_a"
   parents: "data_75"
-  children: "bn3b_2a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -4731,7 +4609,6 @@ nodes {
 nodes {
   name: "data_76"
   op: Data
-  children: "bn3b_2a"
   input_tensors {
     name: "data_76/input0"
     data_type: Float16
@@ -4758,7 +4635,6 @@ nodes {
 nodes {
   name: "data_77"
   op: Data
-  children: "bn3b_2a"
   input_tensors {
     name: "data_77/input0"
     data_type: Float16
@@ -4785,7 +4661,6 @@ nodes {
 nodes {
   name: "data_78"
   op: Data
-  children: "bn3b_2a"
   input_tensors {
     name: "data_78/input0"
     data_type: Float16
@@ -4812,7 +4687,6 @@ nodes {
 nodes {
   name: "data_79"
   op: Data
-  children: "bn3b_2a"
   input_tensors {
     name: "data_79/input0"
     data_type: Float16
@@ -4844,7 +4718,6 @@ nodes {
   parents: "data_77"
   parents: "data_78"
   parents: "data_79"
-  children: "res3b_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -4929,7 +4802,6 @@ nodes {
 nodes {
   name: "data_80"
   op: Data
-  children: "res3b_2b"
   input_tensors {
     name: "data_80/input0"
     data_type: Float16
@@ -4962,7 +4834,6 @@ nodes {
   op: Convolution3d
   parents: "bn3b_2a"
   parents: "data_80"
-  children: "bn3b_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -5015,7 +4886,6 @@ nodes {
 nodes {
   name: "data_81"
   op: Data
-  children: "bn3b_2b"
   input_tensors {
     name: "data_81/input0"
     data_type: Float16
@@ -5042,7 +4912,6 @@ nodes {
 nodes {
   name: "data_82"
   op: Data
-  children: "bn3b_2b"
   input_tensors {
     name: "data_82/input0"
     data_type: Float16
@@ -5069,7 +4938,6 @@ nodes {
 nodes {
   name: "data_83"
   op: Data
-  children: "bn3b_2b"
   input_tensors {
     name: "data_83/input0"
     data_type: Float16
@@ -5096,7 +4964,6 @@ nodes {
 nodes {
   name: "data_84"
   op: Data
-  children: "bn3b_2b"
   input_tensors {
     name: "data_84/input0"
     data_type: Float16
@@ -5128,7 +4995,6 @@ nodes {
   parents: "data_82"
   parents: "data_83"
   parents: "data_84"
-  children: "res3b_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -5213,7 +5079,6 @@ nodes {
 nodes {
   name: "data_85"
   op: Data
-  children: "res3b_2c"
   input_tensors {
     name: "data_85/input0"
     data_type: Float16
@@ -5246,7 +5111,6 @@ nodes {
   op: Convolution3d
   parents: "bn3b_2b"
   parents: "data_85"
-  children: "bn3b_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -5299,7 +5163,6 @@ nodes {
 nodes {
   name: "data_86"
   op: Data
-  children: "bn3b_2c"
   input_tensors {
     name: "data_86/input0"
     data_type: Float16
@@ -5326,7 +5189,6 @@ nodes {
 nodes {
   name: "data_87"
   op: Data
-  children: "bn3b_2c"
   input_tensors {
     name: "data_87/input0"
     data_type: Float16
@@ -5353,7 +5215,6 @@ nodes {
 nodes {
   name: "data_88"
   op: Data
-  children: "bn3b_2c"
   input_tensors {
     name: "data_88/input0"
     data_type: Float16
@@ -5380,7 +5241,6 @@ nodes {
 nodes {
   name: "data_89"
   op: Data
-  children: "bn3b_2c"
   input_tensors {
     name: "data_89/input0"
     data_type: Float16
@@ -5412,7 +5272,6 @@ nodes {
   parents: "data_87"
   parents: "data_88"
   parents: "data_89"
-  children: "add3_b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -5496,7 +5355,6 @@ nodes {
   op: EltwiseAdd
   parents: "bn3b_2c"
   parents: "relu3_a"
-  children: "relu3_b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -5543,8 +5401,6 @@ nodes {
   name: "relu3_b"
   op: ReLU
   parents: "add3_b"
-  children: "res3c_2a"
-  children: "add3_c"
   src_tensors_indices: 0
   input_tensors {
     name: "add3_b/output0"
@@ -5576,7 +5432,6 @@ nodes {
 nodes {
   name: "data_90"
   op: Data
-  children: "res3c_2a"
   input_tensors {
     name: "data_90/input0"
     data_type: Float16
@@ -5609,7 +5464,6 @@ nodes {
   op: Convolution3d
   parents: "relu3_b"
   parents: "data_90"
-  children: "bn3c_2a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -5662,7 +5516,6 @@ nodes {
 nodes {
   name: "data_91"
   op: Data
-  children: "bn3c_2a"
   input_tensors {
     name: "data_91/input0"
     data_type: Float16
@@ -5689,7 +5542,6 @@ nodes {
 nodes {
   name: "data_92"
   op: Data
-  children: "bn3c_2a"
   input_tensors {
     name: "data_92/input0"
     data_type: Float16
@@ -5716,7 +5568,6 @@ nodes {
 nodes {
   name: "data_93"
   op: Data
-  children: "bn3c_2a"
   input_tensors {
     name: "data_93/input0"
     data_type: Float16
@@ -5743,7 +5594,6 @@ nodes {
 nodes {
   name: "data_94"
   op: Data
-  children: "bn3c_2a"
   input_tensors {
     name: "data_94/input0"
     data_type: Float16
@@ -5775,7 +5625,6 @@ nodes {
   parents: "data_92"
   parents: "data_93"
   parents: "data_94"
-  children: "res3c_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -5860,7 +5709,6 @@ nodes {
 nodes {
   name: "data_95"
   op: Data
-  children: "res3c_2b"
   input_tensors {
     name: "data_95/input0"
     data_type: Float16
@@ -5893,7 +5741,6 @@ nodes {
   op: Convolution3d
   parents: "bn3c_2a"
   parents: "data_95"
-  children: "bn3c_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -5946,7 +5793,6 @@ nodes {
 nodes {
   name: "data_96"
   op: Data
-  children: "bn3c_2b"
   input_tensors {
     name: "data_96/input0"
     data_type: Float16
@@ -5973,7 +5819,6 @@ nodes {
 nodes {
   name: "data_97"
   op: Data
-  children: "bn3c_2b"
   input_tensors {
     name: "data_97/input0"
     data_type: Float16
@@ -6000,7 +5845,6 @@ nodes {
 nodes {
   name: "data_98"
   op: Data
-  children: "bn3c_2b"
   input_tensors {
     name: "data_98/input0"
     data_type: Float16
@@ -6027,7 +5871,6 @@ nodes {
 nodes {
   name: "data_99"
   op: Data
-  children: "bn3c_2b"
   input_tensors {
     name: "data_99/input0"
     data_type: Float16
@@ -6059,7 +5902,6 @@ nodes {
   parents: "data_97"
   parents: "data_98"
   parents: "data_99"
-  children: "res3c_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -6144,7 +5986,6 @@ nodes {
 nodes {
   name: "data_100"
   op: Data
-  children: "res3c_2c"
   input_tensors {
     name: "data_100/input0"
     data_type: Float16
@@ -6177,7 +6018,6 @@ nodes {
   op: Convolution3d
   parents: "bn3c_2b"
   parents: "data_100"
-  children: "bn3c_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -6230,7 +6070,6 @@ nodes {
 nodes {
   name: "data_101"
   op: Data
-  children: "bn3c_2c"
   input_tensors {
     name: "data_101/input0"
     data_type: Float16
@@ -6257,7 +6096,6 @@ nodes {
 nodes {
   name: "data_102"
   op: Data
-  children: "bn3c_2c"
   input_tensors {
     name: "data_102/input0"
     data_type: Float16
@@ -6284,7 +6122,6 @@ nodes {
 nodes {
   name: "data_103"
   op: Data
-  children: "bn3c_2c"
   input_tensors {
     name: "data_103/input0"
     data_type: Float16
@@ -6311,7 +6148,6 @@ nodes {
 nodes {
   name: "data_104"
   op: Data
-  children: "bn3c_2c"
   input_tensors {
     name: "data_104/input0"
     data_type: Float16
@@ -6343,7 +6179,6 @@ nodes {
   parents: "data_102"
   parents: "data_103"
   parents: "data_104"
-  children: "add3_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -6427,7 +6262,6 @@ nodes {
   op: EltwiseAdd
   parents: "bn3c_2c"
   parents: "relu3_b"
-  children: "relu3_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -6474,8 +6308,6 @@ nodes {
   name: "relu3_c"
   op: ReLU
   parents: "add3_c"
-  children: "res3d_2a"
-  children: "add3_d"
   src_tensors_indices: 0
   input_tensors {
     name: "add3_c/output0"
@@ -6507,7 +6339,6 @@ nodes {
 nodes {
   name: "data_105"
   op: Data
-  children: "res3d_2a"
   input_tensors {
     name: "data_105/input0"
     data_type: Float16
@@ -6540,7 +6371,6 @@ nodes {
   op: Convolution3d
   parents: "relu3_c"
   parents: "data_105"
-  children: "bn3d_2a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -6593,7 +6423,6 @@ nodes {
 nodes {
   name: "data_106"
   op: Data
-  children: "bn3d_2a"
   input_tensors {
     name: "data_106/input0"
     data_type: Float16
@@ -6620,7 +6449,6 @@ nodes {
 nodes {
   name: "data_107"
   op: Data
-  children: "bn3d_2a"
   input_tensors {
     name: "data_107/input0"
     data_type: Float16
@@ -6647,7 +6475,6 @@ nodes {
 nodes {
   name: "data_108"
   op: Data
-  children: "bn3d_2a"
   input_tensors {
     name: "data_108/input0"
     data_type: Float16
@@ -6674,7 +6501,6 @@ nodes {
 nodes {
   name: "data_109"
   op: Data
-  children: "bn3d_2a"
   input_tensors {
     name: "data_109/input0"
     data_type: Float16
@@ -6706,7 +6532,6 @@ nodes {
   parents: "data_107"
   parents: "data_108"
   parents: "data_109"
-  children: "res3d_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -6791,7 +6616,6 @@ nodes {
 nodes {
   name: "data_110"
   op: Data
-  children: "res3d_2b"
   input_tensors {
     name: "data_110/input0"
     data_type: Float16
@@ -6824,7 +6648,6 @@ nodes {
   op: Convolution3d
   parents: "bn3d_2a"
   parents: "data_110"
-  children: "bn3d_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -6877,7 +6700,6 @@ nodes {
 nodes {
   name: "data_111"
   op: Data
-  children: "bn3d_2b"
   input_tensors {
     name: "data_111/input0"
     data_type: Float16
@@ -6904,7 +6726,6 @@ nodes {
 nodes {
   name: "data_112"
   op: Data
-  children: "bn3d_2b"
   input_tensors {
     name: "data_112/input0"
     data_type: Float16
@@ -6931,7 +6752,6 @@ nodes {
 nodes {
   name: "data_113"
   op: Data
-  children: "bn3d_2b"
   input_tensors {
     name: "data_113/input0"
     data_type: Float16
@@ -6958,7 +6778,6 @@ nodes {
 nodes {
   name: "data_114"
   op: Data
-  children: "bn3d_2b"
   input_tensors {
     name: "data_114/input0"
     data_type: Float16
@@ -6990,7 +6809,6 @@ nodes {
   parents: "data_112"
   parents: "data_113"
   parents: "data_114"
-  children: "res3d_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -7075,7 +6893,6 @@ nodes {
 nodes {
   name: "data_115"
   op: Data
-  children: "res3d_2c"
   input_tensors {
     name: "data_115/input0"
     data_type: Float16
@@ -7108,7 +6925,6 @@ nodes {
   op: Convolution3d
   parents: "bn3d_2b"
   parents: "data_115"
-  children: "bn3d_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -7161,7 +6977,6 @@ nodes {
 nodes {
   name: "data_116"
   op: Data
-  children: "bn3d_2c"
   input_tensors {
     name: "data_116/input0"
     data_type: Float16
@@ -7188,7 +7003,6 @@ nodes {
 nodes {
   name: "data_117"
   op: Data
-  children: "bn3d_2c"
   input_tensors {
     name: "data_117/input0"
     data_type: Float16
@@ -7215,7 +7029,6 @@ nodes {
 nodes {
   name: "data_118"
   op: Data
-  children: "bn3d_2c"
   input_tensors {
     name: "data_118/input0"
     data_type: Float16
@@ -7242,7 +7055,6 @@ nodes {
 nodes {
   name: "data_119"
   op: Data
-  children: "bn3d_2c"
   input_tensors {
     name: "data_119/input0"
     data_type: Float16
@@ -7274,7 +7086,6 @@ nodes {
   parents: "data_117"
   parents: "data_118"
   parents: "data_119"
-  children: "add3_d"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -7358,7 +7169,6 @@ nodes {
   op: EltwiseAdd
   parents: "bn3d_2c"
   parents: "relu3_c"
-  children: "relu3_d"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -7405,8 +7215,6 @@ nodes {
   name: "relu3_d"
   op: ReLU
   parents: "add3_d"
-  children: "res4a_2a"
-  children: "res4a_1"
   src_tensors_indices: 0
   input_tensors {
     name: "add3_d/output0"
@@ -7438,7 +7246,6 @@ nodes {
 nodes {
   name: "data_120"
   op: Data
-  children: "res4a_2a"
   input_tensors {
     name: "data_120/input0"
     data_type: Float16
@@ -7471,7 +7278,6 @@ nodes {
   op: Convolution3d
   parents: "relu3_d"
   parents: "data_120"
-  children: "batch_norm_2"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -7524,7 +7330,6 @@ nodes {
 nodes {
   name: "data_121"
   op: Data
-  children: "batch_norm_2"
   input_tensors {
     name: "data_121/input0"
     data_type: Float16
@@ -7551,7 +7356,6 @@ nodes {
 nodes {
   name: "data_122"
   op: Data
-  children: "batch_norm_2"
   input_tensors {
     name: "data_122/input0"
     data_type: Float16
@@ -7578,7 +7382,6 @@ nodes {
 nodes {
   name: "data_123"
   op: Data
-  children: "batch_norm_2"
   input_tensors {
     name: "data_123/input0"
     data_type: Float16
@@ -7605,7 +7408,6 @@ nodes {
 nodes {
   name: "data_124"
   op: Data
-  children: "batch_norm_2"
   input_tensors {
     name: "data_124/input0"
     data_type: Float16
@@ -7637,7 +7439,6 @@ nodes {
   parents: "data_122"
   parents: "data_123"
   parents: "data_124"
-  children: "res4a_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -7722,7 +7523,6 @@ nodes {
 nodes {
   name: "data_125"
   op: Data
-  children: "res4a_2b"
   input_tensors {
     name: "data_125/input0"
     data_type: Float16
@@ -7755,7 +7555,6 @@ nodes {
   op: Convolution3d
   parents: "batch_norm_2"
   parents: "data_125"
-  children: "bn4a_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -7808,7 +7607,6 @@ nodes {
 nodes {
   name: "data_126"
   op: Data
-  children: "bn4a_2b"
   input_tensors {
     name: "data_126/input0"
     data_type: Float16
@@ -7835,7 +7633,6 @@ nodes {
 nodes {
   name: "data_127"
   op: Data
-  children: "bn4a_2b"
   input_tensors {
     name: "data_127/input0"
     data_type: Float16
@@ -7862,7 +7659,6 @@ nodes {
 nodes {
   name: "data_128"
   op: Data
-  children: "bn4a_2b"
   input_tensors {
     name: "data_128/input0"
     data_type: Float16
@@ -7889,7 +7685,6 @@ nodes {
 nodes {
   name: "data_129"
   op: Data
-  children: "bn4a_2b"
   input_tensors {
     name: "data_129/input0"
     data_type: Float16
@@ -7921,7 +7716,6 @@ nodes {
   parents: "data_127"
   parents: "data_128"
   parents: "data_129"
-  children: "res4a_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -8006,7 +7800,6 @@ nodes {
 nodes {
   name: "data_130"
   op: Data
-  children: "res4a_2c"
   input_tensors {
     name: "data_130/input0"
     data_type: Float16
@@ -8039,7 +7832,6 @@ nodes {
   op: Convolution3d
   parents: "bn4a_2b"
   parents: "data_130"
-  children: "bn4a_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -8092,7 +7884,6 @@ nodes {
 nodes {
   name: "data_131"
   op: Data
-  children: "bn4a_2c"
   input_tensors {
     name: "data_131/input0"
     data_type: Float16
@@ -8119,7 +7910,6 @@ nodes {
 nodes {
   name: "data_132"
   op: Data
-  children: "bn4a_2c"
   input_tensors {
     name: "data_132/input0"
     data_type: Float16
@@ -8146,7 +7936,6 @@ nodes {
 nodes {
   name: "data_133"
   op: Data
-  children: "bn4a_2c"
   input_tensors {
     name: "data_133/input0"
     data_type: Float16
@@ -8173,7 +7962,6 @@ nodes {
 nodes {
   name: "data_134"
   op: Data
-  children: "bn4a_2c"
   input_tensors {
     name: "data_134/input0"
     data_type: Float16
@@ -8205,7 +7993,6 @@ nodes {
   parents: "data_132"
   parents: "data_133"
   parents: "data_134"
-  children: "add4_a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -8287,7 +8074,6 @@ nodes {
 nodes {
   name: "data_135"
   op: Data
-  children: "res4a_1"
   input_tensors {
     name: "data_135/input0"
     data_type: Float16
@@ -8320,7 +8106,6 @@ nodes {
   op: Convolution3d
   parents: "relu3_d"
   parents: "data_135"
-  children: "bn4a_1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -8373,7 +8158,6 @@ nodes {
 nodes {
   name: "data_136"
   op: Data
-  children: "bn4a_1"
   input_tensors {
     name: "data_136/input0"
     data_type: Float16
@@ -8400,7 +8184,6 @@ nodes {
 nodes {
   name: "data_137"
   op: Data
-  children: "bn4a_1"
   input_tensors {
     name: "data_137/input0"
     data_type: Float16
@@ -8427,7 +8210,6 @@ nodes {
 nodes {
   name: "data_138"
   op: Data
-  children: "bn4a_1"
   input_tensors {
     name: "data_138/input0"
     data_type: Float16
@@ -8454,7 +8236,6 @@ nodes {
 nodes {
   name: "data_139"
   op: Data
-  children: "bn4a_1"
   input_tensors {
     name: "data_139/input0"
     data_type: Float16
@@ -8486,7 +8267,6 @@ nodes {
   parents: "data_137"
   parents: "data_138"
   parents: "data_139"
-  children: "add4_a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -8570,7 +8350,6 @@ nodes {
   op: EltwiseAdd
   parents: "bn4a_2c"
   parents: "bn4a_1"
-  children: "relu4_a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -8617,8 +8396,6 @@ nodes {
   name: "relu4_a"
   op: ReLU
   parents: "add4_a"
-  children: "res4b_2a"
-  children: "add4_b"
   src_tensors_indices: 0
   input_tensors {
     name: "add4_a/output0"
@@ -8650,7 +8427,6 @@ nodes {
 nodes {
   name: "data_140"
   op: Data
-  children: "res4b_2a"
   input_tensors {
     name: "data_140/input0"
     data_type: Float16
@@ -8683,7 +8459,6 @@ nodes {
   op: Convolution3d
   parents: "relu4_a"
   parents: "data_140"
-  children: "bn4b_2a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -8736,7 +8511,6 @@ nodes {
 nodes {
   name: "data_141"
   op: Data
-  children: "bn4b_2a"
   input_tensors {
     name: "data_141/input0"
     data_type: Float16
@@ -8763,7 +8537,6 @@ nodes {
 nodes {
   name: "data_142"
   op: Data
-  children: "bn4b_2a"
   input_tensors {
     name: "data_142/input0"
     data_type: Float16
@@ -8790,7 +8563,6 @@ nodes {
 nodes {
   name: "data_143"
   op: Data
-  children: "bn4b_2a"
   input_tensors {
     name: "data_143/input0"
     data_type: Float16
@@ -8817,7 +8589,6 @@ nodes {
 nodes {
   name: "data_144"
   op: Data
-  children: "bn4b_2a"
   input_tensors {
     name: "data_144/input0"
     data_type: Float16
@@ -8849,7 +8620,6 @@ nodes {
   parents: "data_142"
   parents: "data_143"
   parents: "data_144"
-  children: "res4b_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -8934,7 +8704,6 @@ nodes {
 nodes {
   name: "data_145"
   op: Data
-  children: "res4b_2b"
   input_tensors {
     name: "data_145/input0"
     data_type: Float16
@@ -8967,7 +8736,6 @@ nodes {
   op: Convolution3d
   parents: "bn4b_2a"
   parents: "data_145"
-  children: "bn4b_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -9020,7 +8788,6 @@ nodes {
 nodes {
   name: "data_146"
   op: Data
-  children: "bn4b_2b"
   input_tensors {
     name: "data_146/input0"
     data_type: Float16
@@ -9047,7 +8814,6 @@ nodes {
 nodes {
   name: "data_147"
   op: Data
-  children: "bn4b_2b"
   input_tensors {
     name: "data_147/input0"
     data_type: Float16
@@ -9074,7 +8840,6 @@ nodes {
 nodes {
   name: "data_148"
   op: Data
-  children: "bn4b_2b"
   input_tensors {
     name: "data_148/input0"
     data_type: Float16
@@ -9101,7 +8866,6 @@ nodes {
 nodes {
   name: "data_149"
   op: Data
-  children: "bn4b_2b"
   input_tensors {
     name: "data_149/input0"
     data_type: Float16
@@ -9133,7 +8897,6 @@ nodes {
   parents: "data_147"
   parents: "data_148"
   parents: "data_149"
-  children: "res4b_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -9218,7 +8981,6 @@ nodes {
 nodes {
   name: "data_150"
   op: Data
-  children: "res4b_2c"
   input_tensors {
     name: "data_150/input0"
     data_type: Float16
@@ -9251,7 +9013,6 @@ nodes {
   op: Convolution3d
   parents: "bn4b_2b"
   parents: "data_150"
-  children: "bn4b_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -9304,7 +9065,6 @@ nodes {
 nodes {
   name: "data_151"
   op: Data
-  children: "bn4b_2c"
   input_tensors {
     name: "data_151/input0"
     data_type: Float16
@@ -9331,7 +9091,6 @@ nodes {
 nodes {
   name: "data_152"
   op: Data
-  children: "bn4b_2c"
   input_tensors {
     name: "data_152/input0"
     data_type: Float16
@@ -9358,7 +9117,6 @@ nodes {
 nodes {
   name: "data_153"
   op: Data
-  children: "bn4b_2c"
   input_tensors {
     name: "data_153/input0"
     data_type: Float16
@@ -9385,7 +9143,6 @@ nodes {
 nodes {
   name: "data_154"
   op: Data
-  children: "bn4b_2c"
   input_tensors {
     name: "data_154/input0"
     data_type: Float16
@@ -9417,7 +9174,6 @@ nodes {
   parents: "data_152"
   parents: "data_153"
   parents: "data_154"
-  children: "add4_b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -9501,7 +9257,6 @@ nodes {
   op: EltwiseAdd
   parents: "bn4b_2c"
   parents: "relu4_a"
-  children: "relu4_b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -9548,8 +9303,6 @@ nodes {
   name: "relu4_b"
   op: ReLU
   parents: "add4_b"
-  children: "res4c_2a"
-  children: "add4_c"
   src_tensors_indices: 0
   input_tensors {
     name: "add4_b/output0"
@@ -9581,7 +9334,6 @@ nodes {
 nodes {
   name: "data_155"
   op: Data
-  children: "res4c_2a"
   input_tensors {
     name: "data_155/input0"
     data_type: Float16
@@ -9614,7 +9366,6 @@ nodes {
   op: Convolution3d
   parents: "relu4_b"
   parents: "data_155"
-  children: "bn4c_2a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -9667,7 +9418,6 @@ nodes {
 nodes {
   name: "data_156"
   op: Data
-  children: "bn4c_2a"
   input_tensors {
     name: "data_156/input0"
     data_type: Float16
@@ -9694,7 +9444,6 @@ nodes {
 nodes {
   name: "data_157"
   op: Data
-  children: "bn4c_2a"
   input_tensors {
     name: "data_157/input0"
     data_type: Float16
@@ -9721,7 +9470,6 @@ nodes {
 nodes {
   name: "data_158"
   op: Data
-  children: "bn4c_2a"
   input_tensors {
     name: "data_158/input0"
     data_type: Float16
@@ -9748,7 +9496,6 @@ nodes {
 nodes {
   name: "data_159"
   op: Data
-  children: "bn4c_2a"
   input_tensors {
     name: "data_159/input0"
     data_type: Float16
@@ -9780,7 +9527,6 @@ nodes {
   parents: "data_157"
   parents: "data_158"
   parents: "data_159"
-  children: "res4c_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -9865,7 +9611,6 @@ nodes {
 nodes {
   name: "data_160"
   op: Data
-  children: "res4c_2b"
   input_tensors {
     name: "data_160/input0"
     data_type: Float16
@@ -9898,7 +9643,6 @@ nodes {
   op: Convolution3d
   parents: "bn4c_2a"
   parents: "data_160"
-  children: "bn4c_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -9951,7 +9695,6 @@ nodes {
 nodes {
   name: "data_161"
   op: Data
-  children: "bn4c_2b"
   input_tensors {
     name: "data_161/input0"
     data_type: Float16
@@ -9978,7 +9721,6 @@ nodes {
 nodes {
   name: "data_162"
   op: Data
-  children: "bn4c_2b"
   input_tensors {
     name: "data_162/input0"
     data_type: Float16
@@ -10005,7 +9747,6 @@ nodes {
 nodes {
   name: "data_163"
   op: Data
-  children: "bn4c_2b"
   input_tensors {
     name: "data_163/input0"
     data_type: Float16
@@ -10032,7 +9773,6 @@ nodes {
 nodes {
   name: "data_164"
   op: Data
-  children: "bn4c_2b"
   input_tensors {
     name: "data_164/input0"
     data_type: Float16
@@ -10064,7 +9804,6 @@ nodes {
   parents: "data_162"
   parents: "data_163"
   parents: "data_164"
-  children: "res4c_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -10149,7 +9888,6 @@ nodes {
 nodes {
   name: "data_165"
   op: Data
-  children: "res4c_2c"
   input_tensors {
     name: "data_165/input0"
     data_type: Float16
@@ -10182,7 +9920,6 @@ nodes {
   op: Convolution3d
   parents: "bn4c_2b"
   parents: "data_165"
-  children: "bn4c_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -10235,7 +9972,6 @@ nodes {
 nodes {
   name: "data_166"
   op: Data
-  children: "bn4c_2c"
   input_tensors {
     name: "data_166/input0"
     data_type: Float16
@@ -10262,7 +9998,6 @@ nodes {
 nodes {
   name: "data_167"
   op: Data
-  children: "bn4c_2c"
   input_tensors {
     name: "data_167/input0"
     data_type: Float16
@@ -10289,7 +10024,6 @@ nodes {
 nodes {
   name: "data_168"
   op: Data
-  children: "bn4c_2c"
   input_tensors {
     name: "data_168/input0"
     data_type: Float16
@@ -10316,7 +10050,6 @@ nodes {
 nodes {
   name: "data_169"
   op: Data
-  children: "bn4c_2c"
   input_tensors {
     name: "data_169/input0"
     data_type: Float16
@@ -10348,7 +10081,6 @@ nodes {
   parents: "data_167"
   parents: "data_168"
   parents: "data_169"
-  children: "add4_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -10432,7 +10164,6 @@ nodes {
   op: EltwiseAdd
   parents: "bn4c_2c"
   parents: "relu4_b"
-  children: "relu4_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -10479,8 +10210,6 @@ nodes {
   name: "relu4_c"
   op: ReLU
   parents: "add4_c"
-  children: "res4d_2a"
-  children: "add4_d"
   src_tensors_indices: 0
   input_tensors {
     name: "add4_c/output0"
@@ -10512,7 +10241,6 @@ nodes {
 nodes {
   name: "data_170"
   op: Data
-  children: "res4d_2a"
   input_tensors {
     name: "data_170/input0"
     data_type: Float16
@@ -10545,7 +10273,6 @@ nodes {
   op: Convolution3d
   parents: "relu4_c"
   parents: "data_170"
-  children: "bn4d_2a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -10598,7 +10325,6 @@ nodes {
 nodes {
   name: "data_171"
   op: Data
-  children: "bn4d_2a"
   input_tensors {
     name: "data_171/input0"
     data_type: Float16
@@ -10625,7 +10351,6 @@ nodes {
 nodes {
   name: "data_172"
   op: Data
-  children: "bn4d_2a"
   input_tensors {
     name: "data_172/input0"
     data_type: Float16
@@ -10652,7 +10377,6 @@ nodes {
 nodes {
   name: "data_173"
   op: Data
-  children: "bn4d_2a"
   input_tensors {
     name: "data_173/input0"
     data_type: Float16
@@ -10679,7 +10403,6 @@ nodes {
 nodes {
   name: "data_174"
   op: Data
-  children: "bn4d_2a"
   input_tensors {
     name: "data_174/input0"
     data_type: Float16
@@ -10711,7 +10434,6 @@ nodes {
   parents: "data_172"
   parents: "data_173"
   parents: "data_174"
-  children: "res4d_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -10796,7 +10518,6 @@ nodes {
 nodes {
   name: "data_175"
   op: Data
-  children: "res4d_2b"
   input_tensors {
     name: "data_175/input0"
     data_type: Float16
@@ -10829,7 +10550,6 @@ nodes {
   op: Convolution3d
   parents: "bn4d_2a"
   parents: "data_175"
-  children: "bn4d_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -10882,7 +10602,6 @@ nodes {
 nodes {
   name: "data_176"
   op: Data
-  children: "bn4d_2b"
   input_tensors {
     name: "data_176/input0"
     data_type: Float16
@@ -10909,7 +10628,6 @@ nodes {
 nodes {
   name: "data_177"
   op: Data
-  children: "bn4d_2b"
   input_tensors {
     name: "data_177/input0"
     data_type: Float16
@@ -10936,7 +10654,6 @@ nodes {
 nodes {
   name: "data_178"
   op: Data
-  children: "bn4d_2b"
   input_tensors {
     name: "data_178/input0"
     data_type: Float16
@@ -10963,7 +10680,6 @@ nodes {
 nodes {
   name: "data_179"
   op: Data
-  children: "bn4d_2b"
   input_tensors {
     name: "data_179/input0"
     data_type: Float16
@@ -10995,7 +10711,6 @@ nodes {
   parents: "data_177"
   parents: "data_178"
   parents: "data_179"
-  children: "res4d_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -11080,7 +10795,6 @@ nodes {
 nodes {
   name: "data_180"
   op: Data
-  children: "res4d_2c"
   input_tensors {
     name: "data_180/input0"
     data_type: Float16
@@ -11113,7 +10827,6 @@ nodes {
   op: Convolution3d
   parents: "bn4d_2b"
   parents: "data_180"
-  children: "bn4d_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -11166,7 +10879,6 @@ nodes {
 nodes {
   name: "data_181"
   op: Data
-  children: "bn4d_2c"
   input_tensors {
     name: "data_181/input0"
     data_type: Float16
@@ -11193,7 +10905,6 @@ nodes {
 nodes {
   name: "data_182"
   op: Data
-  children: "bn4d_2c"
   input_tensors {
     name: "data_182/input0"
     data_type: Float16
@@ -11220,7 +10931,6 @@ nodes {
 nodes {
   name: "data_183"
   op: Data
-  children: "bn4d_2c"
   input_tensors {
     name: "data_183/input0"
     data_type: Float16
@@ -11247,7 +10957,6 @@ nodes {
 nodes {
   name: "data_184"
   op: Data
-  children: "bn4d_2c"
   input_tensors {
     name: "data_184/input0"
     data_type: Float16
@@ -11279,7 +10988,6 @@ nodes {
   parents: "data_182"
   parents: "data_183"
   parents: "data_184"
-  children: "add4_d"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -11363,7 +11071,6 @@ nodes {
   op: EltwiseAdd
   parents: "bn4d_2c"
   parents: "relu4_c"
-  children: "relu4_d"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -11410,8 +11117,6 @@ nodes {
   name: "relu4_d"
   op: ReLU
   parents: "add4_d"
-  children: "res4e_2a"
-  children: "add4_e"
   src_tensors_indices: 0
   input_tensors {
     name: "add4_d/output0"
@@ -11443,7 +11148,6 @@ nodes {
 nodes {
   name: "data_185"
   op: Data
-  children: "res4e_2a"
   input_tensors {
     name: "data_185/input0"
     data_type: Float16
@@ -11476,7 +11180,6 @@ nodes {
   op: Convolution3d
   parents: "relu4_d"
   parents: "data_185"
-  children: "bn4e_2a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -11529,7 +11232,6 @@ nodes {
 nodes {
   name: "data_186"
   op: Data
-  children: "bn4e_2a"
   input_tensors {
     name: "data_186/input0"
     data_type: Float16
@@ -11556,7 +11258,6 @@ nodes {
 nodes {
   name: "data_187"
   op: Data
-  children: "bn4e_2a"
   input_tensors {
     name: "data_187/input0"
     data_type: Float16
@@ -11583,7 +11284,6 @@ nodes {
 nodes {
   name: "data_188"
   op: Data
-  children: "bn4e_2a"
   input_tensors {
     name: "data_188/input0"
     data_type: Float16
@@ -11610,7 +11310,6 @@ nodes {
 nodes {
   name: "data_189"
   op: Data
-  children: "bn4e_2a"
   input_tensors {
     name: "data_189/input0"
     data_type: Float16
@@ -11642,7 +11341,6 @@ nodes {
   parents: "data_187"
   parents: "data_188"
   parents: "data_189"
-  children: "res4e_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -11727,7 +11425,6 @@ nodes {
 nodes {
   name: "data_190"
   op: Data
-  children: "res4e_2b"
   input_tensors {
     name: "data_190/input0"
     data_type: Float16
@@ -11760,7 +11457,6 @@ nodes {
   op: Convolution3d
   parents: "bn4e_2a"
   parents: "data_190"
-  children: "bn4e_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -11813,7 +11509,6 @@ nodes {
 nodes {
   name: "data_191"
   op: Data
-  children: "bn4e_2b"
   input_tensors {
     name: "data_191/input0"
     data_type: Float16
@@ -11840,7 +11535,6 @@ nodes {
 nodes {
   name: "data_192"
   op: Data
-  children: "bn4e_2b"
   input_tensors {
     name: "data_192/input0"
     data_type: Float16
@@ -11867,7 +11561,6 @@ nodes {
 nodes {
   name: "data_193"
   op: Data
-  children: "bn4e_2b"
   input_tensors {
     name: "data_193/input0"
     data_type: Float16
@@ -11894,7 +11587,6 @@ nodes {
 nodes {
   name: "data_194"
   op: Data
-  children: "bn4e_2b"
   input_tensors {
     name: "data_194/input0"
     data_type: Float16
@@ -11926,7 +11618,6 @@ nodes {
   parents: "data_192"
   parents: "data_193"
   parents: "data_194"
-  children: "res4e_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -12011,7 +11702,6 @@ nodes {
 nodes {
   name: "data_195"
   op: Data
-  children: "res4e_2c"
   input_tensors {
     name: "data_195/input0"
     data_type: Float16
@@ -12044,7 +11734,6 @@ nodes {
   op: Convolution3d
   parents: "bn4e_2b"
   parents: "data_195"
-  children: "bn4e_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -12097,7 +11786,6 @@ nodes {
 nodes {
   name: "data_196"
   op: Data
-  children: "bn4e_2c"
   input_tensors {
     name: "data_196/input0"
     data_type: Float16
@@ -12124,7 +11812,6 @@ nodes {
 nodes {
   name: "data_197"
   op: Data
-  children: "bn4e_2c"
   input_tensors {
     name: "data_197/input0"
     data_type: Float16
@@ -12151,7 +11838,6 @@ nodes {
 nodes {
   name: "data_198"
   op: Data
-  children: "bn4e_2c"
   input_tensors {
     name: "data_198/input0"
     data_type: Float16
@@ -12178,7 +11864,6 @@ nodes {
 nodes {
   name: "data_199"
   op: Data
-  children: "bn4e_2c"
   input_tensors {
     name: "data_199/input0"
     data_type: Float16
@@ -12210,7 +11895,6 @@ nodes {
   parents: "data_197"
   parents: "data_198"
   parents: "data_199"
-  children: "add4_e"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -12294,7 +11978,6 @@ nodes {
   op: EltwiseAdd
   parents: "bn4e_2c"
   parents: "relu4_d"
-  children: "relu4_e"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -12341,8 +12024,6 @@ nodes {
   name: "relu4_e"
   op: ReLU
   parents: "add4_e"
-  children: "res4f_2a"
-  children: "add4_f"
   src_tensors_indices: 0
   input_tensors {
     name: "add4_e/output0"
@@ -12374,7 +12055,6 @@ nodes {
 nodes {
   name: "data_200"
   op: Data
-  children: "res4f_2a"
   input_tensors {
     name: "data_200/input0"
     data_type: Float16
@@ -12407,7 +12087,6 @@ nodes {
   op: Convolution3d
   parents: "relu4_e"
   parents: "data_200"
-  children: "bn4f_2a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -12460,7 +12139,6 @@ nodes {
 nodes {
   name: "data_201"
   op: Data
-  children: "bn4f_2a"
   input_tensors {
     name: "data_201/input0"
     data_type: Float16
@@ -12487,7 +12165,6 @@ nodes {
 nodes {
   name: "data_202"
   op: Data
-  children: "bn4f_2a"
   input_tensors {
     name: "data_202/input0"
     data_type: Float16
@@ -12514,7 +12191,6 @@ nodes {
 nodes {
   name: "data_203"
   op: Data
-  children: "bn4f_2a"
   input_tensors {
     name: "data_203/input0"
     data_type: Float16
@@ -12541,7 +12217,6 @@ nodes {
 nodes {
   name: "data_204"
   op: Data
-  children: "bn4f_2a"
   input_tensors {
     name: "data_204/input0"
     data_type: Float16
@@ -12573,7 +12248,6 @@ nodes {
   parents: "data_202"
   parents: "data_203"
   parents: "data_204"
-  children: "res4f_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -12658,7 +12332,6 @@ nodes {
 nodes {
   name: "data_205"
   op: Data
-  children: "res4f_2b"
   input_tensors {
     name: "data_205/input0"
     data_type: Float16
@@ -12691,7 +12364,6 @@ nodes {
   op: Convolution3d
   parents: "bn4f_2a"
   parents: "data_205"
-  children: "bn4f_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -12744,7 +12416,6 @@ nodes {
 nodes {
   name: "data_206"
   op: Data
-  children: "bn4f_2b"
   input_tensors {
     name: "data_206/input0"
     data_type: Float16
@@ -12771,7 +12442,6 @@ nodes {
 nodes {
   name: "data_207"
   op: Data
-  children: "bn4f_2b"
   input_tensors {
     name: "data_207/input0"
     data_type: Float16
@@ -12798,7 +12468,6 @@ nodes {
 nodes {
   name: "data_208"
   op: Data
-  children: "bn4f_2b"
   input_tensors {
     name: "data_208/input0"
     data_type: Float16
@@ -12825,7 +12494,6 @@ nodes {
 nodes {
   name: "data_209"
   op: Data
-  children: "bn4f_2b"
   input_tensors {
     name: "data_209/input0"
     data_type: Float16
@@ -12857,7 +12525,6 @@ nodes {
   parents: "data_207"
   parents: "data_208"
   parents: "data_209"
-  children: "res4f_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -12942,7 +12609,6 @@ nodes {
 nodes {
   name: "data_210"
   op: Data
-  children: "res4f_2c"
   input_tensors {
     name: "data_210/input0"
     data_type: Float16
@@ -12975,7 +12641,6 @@ nodes {
   op: Convolution3d
   parents: "bn4f_2b"
   parents: "data_210"
-  children: "bn4f_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -13028,7 +12693,6 @@ nodes {
 nodes {
   name: "data_211"
   op: Data
-  children: "bn4f_2c"
   input_tensors {
     name: "data_211/input0"
     data_type: Float16
@@ -13055,7 +12719,6 @@ nodes {
 nodes {
   name: "data_212"
   op: Data
-  children: "bn4f_2c"
   input_tensors {
     name: "data_212/input0"
     data_type: Float16
@@ -13082,7 +12745,6 @@ nodes {
 nodes {
   name: "data_213"
   op: Data
-  children: "bn4f_2c"
   input_tensors {
     name: "data_213/input0"
     data_type: Float16
@@ -13109,7 +12771,6 @@ nodes {
 nodes {
   name: "data_214"
   op: Data
-  children: "bn4f_2c"
   input_tensors {
     name: "data_214/input0"
     data_type: Float16
@@ -13141,7 +12802,6 @@ nodes {
   parents: "data_212"
   parents: "data_213"
   parents: "data_214"
-  children: "add4_f"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -13225,7 +12885,6 @@ nodes {
   op: EltwiseAdd
   parents: "bn4f_2c"
   parents: "relu4_e"
-  children: "relu4_f"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -13272,8 +12931,6 @@ nodes {
   name: "relu4_f"
   op: ReLU
   parents: "add4_f"
-  children: "res5a_2a"
-  children: "res5a_1"
   src_tensors_indices: 0
   input_tensors {
     name: "add4_f/output0"
@@ -13305,7 +12962,6 @@ nodes {
 nodes {
   name: "data_215"
   op: Data
-  children: "res5a_2a"
   input_tensors {
     name: "data_215/input0"
     data_type: Float16
@@ -13338,7 +12994,6 @@ nodes {
   op: Convolution3d
   parents: "relu4_f"
   parents: "data_215"
-  children: "batch_norm_3"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -13391,7 +13046,6 @@ nodes {
 nodes {
   name: "data_216"
   op: Data
-  children: "batch_norm_3"
   input_tensors {
     name: "data_216/input0"
     data_type: Float16
@@ -13418,7 +13072,6 @@ nodes {
 nodes {
   name: "data_217"
   op: Data
-  children: "batch_norm_3"
   input_tensors {
     name: "data_217/input0"
     data_type: Float16
@@ -13445,7 +13098,6 @@ nodes {
 nodes {
   name: "data_218"
   op: Data
-  children: "batch_norm_3"
   input_tensors {
     name: "data_218/input0"
     data_type: Float16
@@ -13472,7 +13124,6 @@ nodes {
 nodes {
   name: "data_219"
   op: Data
-  children: "batch_norm_3"
   input_tensors {
     name: "data_219/input0"
     data_type: Float16
@@ -13504,7 +13155,6 @@ nodes {
   parents: "data_217"
   parents: "data_218"
   parents: "data_219"
-  children: "res5a_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -13589,7 +13239,6 @@ nodes {
 nodes {
   name: "data_220"
   op: Data
-  children: "res5a_2b"
   input_tensors {
     name: "data_220/input0"
     data_type: Float16
@@ -13622,7 +13271,6 @@ nodes {
   op: Convolution3d
   parents: "batch_norm_3"
   parents: "data_220"
-  children: "bn5a_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -13675,7 +13323,6 @@ nodes {
 nodes {
   name: "data_221"
   op: Data
-  children: "bn5a_2b"
   input_tensors {
     name: "data_221/input0"
     data_type: Float16
@@ -13702,7 +13349,6 @@ nodes {
 nodes {
   name: "data_222"
   op: Data
-  children: "bn5a_2b"
   input_tensors {
     name: "data_222/input0"
     data_type: Float16
@@ -13729,7 +13375,6 @@ nodes {
 nodes {
   name: "data_223"
   op: Data
-  children: "bn5a_2b"
   input_tensors {
     name: "data_223/input0"
     data_type: Float16
@@ -13756,7 +13401,6 @@ nodes {
 nodes {
   name: "data_224"
   op: Data
-  children: "bn5a_2b"
   input_tensors {
     name: "data_224/input0"
     data_type: Float16
@@ -13788,7 +13432,6 @@ nodes {
   parents: "data_222"
   parents: "data_223"
   parents: "data_224"
-  children: "res5a_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -13873,7 +13516,6 @@ nodes {
 nodes {
   name: "data_225"
   op: Data
-  children: "res5a_2c"
   input_tensors {
     name: "data_225/input0"
     data_type: Float16
@@ -13906,7 +13548,6 @@ nodes {
   op: Convolution3d
   parents: "bn5a_2b"
   parents: "data_225"
-  children: "bn5a_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -13959,7 +13600,6 @@ nodes {
 nodes {
   name: "data_226"
   op: Data
-  children: "bn5a_2c"
   input_tensors {
     name: "data_226/input0"
     data_type: Float16
@@ -13986,7 +13626,6 @@ nodes {
 nodes {
   name: "data_227"
   op: Data
-  children: "bn5a_2c"
   input_tensors {
     name: "data_227/input0"
     data_type: Float16
@@ -14013,7 +13652,6 @@ nodes {
 nodes {
   name: "data_228"
   op: Data
-  children: "bn5a_2c"
   input_tensors {
     name: "data_228/input0"
     data_type: Float16
@@ -14040,7 +13678,6 @@ nodes {
 nodes {
   name: "data_229"
   op: Data
-  children: "bn5a_2c"
   input_tensors {
     name: "data_229/input0"
     data_type: Float16
@@ -14072,7 +13709,6 @@ nodes {
   parents: "data_227"
   parents: "data_228"
   parents: "data_229"
-  children: "add5_a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -14154,7 +13790,6 @@ nodes {
 nodes {
   name: "data_230"
   op: Data
-  children: "res5a_1"
   input_tensors {
     name: "data_230/input0"
     data_type: Float16
@@ -14187,7 +13822,6 @@ nodes {
   op: Convolution3d
   parents: "relu4_f"
   parents: "data_230"
-  children: "bn5a_1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -14240,7 +13874,6 @@ nodes {
 nodes {
   name: "data_231"
   op: Data
-  children: "bn5a_1"
   input_tensors {
     name: "data_231/input0"
     data_type: Float16
@@ -14267,7 +13900,6 @@ nodes {
 nodes {
   name: "data_232"
   op: Data
-  children: "bn5a_1"
   input_tensors {
     name: "data_232/input0"
     data_type: Float16
@@ -14294,7 +13926,6 @@ nodes {
 nodes {
   name: "data_233"
   op: Data
-  children: "bn5a_1"
   input_tensors {
     name: "data_233/input0"
     data_type: Float16
@@ -14321,7 +13952,6 @@ nodes {
 nodes {
   name: "data_234"
   op: Data
-  children: "bn5a_1"
   input_tensors {
     name: "data_234/input0"
     data_type: Float16
@@ -14353,7 +13983,6 @@ nodes {
   parents: "data_232"
   parents: "data_233"
   parents: "data_234"
-  children: "add5_a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -14437,7 +14066,6 @@ nodes {
   op: EltwiseAdd
   parents: "bn5a_2c"
   parents: "bn5a_1"
-  children: "relu5_a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -14484,8 +14112,6 @@ nodes {
   name: "relu5_a"
   op: ReLU
   parents: "add5_a"
-  children: "res5b_2a"
-  children: "add5_b"
   src_tensors_indices: 0
   input_tensors {
     name: "add5_a/output0"
@@ -14517,7 +14143,6 @@ nodes {
 nodes {
   name: "data_235"
   op: Data
-  children: "res5b_2a"
   input_tensors {
     name: "data_235/input0"
     data_type: Float16
@@ -14550,7 +14175,6 @@ nodes {
   op: Convolution3d
   parents: "relu5_a"
   parents: "data_235"
-  children: "bn5b_2a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -14603,7 +14227,6 @@ nodes {
 nodes {
   name: "data_236"
   op: Data
-  children: "bn5b_2a"
   input_tensors {
     name: "data_236/input0"
     data_type: Float16
@@ -14630,7 +14253,6 @@ nodes {
 nodes {
   name: "data_237"
   op: Data
-  children: "bn5b_2a"
   input_tensors {
     name: "data_237/input0"
     data_type: Float16
@@ -14657,7 +14279,6 @@ nodes {
 nodes {
   name: "data_238"
   op: Data
-  children: "bn5b_2a"
   input_tensors {
     name: "data_238/input0"
     data_type: Float16
@@ -14684,7 +14305,6 @@ nodes {
 nodes {
   name: "data_239"
   op: Data
-  children: "bn5b_2a"
   input_tensors {
     name: "data_239/input0"
     data_type: Float16
@@ -14716,7 +14336,6 @@ nodes {
   parents: "data_237"
   parents: "data_238"
   parents: "data_239"
-  children: "res5b_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -14801,7 +14420,6 @@ nodes {
 nodes {
   name: "data_240"
   op: Data
-  children: "res5b_2b"
   input_tensors {
     name: "data_240/input0"
     data_type: Float16
@@ -14834,7 +14452,6 @@ nodes {
   op: Convolution3d
   parents: "bn5b_2a"
   parents: "data_240"
-  children: "bn5b_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -14887,7 +14504,6 @@ nodes {
 nodes {
   name: "data_241"
   op: Data
-  children: "bn5b_2b"
   input_tensors {
     name: "data_241/input0"
     data_type: Float16
@@ -14914,7 +14530,6 @@ nodes {
 nodes {
   name: "data_242"
   op: Data
-  children: "bn5b_2b"
   input_tensors {
     name: "data_242/input0"
     data_type: Float16
@@ -14941,7 +14556,6 @@ nodes {
 nodes {
   name: "data_243"
   op: Data
-  children: "bn5b_2b"
   input_tensors {
     name: "data_243/input0"
     data_type: Float16
@@ -14968,7 +14582,6 @@ nodes {
 nodes {
   name: "data_244"
   op: Data
-  children: "bn5b_2b"
   input_tensors {
     name: "data_244/input0"
     data_type: Float16
@@ -15000,7 +14613,6 @@ nodes {
   parents: "data_242"
   parents: "data_243"
   parents: "data_244"
-  children: "res5b_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -15085,7 +14697,6 @@ nodes {
 nodes {
   name: "data_245"
   op: Data
-  children: "res5b_2c"
   input_tensors {
     name: "data_245/input0"
     data_type: Float16
@@ -15118,7 +14729,6 @@ nodes {
   op: Convolution3d
   parents: "bn5b_2b"
   parents: "data_245"
-  children: "bn5b_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -15171,7 +14781,6 @@ nodes {
 nodes {
   name: "data_246"
   op: Data
-  children: "bn5b_2c"
   input_tensors {
     name: "data_246/input0"
     data_type: Float16
@@ -15198,7 +14807,6 @@ nodes {
 nodes {
   name: "data_247"
   op: Data
-  children: "bn5b_2c"
   input_tensors {
     name: "data_247/input0"
     data_type: Float16
@@ -15225,7 +14833,6 @@ nodes {
 nodes {
   name: "data_248"
   op: Data
-  children: "bn5b_2c"
   input_tensors {
     name: "data_248/input0"
     data_type: Float16
@@ -15252,7 +14859,6 @@ nodes {
 nodes {
   name: "data_249"
   op: Data
-  children: "bn5b_2c"
   input_tensors {
     name: "data_249/input0"
     data_type: Float16
@@ -15284,7 +14890,6 @@ nodes {
   parents: "data_247"
   parents: "data_248"
   parents: "data_249"
-  children: "add5_b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -15368,7 +14973,6 @@ nodes {
   op: EltwiseAdd
   parents: "bn5b_2c"
   parents: "relu5_a"
-  children: "relu5_b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -15415,8 +15019,6 @@ nodes {
   name: "relu5_b"
   op: ReLU
   parents: "add5_b"
-  children: "res5c_2a"
-  children: "add5_c"
   src_tensors_indices: 0
   input_tensors {
     name: "add5_b/output0"
@@ -15448,7 +15050,6 @@ nodes {
 nodes {
   name: "data_250"
   op: Data
-  children: "res5c_2a"
   input_tensors {
     name: "data_250/input0"
     data_type: Float16
@@ -15481,7 +15082,6 @@ nodes {
   op: Convolution3d
   parents: "relu5_b"
   parents: "data_250"
-  children: "bn5c_2a"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -15534,7 +15134,6 @@ nodes {
 nodes {
   name: "data_251"
   op: Data
-  children: "bn5c_2a"
   input_tensors {
     name: "data_251/input0"
     data_type: Float16
@@ -15561,7 +15160,6 @@ nodes {
 nodes {
   name: "data_252"
   op: Data
-  children: "bn5c_2a"
   input_tensors {
     name: "data_252/input0"
     data_type: Float16
@@ -15588,7 +15186,6 @@ nodes {
 nodes {
   name: "data_253"
   op: Data
-  children: "bn5c_2a"
   input_tensors {
     name: "data_253/input0"
     data_type: Float16
@@ -15615,7 +15212,6 @@ nodes {
 nodes {
   name: "data_254"
   op: Data
-  children: "bn5c_2a"
   input_tensors {
     name: "data_254/input0"
     data_type: Float16
@@ -15647,7 +15243,6 @@ nodes {
   parents: "data_252"
   parents: "data_253"
   parents: "data_254"
-  children: "res5c_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -15732,7 +15327,6 @@ nodes {
 nodes {
   name: "data_255"
   op: Data
-  children: "res5c_2b"
   input_tensors {
     name: "data_255/input0"
     data_type: Float16
@@ -15765,7 +15359,6 @@ nodes {
   op: Convolution3d
   parents: "bn5c_2a"
   parents: "data_255"
-  children: "bn5c_2b"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -15818,7 +15411,6 @@ nodes {
 nodes {
   name: "data_256"
   op: Data
-  children: "bn5c_2b"
   input_tensors {
     name: "data_256/input0"
     data_type: Float16
@@ -15845,7 +15437,6 @@ nodes {
 nodes {
   name: "data_257"
   op: Data
-  children: "bn5c_2b"
   input_tensors {
     name: "data_257/input0"
     data_type: Float16
@@ -15872,7 +15463,6 @@ nodes {
 nodes {
   name: "data_258"
   op: Data
-  children: "bn5c_2b"
   input_tensors {
     name: "data_258/input0"
     data_type: Float16
@@ -15899,7 +15489,6 @@ nodes {
 nodes {
   name: "data_259"
   op: Data
-  children: "bn5c_2b"
   input_tensors {
     name: "data_259/input0"
     data_type: Float16
@@ -15931,7 +15520,6 @@ nodes {
   parents: "data_257"
   parents: "data_258"
   parents: "data_259"
-  children: "res5c_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -16016,7 +15604,6 @@ nodes {
 nodes {
   name: "data_260"
   op: Data
-  children: "res5c_2c"
   input_tensors {
     name: "data_260/input0"
     data_type: Float16
@@ -16049,7 +15636,6 @@ nodes {
   op: Convolution3d
   parents: "bn5c_2b"
   parents: "data_260"
-  children: "bn5c_2c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -16102,7 +15688,6 @@ nodes {
 nodes {
   name: "data_261"
   op: Data
-  children: "bn5c_2c"
   input_tensors {
     name: "data_261/input0"
     data_type: Float16
@@ -16129,7 +15714,6 @@ nodes {
 nodes {
   name: "data_262"
   op: Data
-  children: "bn5c_2c"
   input_tensors {
     name: "data_262/input0"
     data_type: Float16
@@ -16156,7 +15740,6 @@ nodes {
 nodes {
   name: "data_263"
   op: Data
-  children: "bn5c_2c"
   input_tensors {
     name: "data_263/input0"
     data_type: Float16
@@ -16183,7 +15766,6 @@ nodes {
 nodes {
   name: "data_264"
   op: Data
-  children: "bn5c_2c"
   input_tensors {
     name: "data_264/input0"
     data_type: Float16
@@ -16215,7 +15797,6 @@ nodes {
   parents: "data_262"
   parents: "data_263"
   parents: "data_264"
-  children: "add5_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   src_tensors_indices: 0
@@ -16299,7 +15880,6 @@ nodes {
   op: EltwiseAdd
   parents: "bn5c_2c"
   parents: "relu5_b"
-  children: "relu5_c"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -16346,7 +15926,6 @@ nodes {
   name: "relu5_c"
   op: ReLU
   parents: "add5_c"
-  children: "reorder"
   src_tensors_indices: 0
   input_tensors {
     name: "add5_c/output0"
@@ -16379,7 +15958,6 @@ nodes {
   name: "reorder"
   op: Reorder
   parents: "relu5_c"
-  children: "fc"
   src_tensors_indices: 0
   input_tensors {
     name: "relu5_c/output0"
@@ -16409,7 +15987,6 @@ nodes {
 nodes {
   name: "data_265"
   op: Data
-  children: "fc"
   input_tensors {
     name: "data_265/input0"
     data_type: Float16

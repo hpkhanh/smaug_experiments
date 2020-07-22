@@ -1,19 +1,20 @@
 #!/usr/bin/env python
-#
-# Python code for creating the ResNet50 network.
-#
 
-import sys
-sys.path.append('../../../nnet_lib/src/python/')
+"""Example for creating the ResNet-50 network."""
+
 import numpy as np
-from graph import *
-from tensor import *
-from ops import *
-from types_pb2 import *
+
+from smaug.core.types_pb2 import *
+from smaug.python.graph import Graph
+from smaug.python.tensor import Tensor
+from smaug.python.ops import data_op
+from smaug.python.ops import math_ops
+from smaug.python.ops import nn_ops
+from smaug.python.ops import activation_ops
 
 def generate_random_data(shape):
   r = np.random.RandomState(1234)
-  return (r.rand(*shape) * 0.008).astype(np.float16)
+  return (r.rand(*shape) * 0.008).astype(np.float32)
 
 def identity_block(input_tensor, kernel_size, filters, stage, block):
   """The identity block is the block that has no conv layer at shortcut.
@@ -71,26 +72,26 @@ def identity_block(input_tensor, kernel_size, filters, stage, block):
   bn2_beta_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
       (1, filters2)))
 
-  x = convolution(
+  x = nn_ops.convolution(
       input_tensor, conv0_tensor, stride=[1, 1], padding="same",
       name=conv_name_base + '_2a')
-  x = batch_norm(
+  x = nn_ops.batch_norm(
       x, bn0_mean_tensor, bn0_var_tensor, bn0_gamma_tensor, bn0_beta_tensor,
       activation=ReLU, name=bn_name_base + '_2a')
-  x = convolution(
+  x = nn_ops.convolution(
       x, conv1_tensor, stride=[1, 1], padding="same",
       name=conv_name_base + '_2b')
-  x = batch_norm(
+  x = nn_ops.batch_norm(
       x, bn1_mean_tensor, bn1_var_tensor, bn1_gamma_tensor, bn1_beta_tensor,
       activation=ReLU, name=bn_name_base + '_2b')
-  x = convolution(
+  x = nn_ops.convolution(
       x, conv2_tensor, stride=[1, 1], padding="same",
       name=conv_name_base + '_2c')
-  x = batch_norm(
+  x = nn_ops.batch_norm(
       x, bn2_mean_tensor, bn2_var_tensor, bn2_gamma_tensor, bn2_beta_tensor,
       name=bn_name_base + '_2c')
-  x = add(x, input_tensor, name=add_name)
-  x = relu(x, name=relu_name)
+  x = math_ops.add(x, input_tensor, name=add_name)
+  x = activation_ops.relu(x, name=relu_name)
   return x
 
 def conv_block(
@@ -167,36 +168,36 @@ def conv_block(
   bn3_beta_tensor = Tensor(
       data_layout=NC, tensor_data=generate_random_data((1, filters2)))
 
-  x = convolution(
+  x = nn_ops.convolution(
       input_tensor, conv0_tensor, stride=[1, 1], padding="same",
       name=conv_name_base + '_2a')
-  x = batch_norm(
+  x = nn_ops.batch_norm(
       x, bn0_mean_tensor, bn0_var_tensor, bn0_gamma_tensor, bn0_beta_tensor,
       activation=ReLU)
-  x = convolution(
+  x = nn_ops.convolution(
       x, conv1_tensor, stride=strides, padding="same",
       name=conv_name_base + '_2b')
-  x = batch_norm(
+  x = nn_ops.batch_norm(
       x, bn1_mean_tensor, bn1_var_tensor, bn1_gamma_tensor, bn1_beta_tensor,
       activation=ReLU, name=bn_name_base + '_2b')
-  x = convolution(
+  x = nn_ops.convolution(
       x, conv2_tensor, stride=[1, 1], padding="same",
       name=conv_name_base + '_2c')
-  x = batch_norm(
+  x = nn_ops.batch_norm(
       x, bn2_mean_tensor, bn2_var_tensor, bn2_gamma_tensor, bn2_beta_tensor,
       name=bn_name_base + '_2c')
-  shortcut = convolution(
+  shortcut = nn_ops.convolution(
       input_tensor, conv3_tensor, stride=strides, padding="same",
       name=conv_name_base + '_1')
-  shortcut = batch_norm(
+  shortcut = nn_ops.batch_norm(
       shortcut, bn3_mean_tensor, bn3_var_tensor, bn3_gamma_tensor,
       bn3_beta_tensor, name=bn_name_base + '_1')
-  x = add(x, shortcut, name=add_name)
-  x = relu(x, name=relu_name)
+  x = math_ops.add(x, shortcut, name=add_name)
+  x = activation_ops.relu(x, name=relu_name)
   return x
 
 def create_resnet50():
-  with Graph(name="resnet_smv", backend="SMV") as graph:
+  with Graph(name="resnet_ref", backend="Reference") as graph:
     # Tensors and kernels are initialized as NCHW layout.
     input_tensor = Tensor(data_layout=NHWC, tensor_data=generate_random_data(
         (1, 225, 225, 3)))
@@ -213,13 +214,13 @@ def create_resnet50():
     fc_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
         (10, 7*7*2048)))
 
-    x = input_data(input_tensor, name="input")
-    x = convolution(
+    x = data_op.input_data(input_tensor, name="input")
+    x = nn_ops.convolution(
         x, conv0_tensor, stride=[2, 2], padding="same", name="conv0")
-    x = batch_norm(
+    x = nn_ops.batch_norm(
         x, bn0_mean_tensor, bn0_var_tensor, bn0_gamma_tensor, bn0_beta_tensor,
         activation=ReLU, name="bn0")
-    x = max_pool(x, pool_size=[3, 3], stride=[2, 2], name="pool")
+    x = nn_ops.max_pool(x, pool_size=[3, 3], stride=[2, 2], name="pool")
 
     # Four resnet blocks.
     x = conv_block(x, 3, [64, 64, 256], stage=2, block='a', strides=(1, 1))
@@ -242,7 +243,7 @@ def create_resnet50():
     x = identity_block(x, 3, [512, 512, 2048], stage=5, block='b')
     x = identity_block(x, 3, [512, 512, 2048], stage=5, block='c')
 
-    x= mat_mul(x, fc_tensor, name="fc")
+    x= nn_ops.mat_mul(x, fc_tensor, name="fc")
     return graph
 
 if __name__ != "main":
