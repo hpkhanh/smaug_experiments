@@ -2,7 +2,6 @@ name: "elu_ref"
 nodes {
   name: "input"
   op: Data
-  children: "reorder"
   input_tensors {
     name: "input/input0"
     data_type: Float32
@@ -32,7 +31,6 @@ nodes {
   name: "reorder"
   op: Reorder
   parents: "input"
-  children: "conv0_stack0"
   src_tensors_indices: 0
   input_tensors {
     name: "input/output0"
@@ -62,7 +60,6 @@ nodes {
 nodes {
   name: "data"
   op: Data
-  children: "reorder_1"
   input_tensors {
     name: "data/input0"
     data_type: Float32
@@ -92,7 +89,6 @@ nodes {
   name: "reorder_1"
   op: Reorder
   parents: "data"
-  children: "conv0_stack0"
   src_tensors_indices: 0
   input_tensors {
     name: "data/output0"
@@ -124,7 +120,6 @@ nodes {
   op: Convolution3d
   parents: "reorder"
   parents: "reorder_1"
-  children: "pool_stack0"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -172,7 +167,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -181,7 +176,6 @@ nodes {
   name: "pool_stack0"
   op: MaxPooling
   parents: "conv0_stack0"
-  children: "conv0_stack1"
   src_tensors_indices: 0
   input_tensors {
     name: "conv0_stack0/output0"
@@ -219,7 +213,6 @@ nodes {
 nodes {
   name: "data_1"
   op: Data
-  children: "reorder_2"
   input_tensors {
     name: "data_1/input0"
     data_type: Float32
@@ -249,7 +242,6 @@ nodes {
   name: "reorder_2"
   op: Reorder
   parents: "data_1"
-  children: "conv0_stack1"
   src_tensors_indices: 0
   input_tensors {
     name: "data_1/output0"
@@ -281,7 +273,6 @@ nodes {
   op: Convolution3d
   parents: "pool_stack0"
   parents: "reorder_2"
-  children: "conv1_stack1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -329,7 +320,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -337,7 +328,6 @@ nodes {
 nodes {
   name: "data_2"
   op: Data
-  children: "reorder_3"
   input_tensors {
     name: "data_2/input0"
     data_type: Float32
@@ -367,7 +357,6 @@ nodes {
   name: "reorder_3"
   op: Reorder
   parents: "data_2"
-  children: "conv1_stack1"
   src_tensors_indices: 0
   input_tensors {
     name: "data_2/output0"
@@ -399,7 +388,6 @@ nodes {
   op: Convolution3d
   parents: "conv0_stack1"
   parents: "reorder_3"
-  children: "pool_stack1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -447,7 +435,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -456,7 +444,6 @@ nodes {
   name: "pool_stack1"
   op: MaxPooling
   parents: "conv1_stack1"
-  children: "conv0_stack2"
   src_tensors_indices: 0
   input_tensors {
     name: "conv1_stack1/output0"
@@ -494,7 +481,6 @@ nodes {
 nodes {
   name: "data_3"
   op: Data
-  children: "reorder_4"
   input_tensors {
     name: "data_3/input0"
     data_type: Float32
@@ -524,7 +510,6 @@ nodes {
   name: "reorder_4"
   op: Reorder
   parents: "data_3"
-  children: "conv0_stack2"
   src_tensors_indices: 0
   input_tensors {
     name: "data_3/output0"
@@ -556,7 +541,6 @@ nodes {
   op: Convolution3d
   parents: "pool_stack1"
   parents: "reorder_4"
-  children: "conv1_stack2"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -604,7 +588,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -612,7 +596,6 @@ nodes {
 nodes {
   name: "data_4"
   op: Data
-  children: "reorder_5"
   input_tensors {
     name: "data_4/input0"
     data_type: Float32
@@ -642,7 +625,6 @@ nodes {
   name: "reorder_5"
   op: Reorder
   parents: "data_4"
-  children: "conv1_stack2"
   src_tensors_indices: 0
   input_tensors {
     name: "data_4/output0"
@@ -674,7 +656,6 @@ nodes {
   op: Convolution3d
   parents: "conv0_stack2"
   parents: "reorder_5"
-  children: "pool_stack2"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -722,7 +703,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -731,7 +712,6 @@ nodes {
   name: "pool_stack2"
   op: MaxPooling
   parents: "conv1_stack2"
-  children: "conv0_stack3"
   src_tensors_indices: 0
   input_tensors {
     name: "conv1_stack2/output0"
@@ -769,7 +749,6 @@ nodes {
 nodes {
   name: "data_5"
   op: Data
-  children: "reorder_6"
   input_tensors {
     name: "data_5/input0"
     data_type: Float32
@@ -799,7 +778,6 @@ nodes {
   name: "reorder_6"
   op: Reorder
   parents: "data_5"
-  children: "conv0_stack3"
   src_tensors_indices: 0
   input_tensors {
     name: "data_5/output0"
@@ -831,7 +809,6 @@ nodes {
   op: Convolution3d
   parents: "pool_stack2"
   parents: "reorder_6"
-  children: "conv1_stack3"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -879,7 +856,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -887,7 +864,6 @@ nodes {
 nodes {
   name: "data_6"
   op: Data
-  children: "reorder_7"
   input_tensors {
     name: "data_6/input0"
     data_type: Float32
@@ -917,7 +893,6 @@ nodes {
   name: "reorder_7"
   op: Reorder
   parents: "data_6"
-  children: "conv1_stack3"
   src_tensors_indices: 0
   input_tensors {
     name: "data_6/output0"
@@ -949,7 +924,6 @@ nodes {
   op: Convolution3d
   parents: "conv0_stack3"
   parents: "reorder_7"
-  children: "pool_stack3"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -997,7 +971,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -1006,7 +980,6 @@ nodes {
   name: "pool_stack3"
   op: MaxPooling
   parents: "conv1_stack3"
-  children: "conv0_stack4"
   src_tensors_indices: 0
   input_tensors {
     name: "conv1_stack3/output0"
@@ -1044,7 +1017,6 @@ nodes {
 nodes {
   name: "data_7"
   op: Data
-  children: "reorder_8"
   input_tensors {
     name: "data_7/input0"
     data_type: Float32
@@ -1074,7 +1046,6 @@ nodes {
   name: "reorder_8"
   op: Reorder
   parents: "data_7"
-  children: "conv0_stack4"
   src_tensors_indices: 0
   input_tensors {
     name: "data_7/output0"
@@ -1106,7 +1077,6 @@ nodes {
   op: Convolution3d
   parents: "pool_stack3"
   parents: "reorder_8"
-  children: "conv0_stack4_1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1154,7 +1124,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -1162,7 +1132,6 @@ nodes {
 nodes {
   name: "data_8"
   op: Data
-  children: "reorder_9"
   input_tensors {
     name: "data_8/input0"
     data_type: Float32
@@ -1192,7 +1161,6 @@ nodes {
   name: "reorder_9"
   op: Reorder
   parents: "data_8"
-  children: "conv0_stack4_1"
   src_tensors_indices: 0
   input_tensors {
     name: "data_8/output0"
@@ -1224,7 +1192,6 @@ nodes {
   op: Convolution3d
   parents: "conv0_stack4"
   parents: "reorder_9"
-  children: "pool_stack4"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1272,7 +1239,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -1281,7 +1248,6 @@ nodes {
   name: "pool_stack4"
   op: MaxPooling
   parents: "conv0_stack4_1"
-  children: "conv0_stack5"
   src_tensors_indices: 0
   input_tensors {
     name: "conv0_stack4_1/output0"
@@ -1319,7 +1285,6 @@ nodes {
 nodes {
   name: "data_9"
   op: Data
-  children: "reorder_10"
   input_tensors {
     name: "data_9/input0"
     data_type: Float32
@@ -1349,7 +1314,6 @@ nodes {
   name: "reorder_10"
   op: Reorder
   parents: "data_9"
-  children: "conv0_stack5"
   src_tensors_indices: 0
   input_tensors {
     name: "data_9/output0"
@@ -1381,7 +1345,6 @@ nodes {
   op: Convolution3d
   parents: "pool_stack4"
   parents: "reorder_10"
-  children: "conv0_stack6"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1429,7 +1392,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -1437,7 +1400,6 @@ nodes {
 nodes {
   name: "data_10"
   op: Data
-  children: "reorder_11"
   input_tensors {
     name: "data_10/input0"
     data_type: Float32
@@ -1467,7 +1429,6 @@ nodes {
   name: "reorder_11"
   op: Reorder
   parents: "data_10"
-  children: "conv0_stack6"
   src_tensors_indices: 0
   input_tensors {
     name: "data_10/output0"
@@ -1546,7 +1507,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }

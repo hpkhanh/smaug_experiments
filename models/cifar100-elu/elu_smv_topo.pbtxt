@@ -2,7 +2,6 @@ name: "elu_smv"
 nodes {
   name: "input"
   op: Data
-  children: "conv0_stack0"
   input_tensors {
     name: "input/input0"
     data_type: Float16
@@ -33,7 +32,6 @@ nodes {
 nodes {
   name: "data"
   op: Data
-  children: "conv0_stack0"
   input_tensors {
     name: "data/input0"
     data_type: Float16
@@ -66,7 +64,6 @@ nodes {
   op: Convolution3d
   parents: "input"
   parents: "data"
-  children: "pool_stack0"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -117,7 +114,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -126,7 +123,6 @@ nodes {
   name: "pool_stack0"
   op: MaxPooling
   parents: "conv0_stack0"
-  children: "conv0_stack1"
   src_tensors_indices: 0
   input_tensors {
     name: "conv0_stack0/output0"
@@ -166,7 +162,6 @@ nodes {
 nodes {
   name: "data_1"
   op: Data
-  children: "conv0_stack1"
   input_tensors {
     name: "data_1/input0"
     data_type: Float16
@@ -199,7 +194,6 @@ nodes {
   op: Convolution3d
   parents: "pool_stack0"
   parents: "data_1"
-  children: "conv1_stack1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -250,7 +244,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -258,7 +252,6 @@ nodes {
 nodes {
   name: "data_2"
   op: Data
-  children: "conv1_stack1"
   input_tensors {
     name: "data_2/input0"
     data_type: Float16
@@ -291,7 +284,6 @@ nodes {
   op: Convolution3d
   parents: "conv0_stack1"
   parents: "data_2"
-  children: "pool_stack1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -342,7 +334,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -351,7 +343,6 @@ nodes {
   name: "pool_stack1"
   op: MaxPooling
   parents: "conv1_stack1"
-  children: "conv0_stack2"
   src_tensors_indices: 0
   input_tensors {
     name: "conv1_stack1/output0"
@@ -391,7 +382,6 @@ nodes {
 nodes {
   name: "data_3"
   op: Data
-  children: "conv0_stack2"
   input_tensors {
     name: "data_3/input0"
     data_type: Float16
@@ -424,7 +414,6 @@ nodes {
   op: Convolution3d
   parents: "pool_stack1"
   parents: "data_3"
-  children: "conv1_stack2"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -475,7 +464,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -483,7 +472,6 @@ nodes {
 nodes {
   name: "data_4"
   op: Data
-  children: "conv1_stack2"
   input_tensors {
     name: "data_4/input0"
     data_type: Float16
@@ -516,7 +504,6 @@ nodes {
   op: Convolution3d
   parents: "conv0_stack2"
   parents: "data_4"
-  children: "pool_stack2"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -567,7 +554,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -576,7 +563,6 @@ nodes {
   name: "pool_stack2"
   op: MaxPooling
   parents: "conv1_stack2"
-  children: "conv0_stack3"
   src_tensors_indices: 0
   input_tensors {
     name: "conv1_stack2/output0"
@@ -616,7 +602,6 @@ nodes {
 nodes {
   name: "data_5"
   op: Data
-  children: "conv0_stack3"
   input_tensors {
     name: "data_5/input0"
     data_type: Float16
@@ -649,7 +634,6 @@ nodes {
   op: Convolution3d
   parents: "pool_stack2"
   parents: "data_5"
-  children: "conv1_stack3"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -700,7 +684,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -708,7 +692,6 @@ nodes {
 nodes {
   name: "data_6"
   op: Data
-  children: "conv1_stack3"
   input_tensors {
     name: "data_6/input0"
     data_type: Float16
@@ -741,7 +724,6 @@ nodes {
   op: Convolution3d
   parents: "conv0_stack3"
   parents: "data_6"
-  children: "pool_stack3"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -792,7 +774,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -801,7 +783,6 @@ nodes {
   name: "pool_stack3"
   op: MaxPooling
   parents: "conv1_stack3"
-  children: "conv0_stack4"
   src_tensors_indices: 0
   input_tensors {
     name: "conv1_stack3/output0"
@@ -841,7 +822,6 @@ nodes {
 nodes {
   name: "data_7"
   op: Data
-  children: "conv0_stack4"
   input_tensors {
     name: "data_7/input0"
     data_type: Float16
@@ -874,7 +854,6 @@ nodes {
   op: Convolution3d
   parents: "pool_stack3"
   parents: "data_7"
-  children: "conv0_stack4_1"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -925,7 +904,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -933,7 +912,6 @@ nodes {
 nodes {
   name: "data_8"
   op: Data
-  children: "conv0_stack4_1"
   input_tensors {
     name: "data_8/input0"
     data_type: Float16
@@ -966,7 +944,6 @@ nodes {
   op: Convolution3d
   parents: "conv0_stack4"
   parents: "data_8"
-  children: "pool_stack4"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1017,7 +994,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -1026,7 +1003,6 @@ nodes {
   name: "pool_stack4"
   op: MaxPooling
   parents: "conv0_stack4_1"
-  children: "conv0_stack5"
   src_tensors_indices: 0
   input_tensors {
     name: "conv0_stack4_1/output0"
@@ -1066,7 +1042,6 @@ nodes {
 nodes {
   name: "data_9"
   op: Data
-  children: "conv0_stack5"
   input_tensors {
     name: "data_9/input0"
     data_type: Float16
@@ -1099,7 +1074,6 @@ nodes {
   op: Convolution3d
   parents: "pool_stack4"
   parents: "data_9"
-  children: "conv0_stack6"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
@@ -1150,7 +1124,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
@@ -1158,7 +1132,6 @@ nodes {
 nodes {
   name: "data_10"
   op: Data
-  children: "conv0_stack6"
   input_tensors {
     name: "data_10/input0"
     data_type: Float16
@@ -1241,7 +1214,7 @@ nodes {
     act_params {
       activation: ELU
       elu_params {
-        alpha: 0.10000000149
+        alpha: 0.1
       }
     }
   }
