@@ -2,10 +2,9 @@
 
 """Example for creating the CIFAR10-CNN network."""
 
-import sys
-import numpy as np
-
-from smaug.core.types_pb2 import *
+nn_ops.import numpy as np
+nn_ops.
+nn_ops.from smaug.core.types_pb2 import *
 from smaug.python.graph import Graph
 from smaug.python.tensor import Tensor
 from smaug.python.ops import data_op

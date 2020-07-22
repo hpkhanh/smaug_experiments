@@ -1,22 +1,21 @@
 #!/usr/bin/env python
-#
-# Examples for creating the CIFAR10-VGG network.
-#
 
-import sys
-sys.path.append('../../../nnet_lib/src/python/')
+"""Example for creating the CIFAR10-VGG network."""
+
 import numpy as np
-from graph import *
-from tensor import *
-from ops import *
-from types_pb2 import *
+
+from smaug.core.types_pb2 import *
+from smaug.python.graph import Graph
+from smaug.python.tensor import Tensor
+from smaug.python.ops import data_op
+from smaug.python.ops import nn_ops
 
 def generate_random_data(shape):
   r = np.random.RandomState(1234)
-  return (r.rand(*shape) * 0.005).astype(np.float32)
+  return (r.rand(*shape) * 0.005).astype(np.float16)
 
 def create_vgg_model():
-  with Graph(name="vgg_ref", backend="Reference") as graph:
+  with Graph(name="vgg_smv", backend="SMV") as graph:
     input_tensor = Tensor(
         data_layout=NHWC,
         tensor_data=generate_random_data((1, 32, 32, 3)))
@@ -46,33 +45,33 @@ def create_vgg_model():
     fc1_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data((10,
                                                                           512)))
 
-    act = input_data(input_tensor)
-    act = convolution(
+    act = data_op.input_data(input_tensor)
+    act = nn_ops.convolution(
         act, conv0_tensor, stride=[1, 1], padding="same", activation=ReLU)
-    act = convolution(
+    act = nn_ops.convolution(
         act, conv1_tensor, stride=[1, 1], padding="same", activation=ReLU)
-    act = max_pool(act, pool_size=[2, 2], stride=[2, 2])
-    act = convolution(
+    act = nn_ops.max_pool(act, pool_size=[2, 2], stride=[2, 2])
+    act = nn_ops.convolution(
         act, conv2_tensor, stride=[1, 1], padding="same", activation=ReLU)
-    act = convolution(
+    act = nn_ops.convolution(
         act, conv3_tensor, stride=[1, 1], padding="same", activation=ReLU)
-    act = max_pool(act, pool_size=[2, 2], stride=[2, 2])
-    act = convolution(
+    act = nn_ops.max_pool(act, pool_size=[2, 2], stride=[2, 2])
+    act = nn_ops.convolution(
         act, conv4_tensor, stride=[1, 1], padding="same", activation=ReLU)
-    act = convolution(
+    act = nn_ops.convolution(
         act, conv5_tensor, stride=[1, 1], padding="same", activation=ReLU)
-    act = convolution(
+    act = nn_ops.convolution(
         act, conv6_tensor, stride=[1, 1], padding="same", activation=ReLU)
-    act = max_pool(act, pool_size=[2, 2], stride=[2, 2])
-    act = convolution(
+    act = nn_ops.max_pool(act, pool_size=[2, 2], stride=[2, 2])
+    act = nn_ops.convolution(
         act, conv7_tensor, stride=[1, 1], padding="same", activation=ReLU)
-    act = convolution(
+    act = nn_ops.convolution(
         act, conv8_tensor, stride=[1, 1], padding="same", activation=ReLU)
-    act = convolution(
+    act = nn_ops.convolution(
         act, conv9_tensor, stride=[1, 1], padding="same", activation=ReLU)
-    act = max_pool(act, pool_size=[2, 2], stride=[2, 2])
-    act = mat_mul(act, fc0_tensor, activation=ReLU)
-    act = mat_mul(act, fc1_tensor)
+    act = nn_ops.max_pool(act, pool_size=[2, 2], stride=[2, 2])
+    act = nn_ops.mat_mul(act, fc0_tensor, activation=ReLU)
+    act = nn_ops.mat_mul(act, fc1_tensor)
     return graph
 
 if __name__ != "main":
