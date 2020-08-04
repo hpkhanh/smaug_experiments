@@ -3,18 +3,11 @@
 """Example for creating the ResNet-50 network."""
 
 import numpy as np
-
-from smaug.core.types_pb2 import *
-from smaug.python.graph import Graph
-from smaug.python.tensor import Tensor
-from smaug.python.ops import data_op
-from smaug.python.ops import math_ops
-from smaug.python.ops import nn_ops
-from smaug.python.ops import activation_ops
+import smaug as sg
 
 def generate_random_data(shape):
   r = np.random.RandomState(1234)
-  return (r.rand(*shape) * 0.008).astype(np.float32)
+  return (r.rand(*shape) * 0.008).astype(np.float16)
 
 def identity_block(input_tensor, kernel_size, filters, stage, block):
   """The identity block is the block that has no conv layer at shortcut.
@@ -37,61 +30,61 @@ def identity_block(input_tensor, kernel_size, filters, stage, block):
 
   # Tensors
   input_tensor_chans = input_tensor.dims(
-      3) if input_tensor.shape.layout == NHWC else input_tensor.dims(1)
-  conv0_tensor = Tensor(
-      data_layout=NHWC, tensor_data=generate_random_data(
+      3) if input_tensor.shape.layout == sg.NHWC else input_tensor.dims(1)
+  conv0_tensor = sg.Tensor(
+      data_layout=sg.NHWC, tensor_data=generate_random_data(
           (filters0, 1, 1, input_tensor_chans)))
-  bn0_mean_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
-      (1, filters0)))
-  bn0_var_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
-      (1, filters0)))
-  bn0_gamma_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
-      (1, filters0)))
-  bn0_beta_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
-      (1, filters0)))
-  conv1_tensor = Tensor(
-      data_layout=NHWC, tensor_data=generate_random_data(
+  bn0_mean_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters0)))
+  bn0_var_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters0)))
+  bn0_gamma_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters0)))
+  bn0_beta_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters0)))
+  conv1_tensor = sg.Tensor(
+      data_layout=sg.NHWC, tensor_data=generate_random_data(
           (filters1, kernel_size, kernel_size, filters0)))
-  bn1_mean_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
-      (1, filters1)))
-  bn1_var_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
-      (1, filters1)))
-  bn1_gamma_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
-      (1, filters1)))
-  bn1_beta_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
-      (1, filters1)))
-  conv2_tensor = Tensor(
-      data_layout=NHWC, tensor_data=generate_random_data(
+  bn1_mean_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters1)))
+  bn1_var_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters1)))
+  bn1_gamma_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters1)))
+  bn1_beta_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters1)))
+  conv2_tensor = sg.Tensor(
+      data_layout=sg.NHWC, tensor_data=generate_random_data(
           (filters2, 1, 1, filters1)))
-  bn2_mean_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
-      (1, filters2)))
-  bn2_var_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
-      (1, filters2)))
-  bn2_gamma_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
-      (1, filters2)))
-  bn2_beta_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
-      (1, filters2)))
+  bn2_mean_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters2)))
+  bn2_var_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters2)))
+  bn2_gamma_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters2)))
+  bn2_beta_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters2)))
 
-  x = nn_ops.convolution(
+  x = sg.nn.convolution(
       input_tensor, conv0_tensor, stride=[1, 1], padding="same",
       name=conv_name_base + '_2a')
-  x = nn_ops.batch_norm(
+  x = sg.nn.batch_norm(
       x, bn0_mean_tensor, bn0_var_tensor, bn0_gamma_tensor, bn0_beta_tensor,
-      activation=ReLU, name=bn_name_base + '_2a')
-  x = nn_ops.convolution(
+      activation="relu", name=bn_name_base + '_2a')
+  x = sg.nn.convolution(
       x, conv1_tensor, stride=[1, 1], padding="same",
       name=conv_name_base + '_2b')
-  x = nn_ops.batch_norm(
+  x = sg.nn.batch_norm(
       x, bn1_mean_tensor, bn1_var_tensor, bn1_gamma_tensor, bn1_beta_tensor,
-      activation=ReLU, name=bn_name_base + '_2b')
-  x = nn_ops.convolution(
+      activation="relu", name=bn_name_base + '_2b')
+  x = sg.nn.convolution(
       x, conv2_tensor, stride=[1, 1], padding="same",
       name=conv_name_base + '_2c')
-  x = nn_ops.batch_norm(
+  x = sg.nn.batch_norm(
       x, bn2_mean_tensor, bn2_var_tensor, bn2_gamma_tensor, bn2_beta_tensor,
       name=bn_name_base + '_2c')
-  x = math_ops.add(x, input_tensor, name=add_name)
-  x = activation_ops.relu(x, name=relu_name)
+  x = sg.math.add(x, input_tensor, name=add_name)
+  x = sg.nn.relu(x, name=relu_name)
   return x
 
 def conv_block(
@@ -120,107 +113,107 @@ def conv_block(
   add_name = 'add' + str(stage) + "_" + block
   relu_name = 'relu' + str(stage) + "_" + block
 
-  # Tensors
+  # sg.Tensors
   input_tensor_chans = input_tensor.dims(
-      3) if input_tensor.shape.layout == NHWC else input_tensor.dims(1)
-  conv0_tensor = Tensor(
-      data_layout=NHWC, tensor_data=generate_random_data(
+      3) if input_tensor.shape.layout == sg.NHWC else input_tensor.dims(1)
+  conv0_tensor = sg.Tensor(
+      data_layout=sg.NHWC, tensor_data=generate_random_data(
           (filters0, 1, 1, input_tensor_chans)))
-  bn0_mean_tensor = Tensor(
-      data_layout=NC, tensor_data=generate_random_data((1, filters0)))
-  bn0_var_tensor = Tensor(
-      data_layout=NC, tensor_data=generate_random_data((1, filters0)))
-  bn0_gamma_tensor = Tensor(
-      data_layout=NC, tensor_data=generate_random_data((1, filters0)))
-  bn0_beta_tensor = Tensor(
-      data_layout=NC, tensor_data=generate_random_data((1, filters0)))
-  conv1_tensor = Tensor(
-      data_layout=NHWC, tensor_data=generate_random_data(
+  bn0_mean_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters0)))
+  bn0_var_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters0)))
+  bn0_gamma_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters0)))
+  bn0_beta_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters0)))
+  conv1_tensor = sg.Tensor(
+      data_layout=sg.NHWC, tensor_data=generate_random_data(
           (filters1, kernel_size, kernel_size, filters0)))
-  bn1_mean_tensor = Tensor(
-      data_layout=NC, tensor_data=generate_random_data((1, filters1)))
-  bn1_var_tensor = Tensor(
-      data_layout=NC, tensor_data=generate_random_data((1, filters1)))
-  bn1_gamma_tensor = Tensor(
-      data_layout=NC, tensor_data=generate_random_data((1, filters1)))
-  bn1_beta_tensor = Tensor(
-      data_layout=NC, tensor_data=generate_random_data((1, filters1)))
-  conv2_tensor = Tensor(
-      data_layout=NHWC, tensor_data=generate_random_data(
+  bn1_mean_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters1)))
+  bn1_var_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters1)))
+  bn1_gamma_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters1)))
+  bn1_beta_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters1)))
+  conv2_tensor = sg.Tensor(
+      data_layout=sg.NHWC, tensor_data=generate_random_data(
           (filters2, 1, 1, filters1)))
-  bn2_mean_tensor = Tensor(
-      data_layout=NC, tensor_data=generate_random_data((1, filters2)))
-  bn2_var_tensor = Tensor(
-      data_layout=NC, tensor_data=generate_random_data((1, filters2)))
-  bn2_gamma_tensor = Tensor(
-      data_layout=NC, tensor_data=generate_random_data((1, filters2)))
-  bn2_beta_tensor = Tensor(
-      data_layout=NC, tensor_data=generate_random_data((1, filters2)))
-  conv3_tensor = Tensor(
-      data_layout=NHWC, tensor_data=generate_random_data(
+  bn2_mean_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters2)))
+  bn2_var_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters2)))
+  bn2_gamma_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters2)))
+  bn2_beta_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters2)))
+  conv3_tensor = sg.Tensor(
+      data_layout=sg.NHWC, tensor_data=generate_random_data(
           (filters2, 1, 1, input_tensor_chans)))
-  bn3_mean_tensor = Tensor(
-      data_layout=NC, tensor_data=generate_random_data((1, filters2)))
-  bn3_var_tensor = Tensor(
-      data_layout=NC, tensor_data=generate_random_data((1, filters2)))
-  bn3_gamma_tensor = Tensor(
-      data_layout=NC, tensor_data=generate_random_data((1, filters2)))
-  bn3_beta_tensor = Tensor(
-      data_layout=NC, tensor_data=generate_random_data((1, filters2)))
+  bn3_mean_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters2)))
+  bn3_var_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters2)))
+  bn3_gamma_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters2)))
+  bn3_beta_tensor = sg.Tensor(
+      data_layout=sg.NC, tensor_data=generate_random_data((1, filters2)))
 
-  x = nn_ops.convolution(
+  x = sg.nn.convolution(
       input_tensor, conv0_tensor, stride=[1, 1], padding="same",
       name=conv_name_base + '_2a')
-  x = nn_ops.batch_norm(
+  x = sg.nn.batch_norm(
       x, bn0_mean_tensor, bn0_var_tensor, bn0_gamma_tensor, bn0_beta_tensor,
-      activation=ReLU)
-  x = nn_ops.convolution(
+      activation="relu")
+  x = sg.nn.convolution(
       x, conv1_tensor, stride=strides, padding="same",
       name=conv_name_base + '_2b')
-  x = nn_ops.batch_norm(
+  x = sg.nn.batch_norm(
       x, bn1_mean_tensor, bn1_var_tensor, bn1_gamma_tensor, bn1_beta_tensor,
-      activation=ReLU, name=bn_name_base + '_2b')
-  x = nn_ops.convolution(
+      activation="relu", name=bn_name_base + '_2b')
+  x = sg.nn.convolution(
       x, conv2_tensor, stride=[1, 1], padding="same",
       name=conv_name_base + '_2c')
-  x = nn_ops.batch_norm(
+  x = sg.nn.batch_norm(
       x, bn2_mean_tensor, bn2_var_tensor, bn2_gamma_tensor, bn2_beta_tensor,
       name=bn_name_base + '_2c')
-  shortcut = nn_ops.convolution(
+  shortcut = sg.nn.convolution(
       input_tensor, conv3_tensor, stride=strides, padding="same",
       name=conv_name_base + '_1')
-  shortcut = nn_ops.batch_norm(
+  shortcut = sg.nn.batch_norm(
       shortcut, bn3_mean_tensor, bn3_var_tensor, bn3_gamma_tensor,
       bn3_beta_tensor, name=bn_name_base + '_1')
-  x = math_ops.add(x, shortcut, name=add_name)
-  x = activation_ops.relu(x, name=relu_name)
+  x = sg.math.add(x, shortcut, name=add_name)
+  x = sg.nn.relu(x, name=relu_name)
   return x
 
 def create_resnet50():
-  with Graph(name="resnet_ref", backend="Reference") as graph:
-    # Tensors and kernels are initialized as NCHW layout.
-    input_tensor = Tensor(data_layout=NHWC, tensor_data=generate_random_data(
-        (1, 225, 225, 3)))
-    conv0_tensor = Tensor(data_layout=NHWC, tensor_data=generate_random_data(
-        (64, 7, 7, 3)))
-    bn0_mean_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
-        (1, 64)))
-    bn0_var_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
-        (1, 64)))
-    bn0_gamma_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
-        (1, 64)))
-    bn0_beta_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
-        (1, 64)))
-    fc_tensor = Tensor(data_layout=NC, tensor_data=generate_random_data(
-        (10, 7*7*2048)))
+  with sg.Graph(name="resnet_smv", backend="SMV") as graph:
+    # sg.Tensors and kernels are initialized as sg.NCHW layout.
+    input_tensor = sg.Tensor(
+        data_layout=sg.NHWC, tensor_data=generate_random_data((1, 225, 225, 3)))
+    conv0_tensor = sg.Tensor(
+        data_layout=sg.NHWC, tensor_data=generate_random_data((64, 7, 7, 3)))
+    bn0_mean_tensor = sg.Tensor(
+        data_layout=sg.NC, tensor_data=generate_random_data((1, 64)))
+    bn0_var_tensor = sg.Tensor(
+        data_layout=sg.NC, tensor_data=generate_random_data((1, 64)))
+    bn0_gamma_tensor = sg.Tensor(
+        data_layout=sg.NC, tensor_data=generate_random_data((1, 64)))
+    bn0_beta_tensor = sg.Tensor(
+        data_layout=sg.NC, tensor_data=generate_random_data((1, 64)))
+    fc_tensor = sg.Tensor(
+        data_layout=sg.NC, tensor_data=generate_random_data((10, 7 * 7 * 2048)))
 
-    x = data_op.input_data(input_tensor, name="input")
-    x = nn_ops.convolution(
+    x = sg.input_data(input_tensor, name="input")
+    x = sg.nn.convolution(
         x, conv0_tensor, stride=[2, 2], padding="same", name="conv0")
-    x = nn_ops.batch_norm(
+    x = sg.nn.batch_norm(
         x, bn0_mean_tensor, bn0_var_tensor, bn0_gamma_tensor, bn0_beta_tensor,
-        activation=ReLU, name="bn0")
-    x = nn_ops.max_pool(x, pool_size=[3, 3], stride=[2, 2], name="pool")
+        activation="relu", name="bn0")
+    x = sg.nn.max_pool(x, pool_size=[3, 3], stride=[2, 2], name="pool")
 
     # Four resnet blocks.
     x = conv_block(x, 3, [64, 64, 256], stage=2, block='a', strides=(1, 1))
@@ -243,7 +236,7 @@ def create_resnet50():
     x = identity_block(x, 3, [512, 512, 2048], stage=5, block='b')
     x = identity_block(x, 3, [512, 512, 2048], stage=5, block='c')
 
-    x= nn_ops.mat_mul(x, fc_tensor, name="fc")
+    x = sg.nn.mat_mul(x, fc_tensor, name="fc")
     return graph
 
 if __name__ != "main":
