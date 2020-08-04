@@ -1,9 +1,9 @@
 name: "minerva_ref"
 nodes {
-  name: "input"
+  name: "data"
   op: Data
   input_tensors {
-    name: "input/input0"
+    name: "data/input0"
     data_type: Float32
     shape {
       dims: 1
@@ -15,7 +15,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "input/output0"
+    name: "data/output0"
     data_type: Float32
     shape {
       dims: 1
@@ -30,10 +30,10 @@ nodes {
 nodes {
   name: "reorder"
   op: Reorder
-  parents: "input"
+  parents: "data"
   src_tensors_indices: 0
   input_tensors {
-    name: "input/output0"
+    name: "data/output0"
     data_type: Float32
     shape {
       dims: 1
@@ -56,10 +56,10 @@ nodes {
   }
 }
 nodes {
-  name: "data"
+  name: "data_1"
   op: Data
   input_tensors {
-    name: "data/input0"
+    name: "data_1/input0"
     data_type: Float32
     shape {
       dims: 256
@@ -69,7 +69,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "data/output0"
+    name: "data_1/output0"
     data_type: Float32
     shape {
       dims: 256
@@ -82,10 +82,10 @@ nodes {
 nodes {
   name: "reorder_1"
   op: Reorder
-  parents: "data"
+  parents: "data_1"
   src_tensors_indices: 0
   input_tensors {
-    name: "data/output0"
+    name: "data_1/output0"
     data_type: Float32
     shape {
       dims: 256
@@ -106,7 +106,7 @@ nodes {
   }
 }
 nodes {
-  name: "fc0"
+  name: "mat_mul"
   op: InnerProduct
   parents: "reorder"
   parents: "reorder_1"
@@ -133,100 +133,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "fc0/output0"
-    data_type: Float32
-    shape {
-      dims: 1
-      dims: 256
-      layout: NC
-    }
-    data_format: Uncompressed
-  }
-  params {
-    act_params {
-      activation: ReLU
-    }
-  }
-}
-nodes {
-  name: "data_1"
-  op: Data
-  input_tensors {
-    name: "data_1/input0"
-    data_type: Float32
-    shape {
-      dims: 256
-      dims: 256
-      layout: NC
-    }
-    data_format: Uncompressed
-  }
-  output_tensors {
-    name: "data_1/output0"
-    data_type: Float32
-    shape {
-      dims: 256
-      dims: 256
-      layout: NC
-    }
-    data_format: Uncompressed
-  }
-}
-nodes {
-  name: "reorder_2"
-  op: Reorder
-  parents: "data_1"
-  src_tensors_indices: 0
-  input_tensors {
-    name: "data_1/output0"
-    data_type: Float32
-    shape {
-      dims: 256
-      dims: 256
-      layout: NC
-    }
-    data_format: Uncompressed
-  }
-  output_tensors {
-    name: "reorder_2/output0"
-    data_type: Float32
-    shape {
-      dims: 256
-      dims: 256
-      layout: CN
-    }
-    data_format: Uncompressed
-  }
-}
-nodes {
-  name: "fc1"
-  op: InnerProduct
-  parents: "fc0"
-  parents: "reorder_2"
-  src_tensors_indices: 0
-  src_tensors_indices: 0
-  input_tensors {
-    name: "fc0/output0"
-    data_type: Float32
-    shape {
-      dims: 1
-      dims: 256
-      layout: NC
-    }
-    data_format: Uncompressed
-  }
-  input_tensors {
-    name: "reorder_2/output0"
-    data_type: Float32
-    shape {
-      dims: 256
-      dims: 256
-      layout: CN
-    }
-    data_format: Uncompressed
-  }
-  output_tensors {
-    name: "fc1/output0"
+    name: "mat_mul/output0"
     data_type: Float32
     shape {
       dims: 1
@@ -266,7 +173,7 @@ nodes {
   }
 }
 nodes {
-  name: "reorder_3"
+  name: "reorder_2"
   op: Reorder
   parents: "data_2"
   src_tensors_indices: 0
@@ -281,7 +188,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "reorder_3/output0"
+    name: "reorder_2/output0"
     data_type: Float32
     shape {
       dims: 256
@@ -292,14 +199,14 @@ nodes {
   }
 }
 nodes {
-  name: "fc2"
+  name: "mat_mul_1"
   op: InnerProduct
-  parents: "fc1"
-  parents: "reorder_3"
+  parents: "mat_mul"
+  parents: "reorder_2"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
-    name: "fc1/output0"
+    name: "mat_mul/output0"
     data_type: Float32
     shape {
       dims: 1
@@ -309,7 +216,7 @@ nodes {
     data_format: Uncompressed
   }
   input_tensors {
-    name: "reorder_3/output0"
+    name: "reorder_2/output0"
     data_type: Float32
     shape {
       dims: 256
@@ -319,7 +226,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "fc2/output0"
+    name: "mat_mul_1/output0"
     data_type: Float32
     shape {
       dims: 1
@@ -341,7 +248,7 @@ nodes {
     name: "data_3/input0"
     data_type: Float32
     shape {
-      dims: 10
+      dims: 256
       dims: 256
       layout: NC
     }
@@ -349,6 +256,99 @@ nodes {
   }
   output_tensors {
     name: "data_3/output0"
+    data_type: Float32
+    shape {
+      dims: 256
+      dims: 256
+      layout: NC
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "reorder_3"
+  op: Reorder
+  parents: "data_3"
+  src_tensors_indices: 0
+  input_tensors {
+    name: "data_3/output0"
+    data_type: Float32
+    shape {
+      dims: 256
+      dims: 256
+      layout: NC
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "reorder_3/output0"
+    data_type: Float32
+    shape {
+      dims: 256
+      dims: 256
+      layout: CN
+    }
+    data_format: Uncompressed
+  }
+}
+nodes {
+  name: "mat_mul_2"
+  op: InnerProduct
+  parents: "mat_mul_1"
+  parents: "reorder_3"
+  src_tensors_indices: 0
+  src_tensors_indices: 0
+  input_tensors {
+    name: "mat_mul_1/output0"
+    data_type: Float32
+    shape {
+      dims: 1
+      dims: 256
+      layout: NC
+    }
+    data_format: Uncompressed
+  }
+  input_tensors {
+    name: "reorder_3/output0"
+    data_type: Float32
+    shape {
+      dims: 256
+      dims: 256
+      layout: CN
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "mat_mul_2/output0"
+    data_type: Float32
+    shape {
+      dims: 1
+      dims: 256
+      layout: NC
+    }
+    data_format: Uncompressed
+  }
+  params {
+    act_params {
+      activation: ReLU
+    }
+  }
+}
+nodes {
+  name: "data_4"
+  op: Data
+  input_tensors {
+    name: "data_4/input0"
+    data_type: Float32
+    shape {
+      dims: 10
+      dims: 256
+      layout: NC
+    }
+    data_format: Uncompressed
+  }
+  output_tensors {
+    name: "data_4/output0"
     data_type: Float32
     shape {
       dims: 10
@@ -361,10 +361,10 @@ nodes {
 nodes {
   name: "reorder_4"
   op: Reorder
-  parents: "data_3"
+  parents: "data_4"
   src_tensors_indices: 0
   input_tensors {
-    name: "data_3/output0"
+    name: "data_4/output0"
     data_type: Float32
     shape {
       dims: 10
@@ -385,14 +385,14 @@ nodes {
   }
 }
 nodes {
-  name: "fc3"
+  name: "mat_mul_3"
   op: InnerProduct
-  parents: "fc2"
+  parents: "mat_mul_2"
   parents: "reorder_4"
   src_tensors_indices: 0
   src_tensors_indices: 0
   input_tensors {
-    name: "fc2/output0"
+    name: "mat_mul_2/output0"
     data_type: Float32
     shape {
       dims: 1
@@ -412,7 +412,7 @@ nodes {
     data_format: Uncompressed
   }
   output_tensors {
-    name: "fc3/output0"
+    name: "mat_mul_3/output0"
     data_type: Float32
     shape {
       dims: 1
