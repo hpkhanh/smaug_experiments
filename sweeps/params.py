@@ -12,13 +12,14 @@ def change_config_file(point_dir, config_file, kv_map):
   f.close()
 
 class BaseParam:
-  def __init__(self, sweep_vals, changes_trace=False):
+  def __init__(self, name, sweep_vals, changes_trace=False):
+    self._name = name
     self._sweep_vals = sweep_vals
     self._changes_trace = changes_trace
     self._curr_sweep_idx = -1
 
   def __str__(self):
-    return "%s:%s" % (self._name, str(self.curr_sweep_value()))
+    return "%s_%s" % (self._name, str(self.curr_sweep_value()))
 
   @property
   def changes_trace(self):
@@ -38,9 +39,8 @@ class BaseParam:
     return True
 
 class NumThreadsParam(BaseParam):
-  def __init__(self, sweep_vals):
-    BaseParam.__init__(self, sweep_vals, False)
-    self._name = "Number of threads"
+  def __init__(self, name, sweep_vals):
+    BaseParam.__init__(self, name, sweep_vals, False)
 
   def apply(self, point_dir):
     change_config_file(
@@ -50,9 +50,8 @@ class NumThreadsParam(BaseParam):
         })
 
 class NumAccelsParam(BaseParam):
-  def __init__(self, sweep_vals):
-    BaseParam.__init__(self, sweep_vals, True)
-    self._name = "Number of accelerators"
+  def __init__(self, name, sweep_vals):
+    BaseParam.__init__(self, name, sweep_vals, True)
 
   def apply(self, point_dir):
     # Change the run.sh, gem5.cfg and trace.sh.
@@ -80,36 +79,32 @@ class NumAccelsParam(BaseParam):
       gem5cfg.write(cfg)
 
 class SoCInterfaceParam(BaseParam):
-  def __init__(self, sweep_vals):
-    BaseParam.__init__(self, sweep_vals, False)
-    self._name = "SoC interface"
+  def __init__(self, name, sweep_vals):
+    BaseParam.__init__(self, name, sweep_vals, False)
 
   def apply(self, point_dir):
     change_config_file(
         point_dir, "model_files", {"soc_interface": self.curr_sweep_value()})
 
 class L2SizeParam(BaseParam):
-  def __init__(self, sweep_vals):
-    BaseParam.__init__(self, sweep_vals, False)
-    self._name = "L2 size"
+  def __init__(self, name, sweep_vals):
+    BaseParam.__init__(self, name, sweep_vals, False)
 
   def apply(self, point_dir):
     change_config_file(
         point_dir, "run.sh", {"l2_size": self.curr_sweep_value()})
 
 class L2AssocParam(BaseParam):
-  def __init__(self, sweep_vals):
-    BaseParam.__init__(self, sweep_vals, False)
-    self._name = "L2 assoc"
+  def __init__(self, name, sweep_vals):
+    BaseParam.__init__(self, name, sweep_vals, False)
 
   def apply(self, point_dir):
     change_config_file(
         point_dir, "run.sh", {"l2_assoc": self.curr_sweep_value()})
 
 class AccClockParam(BaseParam):
-  def __init__(self, sweep_vals):
-    BaseParam.__init__(self, sweep_vals, False)
-    self._name = "Accelerator clock time"
+  def __init__(self, name, sweep_vals):
+    BaseParam.__init__(self, name, sweep_vals, False)
 
   def apply(self, point_dir):
     change_config_file(
@@ -121,9 +116,8 @@ class AccClockParam(BaseParam):
         point_dir, "gem5.cfg", {"cycle_time": self.curr_sweep_value()})
 
 class MemTypeParam(BaseParam):
-  def __init__(self, sweep_vals):
-    BaseParam.__init__(self, sweep_vals, False)
-    self._name = "Memory type"
+  def __init__(self, name, sweep_vals):
+    BaseParam.__init__(self, name, sweep_vals, False)
 
   def apply(self, point_dir):
     change_config_file(

@@ -35,8 +35,8 @@ class Sweeper:
 
   def _init_params(self, params):
     self._params = []
-    for p, v in params.items():
-      self._params.append(param_types[p](v))
+    for p, vals in params.items():
+      self._params.append(param_types[p](p, vals))
 
   def curr_point_dir(self):
     return os.path.join(self._output_dir, str(self._num_data_points))
