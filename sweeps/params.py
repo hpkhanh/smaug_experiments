@@ -58,16 +58,17 @@ class NumAccelsParam(BaseParam):
     change_config_file(
         point_dir, "run.sh", {"num-accels": self.curr_sweep_value()})
     if self._sweep_vals[self._curr_sweep_idx] > 1:
-      self._change_gem5_cfg(sweeper)
+      self._change_gem5_cfg(point_dir)
     change_config_file(
         point_dir, "trace.sh", {"num-accels": self.curr_sweep_value()})
 
-  def _change_gem5_cfg(self, sweeper):
+  def _change_gem5_cfg(self, point_dir):
     gem5cfg = RawConfigParser()
-    gem5cfg.read(os.path.join(sweeper.curr_point_dir(), "gem5.cfg"))
+    gem5cfg_file = os.path.join(point_dir, "gem5.cfg")
+    gem5cfg.read(gem5cfg_file)
     acc0 = gem5cfg.sections()[0]
     acc0_id = int(gem5cfg.get(acc0, "accelerator_id"))
-    with open(os.path.join(sweeper.curr_point_dir(), "gem5.cfg"), "w") as cfg:
+    with open(gem5cfg_file, "w") as cfg:
       for n in range(1, self.curr_sweep_value()):
         new_acc = "acc" + str(n)
         gem5cfg.add_section(new_acc)
