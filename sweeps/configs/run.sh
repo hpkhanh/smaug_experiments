@@ -14,17 +14,17 @@ ${gem5_dir}/build/X86/gem5.opt \
   --env=env.txt \
   --num-cpus=1 \
   --mem-size=4GB \
-  --mem-type=LPDDR4_3200_2x16  \
-  --sys-clock=1GHz \
+  --mem-type=%(mem-type)s  \
+  --sys-clock=%(sys-clock)s \
   --cpu-clock=2GHz \
   --cpu-type=DerivO3CPU \
   --ruby \
   --access-backing-store \
-  --l2_size=2097152 \
-  --l2_assoc=16 \
+  --l2_size=%(l2_size)s \
+  --l2_assoc=%(l2_assoc)s \
   --cacheline_size=32 \
   --accel_cfg_file=gem5.cfg \
   --fast-forward=10000000000 \
   -c ${bmk_dir}/smaug \
-  -o "${topo_file} ${params_file} --sample-level=high --gem5 --debug-level=0 --num-accels=1" \
+  -o "${topo_file} ${params_file} --sample-level=high --gem5 --debug-level=0 --num-accels=%(num-accels)s" \
   > stdout 2> stderr

@@ -1,71 +1,75 @@
 import os
-from configparser import ConfigParser
+from configparser import RawConfigParser
 import fileinput
 
+def change_config_file(point_dir, config_file, kv_map):
+  f = fileinput.input(os.path.join(point_dir, config_file), inplace=True)
+  for line in f:
+    for k in kv_map:
+      if k in line:
+        line = line % kv_map
+    print(line, end="")
+  f.close()
+
 class BaseParam:
-  def __init__(self, sweep_vals, changesTrace=False):
-    self.sweep_vals = sweep_vals
-    self.changesTrace = changesTrace
-    self.curr_sweep_idx = -1
+  def __init__(self, sweep_vals, changes_trace=False):
+    self._sweep_vals = sweep_vals
+    self._changes_trace = changes_trace
+    self._curr_sweep_idx = -1
 
   def __str__(self):
-    return self.name + "_" + str(self.sweep_vals[self.curr_sweep_idx])
+    return "%s:%s" % (self._name, str(self.curr_sweep_value()))
 
-  def apply(self, sweeper):
+  @property
+  def changes_trace(self):
+    return self._changes_trace
+
+  def curr_sweep_value(self):
+    return self._sweep_vals[self._curr_sweep_idx]
+
+  def apply(self, point_dir):
     raise NotImplementedError
 
-  def next(self, sweeper):
-    self.curr_sweep_idx += 1
-    if self.curr_sweep_idx == len(self.sweep_vals):
-      self.curr_sweep_idx = -1
+  def next(self):
+    self._curr_sweep_idx += 1
+    if self._curr_sweep_idx == len(self._sweep_vals):
+      self._curr_sweep_idx = -1
       return False
     return True
-
-  def change_config_file(self, config_file, origin, new, sweeper):
-    f = fileinput.input(
-        os.path.join(sweeper.curr_config_dir(), config_file), inplace=True)
-    for line in f:
-      print(line.replace(origin, new), end="")
-    f.close()
 
 class NumThreadsParam(BaseParam):
   def __init__(self, sweep_vals):
     BaseParam.__init__(self, sweep_vals, False)
-    self.name = "num_threads"
+    self._name = "Number of threads"
 
-  def apply(self, sweeper):
-    #print self
-    self.change_config_file(
-        "run.sh", "--num-threads=1",
-        "--num-threads=" + str(self.sweep_vals[self.curr_sweep_idx]), sweeper)
-    self.change_config_file(
-        "run.sh", "--num-cpus=1",
-        "--num-cpus=" + str(self.sweep_vals[self.curr_sweep_idx] + 1), sweeper)
+  def apply(self, point_dir):
+    change_config_file(
+        point_dir, "run.sh", {
+            "num-threads": self.curr_sweep_value(),
+            "num-cpus": self.curr_sweep_value()
+        })
 
 class NumAccelsParam(BaseParam):
   def __init__(self, sweep_vals):
     BaseParam.__init__(self, sweep_vals, True)
-    self.name = "num_accels"
+    self._name = "Number of accelerators"
 
-  def apply(self, sweeper):
-    #print self
+  def apply(self, point_dir):
     # Change the run.sh, gem5.cfg and trace.sh.
-    self.change_config_file(
-        "run.sh", "--num-accels=1",
-        "--num-accels=" + str(self.sweep_vals[self.curr_sweep_idx]), sweeper)
-    if self.sweep_vals[self.curr_sweep_idx] > 1:
-      self.change_gem5_cfg(sweeper)
-    self.change_config_file(
-        "trace.sh", "--num-accels=1",
-        "--num-accels=" + str(self.sweep_vals[self.curr_sweep_idx]), sweeper)
+    change_config_file(
+        point_dir, "run.sh", {"num-accels": self.curr_sweep_value()})
+    if self._sweep_vals[self._curr_sweep_idx] > 1:
+      self._change_gem5_cfg(sweeper)
+    change_config_file(
+        point_dir, "trace.sh", {"num-accels": self.curr_sweep_value()})
 
-  def change_gem5_cfg(self, sweeper):
-    gem5cfg = ConfigParser()
-    gem5cfg.read(os.path.join(sweeper.curr_config_dir(), "gem5.cfg"))
+  def _change_gem5_cfg(self, sweeper):
+    gem5cfg = RawConfigParser()
+    gem5cfg.read(os.path.join(sweeper.curr_point_dir(), "gem5.cfg"))
     acc0 = gem5cfg.sections()[0]
     acc0_id = int(gem5cfg.get(acc0, "accelerator_id"))
-    with open(os.path.join(sweeper.curr_config_dir(), "gem5.cfg"), "w") as cfg:
-      for n in range(1, self.sweep_vals[self.curr_sweep_idx]):
+    with open(os.path.join(sweeper.curr_point_dir(), "gem5.cfg"), "w") as cfg:
+      for n in range(1, self.curr_sweep_value()):
         new_acc = "acc" + str(n)
         gem5cfg.add_section(new_acc)
         for key, value in gem5cfg.items(acc0):
@@ -78,50 +82,49 @@ class NumAccelsParam(BaseParam):
 class SoCInterfaceParam(BaseParam):
   def __init__(self, sweep_vals):
     BaseParam.__init__(self, sweep_vals, False)
-    self.name = "soc_interface"
+    self._name = "SoC interface"
 
-  def apply(self, sweeper):
-    #print self
-    self.change_config_file(
-        "model_files", "smv_dma_topo.pbtxt",
-        "smv_%s_topo.pbtxt" % self.sweep_vals[self.curr_sweep_idx], sweeper)
+  def apply(self, point_dir):
+    change_config_file(
+        point_dir, "model_files", {"soc_interface": self.curr_sweep_value()})
 
 class L2SizeParam(BaseParam):
   def __init__(self, sweep_vals):
     BaseParam.__init__(self, sweep_vals, False)
-    self.name = "l2_size"
+    self._name = "L2 size"
 
-  def apply(self, sweeper):
-    #print self
-    self.change_config_file(
-        "run.sh", "--l2_size=2097152",
-        "--l2_size=" + str(self.sweep_vals[self.curr_sweep_idx]), sweeper)
+  def apply(self, point_dir):
+    change_config_file(
+        point_dir, "run.sh", {"l2_size": self.curr_sweep_value()})
 
 class L2AssocParam(BaseParam):
   def __init__(self, sweep_vals):
     BaseParam.__init__(self, sweep_vals, False)
-    self.name = "l2_assoc"
+    self._name = "L2 assoc"
 
-  def apply(self, sweeper):
-    #print self
-    self.change_config_file(
-        "run.sh", "--l2_assoc=16",
-        "--l2_assoc=" + str(self.sweep_vals[self.curr_sweep_idx]), sweeper)
+  def apply(self, point_dir):
+    change_config_file(
+        point_dir, "run.sh", {"l2_assoc": self.curr_sweep_value()})
 
 class AccClockParam(BaseParam):
   def __init__(self, sweep_vals):
     BaseParam.__init__(self, sweep_vals, False)
-    self.name = "accel_clock_time"
+    self._name = "Accelerator clock time"
 
-  def apply(self, sweeper):
-    #print self
-    self.change_config_file(
-        "run.sh", "--sys-clock=1GHz",
-        "--sys-clock=%.3fGHz" % (1.0 / self.sweep_vals[self.curr_sweep_idx]),
-        sweeper)
-    self.change_config_file(
-        "smv-accel.cfg", "cycle_time,1",
-        "cycle_time,%d" % self.sweep_vals[self.curr_sweep_idx], sweeper)
-    self.change_config_file(
-        "gem5.cfg", "cycle_time = 1",
-        "cycle_time = %d" % self.sweep_vals[self.curr_sweep_idx], sweeper)
+  def apply(self, point_dir):
+    change_config_file(
+        point_dir, "run.sh",
+        {"sys-clock": "%.3fGHz" % (1.0 / self.curr_sweep_value())})
+    change_config_file(
+        point_dir, "smv-accel.cfg", {"cycle_time": self.curr_sweep_value()})
+    change_config_file(
+        point_dir, "gem5.cfg", {"cycle_time": self.curr_sweep_value()})
+
+class MemTypeParam(BaseParam):
+  def __init__(self, sweep_vals):
+    BaseParam.__init__(self, sweep_vals, False)
+    self._name = "Memory type"
+
+  def apply(self, point_dir):
+    change_config_file(
+        point_dir, "run.sh", {"mem-type": self.curr_sweep_value()})

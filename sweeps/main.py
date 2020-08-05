@@ -6,29 +6,31 @@ import os
 from sweeper import Sweeper
 from sweep_params import sweep_params
 
-def check_sim_dir(sim_dir):
-  files = os.listdir(sim_dir)
-  for filename in ["env.txt", "gem5.cfg", "model_files", "run.sh",
-                   "smv-accel.cfg", "trace.sh"]:
-    if filename not in files:
-      print("Could not find %s in this simulation directory!" % filename)
-      sys.exit(1)
-
 def main():
   parser = argparse.ArgumentParser()
-  parser.add_argument("sim_dir")
+  parser.add_argument("--model", help="Model name.")
+  parser.add_argument(
+      "--output-dir", help="Output directory for generating the data points.")
+  parser.add_argument(
+      "--run-points", action="store_true", default=False,
+      help="Option to run the generated data points.")
+  parser.add_argument(
+      "--num-threads", type=int, default=8,
+      help="Number of threads used to run the data points.")
   args = parser.parse_args()
 
-  check_sim_dir(args.sim_dir)
+  if not args.model:
+    raise ValueError("Please provide the model name!")
+  if not args.output_dir:
+    raise ValueError("Please provide the output directory!")
+  sweeper = Sweeper(args.model, args.output_dir, sweep_params)
 
-  sweeper = Sweeper(args.sim_dir, sweep_params)
+  # Start enumerating all the data points.
+  sweeper.enumerate_all()
 
-  # Start enumerating all the configurations.
-  sweeper.enumerate()
-
-  # Start running simulations for all the generated configurations.
-  # Use 20 threads to run the simulations in parallel.
-  sweeper.runAll(16)
+  # Start running simulations for all the generated data points.
+  if args.run_points:
+    sweeper.run_all(threads=args.num_threads)
 
 if __name__ == "__main__":
   main()
