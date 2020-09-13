@@ -116,6 +116,15 @@ class AccClockParam(BaseParam):
     change_config_file(
         point_dir, "gem5.cfg", {"cycle_time": self.curr_sweep_value()})
 
+class CpuClockParam(BaseParam):
+  def __init__(self, name, sweep_vals):
+    BaseParam.__init__(self, name, sweep_vals, False)
+
+  def apply(self, point_dir):
+    change_config_file(
+        point_dir, "run.sh",
+        {"cpu-clock": "%.3fGHz" % (1.0 / self.curr_sweep_value())})
+
 class MemTypeParam(BaseParam):
   def __init__(self, name, sweep_vals):
     BaseParam.__init__(self, name, sweep_vals, False)
@@ -123,3 +132,52 @@ class MemTypeParam(BaseParam):
   def apply(self, point_dir):
     change_config_file(
         point_dir, "run.sh", {"mem-type": self.curr_sweep_value()})
+
+class PipelinedDmaParam(BaseParam):
+  def __init__(self, name, sweep_vals):
+    BaseParam.__init__(self, name, sweep_vals, False)
+
+  def apply(self, point_dir):
+    change_config_file(
+        point_dir, "gem5.cfg", {"pipelined_dma": self.curr_sweep_value()})
+
+class IgnoreCacheFlushParam(BaseParam):
+  def __init__(self, name, sweep_vals):
+    BaseParam.__init__(self, name, sweep_vals, False)
+
+  def apply(self, point_dir):
+    change_config_file(
+        point_dir, "gem5.cfg", {"ignore_cache_flush": self.curr_sweep_value()})
+
+class InvalidateOnDmaStoreParam(BaseParam):
+  def __init__(self, name, sweep_vals):
+    BaseParam.__init__(self, name, sweep_vals, False)
+
+  def apply(self, point_dir):
+    change_config_file(
+        point_dir, "gem5.cfg",
+        {"invalidate_on_dma_store": self.curr_sweep_value()})
+
+class MaxDmaRequestsParam(BaseParam):
+  def __init__(self, name, sweep_vals):
+    BaseParam.__init__(self, name, sweep_vals, False)
+
+  def apply(self, point_dir):
+    change_config_file(
+        point_dir, "gem5.cfg", {"max_dma_requests": self.curr_sweep_value()})
+
+class NumDmaChannelsParam(BaseParam):
+  def __init__(self, name, sweep_vals):
+    BaseParam.__init__(self, name, sweep_vals, False)
+
+  def apply(self, point_dir):
+    change_config_file(
+        point_dir, "gem5.cfg", {"num_dma_channels": self.curr_sweep_value()})
+
+class DmaChunkSizeParam(BaseParam):
+  def __init__(self, name, sweep_vals):
+    BaseParam.__init__(self, name, sweep_vals, False)
+
+  def apply(self, point_dir):
+    change_config_file(
+        point_dir, "gem5.cfg", {"dma_chunk_size": self.curr_sweep_value()})

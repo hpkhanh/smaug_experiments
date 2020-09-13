@@ -15,7 +15,7 @@ ${gem5_dir}/build/X86/gem5.opt \
   --mem-size=4GB \
   --mem-type=%(mem-type)s  \
   --sys-clock=%(sys-clock)s \
-  --cpu-clock=2GHz \
+  --cpu-clock=%(cpu-clock)s \
   --cpu-type=DerivO3CPU \
   --ruby \
   --access-backing-store \

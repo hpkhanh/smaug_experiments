@@ -15,6 +15,13 @@ param_types = {
     "l2_assoc": L2AssocParam,
     "acc_clock": AccClockParam,
     "mem_type": MemTypeParam,
+    "cpu_clock": CpuClockParam,
+    "pipelined_dma": PipelinedDmaParam,
+    "ignore_cache_flush": IgnoreCacheFlushParam,
+    "invalidate_on_dma_store": InvalidateOnDmaStoreParam,
+    "max_dma_requests": MaxDmaRequestsParam,
+    "num_dma_channels": NumDmaChannelsParam,
+    "dma_chunk_size": DmaChunkSizeParam,
 }
 
 class Sweeper:
@@ -145,7 +152,7 @@ class Sweeper:
     pool.close()
     pool.join()
 
-finished_points = 0
+counter = 0
 
 def _init_counter(args):
   global counter
