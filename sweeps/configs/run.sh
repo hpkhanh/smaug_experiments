@@ -4,7 +4,6 @@ source ./model_files
 
 cfg_home=`pwd`
 gem5_dir=${ALADDIN_HOME}/../..
-bmk_dir=`git rev-parse --show-toplevel`/../build/bin
 
 ${gem5_dir}/build/X86/gem5.opt \
   --debug-flags=Aladdin,HybridDatapath \
@@ -25,6 +24,6 @@ ${gem5_dir}/build/X86/gem5.opt \
   --cacheline_size=32 \
   --accel_cfg_file=gem5.cfg \
   --fast-forward=10000000000 \
-  -c ${bmk_dir}/smaug \
+  -c ${SMAUG_HOME}/build/bin/smaug \
   -o "${topo_file} ${params_file} --sample-level=high --gem5 --debug-level=0 --num-accels=%(num-accels)s" \
   > stdout 2> stderr
