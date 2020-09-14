@@ -3,14 +3,17 @@
 import argparse
 import sys
 import os
+import json
 from sweeper import Sweeper
-from sweep_params import sweep_params
 
 def main():
   parser = argparse.ArgumentParser()
-  parser.add_argument("--model", help="Model name.")
+  parser.add_argument("--model", help="Model name.", required=True)
   parser.add_argument(
-      "--output-dir", help="Output directory for generating the data points.")
+      "--params", help="Path to sweep parameter JSON", required=True)
+  parser.add_argument(
+      "--output-dir", help="Output directory for generating the data points.",
+      required=True)
   parser.add_argument(
       "--run-points", action="store_true", default=False,
       help="Option to run the generated data points.")
@@ -19,10 +22,9 @@ def main():
       help="Number of threads used to run the data points.")
   args = parser.parse_args()
 
-  if not args.model:
-    raise ValueError("Please provide the model name!")
-  if not args.output_dir:
-    raise ValueError("Please provide the output directory!")
+  with open(args.params) as params_file:
+    sweep_params = json.load(params_file)
+
   sweeper = Sweeper(args.model, args.output_dir, sweep_params)
 
   # Start enumerating all the data points.

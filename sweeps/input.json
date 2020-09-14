@@ -1,0 +1,15 @@
+{
+    "dma_chunk_size": [128],
+    "num_dma_channels": [2],
+    "max_dma_requests": [16],
+    "invalidate_on_dma_store": [0],
+    "ignore_cache_flush": [0],
+    "pipelined_dma": [1],
+    "cpu_clock": [0.8],
+    "acc_clock": [2],
+    "l2_assoc": [1],
+    "l2_size": [131072],
+    "num_accels": [8],
+    "soc_interface": ["dma"],
+    "mem_type": ["LPDDR3_1600_1x32"]
+}
