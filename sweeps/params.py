@@ -87,6 +87,14 @@ class SoCInterfaceParam(BaseParam):
     change_config_file(
         point_dir, "model_files", {"soc_interface": self.curr_sweep_value()})
 
+class L1DSizeParam(BaseParam):
+  def __init__(self, name, sweep_vals):
+    BaseParam.__init__(self, name, sweep_vals, False)
+
+  def apply(self, point_dir):
+    change_config_file(
+        point_dir, "run.sh", {"l1d_size": self.curr_sweep_value()})
+
 class L2SizeParam(BaseParam):
   def __init__(self, name, sweep_vals):
     BaseParam.__init__(self, name, sweep_vals, False)
@@ -95,6 +103,14 @@ class L2SizeParam(BaseParam):
     change_config_file(
         point_dir, "run.sh", {"l2_size": self.curr_sweep_value()})
 
+class L1DAssocParam(BaseParam):
+  def __init__(self, name, sweep_vals):
+    BaseParam.__init__(self, name, sweep_vals, False)
+
+  def apply(self, point_dir):
+    change_config_file(
+        point_dir, "run.sh", {"l1d_assoc": self.curr_sweep_value()})
+
 class L2AssocParam(BaseParam):
   def __init__(self, name, sweep_vals):
     BaseParam.__init__(self, name, sweep_vals, False)
@@ -102,6 +118,22 @@ class L2AssocParam(BaseParam):
   def apply(self, point_dir):
     change_config_file(
         point_dir, "run.sh", {"l2_assoc": self.curr_sweep_value()})
+
+class L1DHitLatencyParam(BaseParam):
+  def __init__(self, name, sweep_vals):
+    BaseParam.__init__(self, name, sweep_vals, False)
+
+  def apply(self, point_dir):
+    change_config_file(
+        point_dir, "run.sh", {"l1d_hit_latency": self.curr_sweep_value()})
+
+class L2HitLatencyParam(BaseParam):
+  def __init__(self, name, sweep_vals):
+    BaseParam.__init__(self, name, sweep_vals, False)
+
+  def apply(self, point_dir):
+    change_config_file(
+        point_dir, "run.sh", {"l2_hit_latency": self.curr_sweep_value()})
 
 class AccClockParam(BaseParam):
   def __init__(self, name, sweep_vals):

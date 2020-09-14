@@ -19,8 +19,12 @@ ${gem5_dir}/build/X86/gem5.opt \
   --cpu-type=DerivO3CPU \
   --ruby \
   --access-backing-store \
+  --l1d_size=%(l1d_size)s \
+  --l1d_assoc=%(l1d_assoc)s \
+  --l1d_hit_latency=%(l1d_hit_latency)s \
   --l2_size=%(l2_size)s \
   --l2_assoc=%(l2_assoc)s \
+  --l2_hit_latency=%(l2_hit_latency)s \
   --cacheline_size=32 \
   --accel_cfg_file=gem5.cfg \
   --fast-forward=10000000000 \
