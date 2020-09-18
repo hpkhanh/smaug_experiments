@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
-source ./model_files
+. ./model_files
 
 cfg_home=`pwd`
-gem5_dir=${ALADDIN_HOME}/../..
 
-${gem5_dir}/build/X86/gem5.opt \
+%(gem5-binary)s \
   --debug-flags=Aladdin,HybridDatapath \
   --outdir=${cfg_home}/outputs \
   --stats-db-file=stats.db \

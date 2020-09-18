@@ -29,7 +29,7 @@ param_types = {
 }
 
 class Sweeper:
-  def __init__(self, model_name, output_dir, params):
+  def __init__(self, model_name, output_dir, params, gem5_binary):
     self._model_name = model_name
     self._output_dir = os.path.abspath(output_dir)
     if not os.path.isdir(self._output_dir):
@@ -37,6 +37,7 @@ class Sweeper:
     self._configs_dir = os.path.join(
         os.getenv("SMAUG_HOME"), "experiments/sweeps/configs")
     self._init_params(params)
+    self._gem5_binary = gem5_binary
     self._num_data_points = 0
     self._traces = set()
     # Create a folder for storing all the traces.
@@ -85,6 +86,8 @@ class Sweeper:
             "model_name": self._model_name,
             "soc_interface": soc_interface
         })
+    # gem5 binary in run.sh.
+    change_config_file(point_dir, "run.sh", {"gem5-binary": self._gem5_binary})
 
     # Apply every sweep parameter for this data point.
     for p in self._params:

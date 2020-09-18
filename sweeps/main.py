@@ -10,10 +10,12 @@ def main():
   parser = argparse.ArgumentParser()
   parser.add_argument("--model", help="Model name.", required=True)
   parser.add_argument(
-      "--params", help="Path to sweep parameter JSON", required=True)
+      "--params", help="Path to sweep parameter JSON.", required=True)
   parser.add_argument(
       "--output-dir", help="Output directory for generating the data points.",
       required=True)
+  parser.add_argument(
+      "--gem5-binary", help="Path to the gem5 binary.")
   parser.add_argument(
       "--run-points", action="store_true", default=False,
       help="Option to run the generated data points.")
@@ -25,7 +27,11 @@ def main():
   with open(args.params) as params_file:
     sweep_params = json.load(params_file)
 
-  sweeper = Sweeper(args.model, args.output_dir, sweep_params)
+  if not args.gem5_binary:
+    args.gem5_binary = os.path.join(
+        os.getenv("ALADDIN_HOME"), "../../build/X86/gem5.opt")
+
+  sweeper = Sweeper(args.model, args.output_dir, sweep_params, args.gem5_binary)
 
   # Start enumerating all the data points.
   sweeper.enumerate_all()
