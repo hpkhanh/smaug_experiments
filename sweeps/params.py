@@ -31,6 +31,10 @@ class BaseParam:
   def apply(self, point_dir):
     raise NotImplementedError
 
+  @classmethod
+  def default_value(cls):
+    raise NotImplementedError
+
   def next(self):
     self._curr_sweep_idx += 1
     if self._curr_sweep_idx == len(self._sweep_vals):
@@ -46,8 +50,12 @@ class NumThreadsParam(BaseParam):
     change_config_file(
         point_dir, "run.sh", {
             "num-threads": self.curr_sweep_value(),
-            "num-cpus": self.curr_sweep_value()
+            "num-cpus": self.curr_sweep_value() + 1
         })
+
+  @classmethod
+  def default_value(cls):
+    return [1]
 
 class NumAccelsParam(BaseParam):
   def __init__(self, name, sweep_vals):
@@ -61,6 +69,10 @@ class NumAccelsParam(BaseParam):
       self._change_gem5_cfg(point_dir)
     change_config_file(
         point_dir, "trace.sh", {"num-accels": self.curr_sweep_value()})
+
+  @classmethod
+  def default_value(cls):
+    return [1]
 
   def _change_gem5_cfg(self, point_dir):
     gem5cfg = RawConfigParser()
@@ -87,6 +99,10 @@ class SoCInterfaceParam(BaseParam):
     change_config_file(
         point_dir, "model_files", {"soc_interface": self.curr_sweep_value()})
 
+  @classmethod
+  def default_value(cls):
+    return ["dma"]
+
 class L1DSizeParam(BaseParam):
   def __init__(self, name, sweep_vals):
     BaseParam.__init__(self, name, sweep_vals, False)
@@ -94,6 +110,11 @@ class L1DSizeParam(BaseParam):
   def apply(self, point_dir):
     change_config_file(
         point_dir, "run.sh", {"l1d_size": self.curr_sweep_value()})
+
+  @classmethod
+  def default_value(cls):
+    # 32KB by default.
+    return [32768]
 
 class L2SizeParam(BaseParam):
   def __init__(self, name, sweep_vals):
@@ -103,6 +124,11 @@ class L2SizeParam(BaseParam):
     change_config_file(
         point_dir, "run.sh", {"l2_size": self.curr_sweep_value()})
 
+  @classmethod
+  def default_value(cls):
+    # 4MB by default.
+    return [4194304]
+
 class L1DAssocParam(BaseParam):
   def __init__(self, name, sweep_vals):
     BaseParam.__init__(self, name, sweep_vals, False)
@@ -110,6 +136,10 @@ class L1DAssocParam(BaseParam):
   def apply(self, point_dir):
     change_config_file(
         point_dir, "run.sh", {"l1d_assoc": self.curr_sweep_value()})
+
+  @classmethod
+  def default_value(cls):
+    return [4]
 
 class L2AssocParam(BaseParam):
   def __init__(self, name, sweep_vals):
@@ -119,6 +149,10 @@ class L2AssocParam(BaseParam):
     change_config_file(
         point_dir, "run.sh", {"l2_assoc": self.curr_sweep_value()})
 
+  @classmethod
+  def default_value(cls):
+    return [16]
+
 class L1DHitLatencyParam(BaseParam):
   def __init__(self, name, sweep_vals):
     BaseParam.__init__(self, name, sweep_vals, False)
@@ -127,6 +161,10 @@ class L1DHitLatencyParam(BaseParam):
     change_config_file(
         point_dir, "run.sh", {"l1d_hit_latency": self.curr_sweep_value()})
 
+  @classmethod
+  def default_value(cls):
+    return [1]
+
 class L2HitLatencyParam(BaseParam):
   def __init__(self, name, sweep_vals):
     BaseParam.__init__(self, name, sweep_vals, False)
@@ -134,6 +172,10 @@ class L2HitLatencyParam(BaseParam):
   def apply(self, point_dir):
     change_config_file(
         point_dir, "run.sh", {"l2_hit_latency": self.curr_sweep_value()})
+
+  @classmethod
+  def default_value(cls):
+    return [5]
 
 class AccClockParam(BaseParam):
   def __init__(self, name, sweep_vals):
@@ -148,6 +190,10 @@ class AccClockParam(BaseParam):
     change_config_file(
         point_dir, "gem5.cfg", {"cycle_time": self.curr_sweep_value()})
 
+  @classmethod
+  def default_value(cls):
+    return [1]
+
 class CpuClockParam(BaseParam):
   def __init__(self, name, sweep_vals):
     BaseParam.__init__(self, name, sweep_vals, False)
@@ -157,6 +203,10 @@ class CpuClockParam(BaseParam):
         point_dir, "run.sh",
         {"cpu-clock": "%.3fGHz" % (1.0 / self.curr_sweep_value())})
 
+  @classmethod
+  def default_value(cls):
+    return [0.5]
+
 class MemTypeParam(BaseParam):
   def __init__(self, name, sweep_vals):
     BaseParam.__init__(self, name, sweep_vals, False)
@@ -164,6 +214,10 @@ class MemTypeParam(BaseParam):
   def apply(self, point_dir):
     change_config_file(
         point_dir, "run.sh", {"mem-type": self.curr_sweep_value()})
+
+  @classmethod
+  def default_value(cls):
+    return ["LPDDR3_1600_1x32"]
 
 class PipelinedDmaParam(BaseParam):
   def __init__(self, name, sweep_vals):
@@ -173,6 +227,10 @@ class PipelinedDmaParam(BaseParam):
     change_config_file(
         point_dir, "gem5.cfg", {"pipelined_dma": self.curr_sweep_value()})
 
+  @classmethod
+  def default_value(cls):
+    return [1]
+
 class IgnoreCacheFlushParam(BaseParam):
   def __init__(self, name, sweep_vals):
     BaseParam.__init__(self, name, sweep_vals, False)
@@ -180,6 +238,10 @@ class IgnoreCacheFlushParam(BaseParam):
   def apply(self, point_dir):
     change_config_file(
         point_dir, "gem5.cfg", {"ignore_cache_flush": self.curr_sweep_value()})
+
+  @classmethod
+  def default_value(cls):
+    return [0]
 
 class InvalidateOnDmaStoreParam(BaseParam):
   def __init__(self, name, sweep_vals):
@@ -190,6 +252,10 @@ class InvalidateOnDmaStoreParam(BaseParam):
         point_dir, "gem5.cfg",
         {"invalidate_on_dma_store": self.curr_sweep_value()})
 
+  @classmethod
+  def default_value(cls):
+    return [0]
+
 class MaxDmaRequestsParam(BaseParam):
   def __init__(self, name, sweep_vals):
     BaseParam.__init__(self, name, sweep_vals, False)
@@ -197,6 +263,10 @@ class MaxDmaRequestsParam(BaseParam):
   def apply(self, point_dir):
     change_config_file(
         point_dir, "gem5.cfg", {"max_dma_requests": self.curr_sweep_value()})
+
+  @classmethod
+  def default_value(cls):
+    return [16]
 
 class NumDmaChannelsParam(BaseParam):
   def __init__(self, name, sweep_vals):
@@ -206,6 +276,10 @@ class NumDmaChannelsParam(BaseParam):
     change_config_file(
         point_dir, "gem5.cfg", {"num_dma_channels": self.curr_sweep_value()})
 
+  @classmethod
+  def default_value(cls):
+    return [1]
+
 class DmaChunkSizeParam(BaseParam):
   def __init__(self, name, sweep_vals):
     BaseParam.__init__(self, name, sweep_vals, False)
@@ -213,3 +287,7 @@ class DmaChunkSizeParam(BaseParam):
   def apply(self, point_dir):
     change_config_file(
         point_dir, "gem5.cfg", {"dma_chunk_size": self.curr_sweep_value()})
+
+  @classmethod
+  def default_value(cls):
+    return [64]

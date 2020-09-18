@@ -11,7 +11,7 @@ ${gem5_dir}/build/X86/gem5.opt \
   --stats-db-file=stats.db \
   ${gem5_dir}/configs/aladdin/aladdin_se.py \
   --env=env.txt \
-  --num-cpus=1 \
+  --num-cpus=%(num-cpus)s \
   --mem-size=4GB \
   --mem-type=%(mem-type)s  \
   --sys-clock=%(sys-clock)s \
@@ -29,5 +29,10 @@ ${gem5_dir}/build/X86/gem5.opt \
   --accel_cfg_file=gem5.cfg \
   --fast-forward=10000000000 \
   -c ${SMAUG_HOME}/build/bin/smaug \
-  -o "${topo_file} ${params_file} --sample-level=high --gem5 --debug-level=0 --num-accels=%(num-accels)s" \
+  -o "${topo_file} ${params_file}
+      --sample-level=high
+      --debug-level=0
+      --gem5
+      --num-accels=%(num-accels)s
+      --num-threads=%(num-threads)s" \
   > stdout 2> stderr
