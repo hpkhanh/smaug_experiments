@@ -154,11 +154,14 @@ class Sweeper:
     """
     print("Running all data points...")
     counter = mp.Value('i', 0)
+    sims = []
     pool = mp.Pool(
         initializer=_init_counter, initargs=(counter, ), processes=threads)
     for p in range(self._num_data_points):
       cmd = os.path.join(self._output_dir, str(p), "run.sh")
-      pool.apply_async(_run_simulation, args=(cmd, ))
+      sims.append(pool.apply_async(_run_simulation, args=(cmd, )))
+    for sim in sims:
+      sim.get()
     pool.close()
     pool.join()
 

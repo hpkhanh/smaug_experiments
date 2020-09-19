@@ -33,5 +33,4 @@ gem5_dir=${ALADDIN_HOME}/../..
       --sample-level=high
       --debug-level=0
       --gem5
-      --num-accels=%(num-accels)s" \
-  > stdout 2> stderr
+      --num-accels=%(num-accels)s"
