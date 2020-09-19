@@ -12,7 +12,7 @@ gem5_dir=${ALADDIN_HOME}/../..
   ${gem5_dir}/configs/aladdin/aladdin_se.py \
   --env=env.txt \
   --num-cpus=1 \
-  --mem-size=4GB \
+  --mem-size=1GB \
   --mem-type=%(mem-type)s  \
   --sys-clock=%(sys-clock)s \
   --cpu-clock=%(cpu-clock)s \
