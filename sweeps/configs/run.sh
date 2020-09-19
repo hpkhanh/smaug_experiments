@@ -3,6 +3,7 @@
 . ./model_files
 
 cfg_home=`pwd`
+gem5_dir=${ALADDIN_HOME}/../..
 
 %(gem5-binary)s \
   --debug-flags=Aladdin,HybridDatapath \
@@ -10,7 +11,7 @@ cfg_home=`pwd`
   --stats-db-file=stats.db \
   ${gem5_dir}/configs/aladdin/aladdin_se.py \
   --env=env.txt \
-  --num-cpus=%(num-cpus)s \
+  --num-cpus=1 \
   --mem-size=4GB \
   --mem-type=%(mem-type)s  \
   --sys-clock=%(sys-clock)s \
@@ -32,6 +33,5 @@ cfg_home=`pwd`
       --sample-level=high
       --debug-level=0
       --gem5
-      --num-accels=%(num-accels)s
-      --num-threads=%(num-threads)s" \
+      --num-accels=%(num-accels)s" \
   > stdout 2> stderr
