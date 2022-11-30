@@ -4,11 +4,11 @@ nodes {
   op: Data
   input_tensors {
     name: "data/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
-      dims: 32
+      dims: 4
+      dims: 4
       dims: 3
       layout: NHWC
     }
@@ -16,11 +16,11 @@ nodes {
   }
   output_tensors {
     name: "data/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
-      dims: 32
+      dims: 4
+      dims: 4
       dims: 3
       layout: NHWC
     }
@@ -34,11 +34,11 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "data/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
-      dims: 32
+      dims: 4
+      dims: 4
       dims: 3
       layout: NHWC
     }
@@ -46,12 +46,12 @@ nodes {
   }
   output_tensors {
     name: "reorder/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
       dims: 3
-      dims: 32
-      dims: 32
+      dims: 4
+      dims: 4
       layout: NCHW
     }
     data_format: Uncompressed
@@ -62,9 +62,9 @@ nodes {
   op: Data
   input_tensors {
     name: "data_1/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 32
+      dims: 4
       dims: 3
       dims: 3
       dims: 3
@@ -74,9 +74,9 @@ nodes {
   }
   output_tensors {
     name: "data_1/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 32
+      dims: 4
       dims: 3
       dims: 3
       dims: 3
@@ -92,9 +92,9 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "data_1/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 32
+      dims: 4
       dims: 3
       dims: 3
       dims: 3
@@ -104,9 +104,9 @@ nodes {
   }
   output_tensors {
     name: "reorder_1/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 32
+      dims: 4
       dims: 3
       dims: 3
       dims: 3
@@ -124,21 +124,21 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "reorder/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
       dims: 3
-      dims: 32
-      dims: 32
+      dims: 4
+      dims: 4
       layout: NCHW
     }
     data_format: Uncompressed
   }
   input_tensors {
     name: "reorder_1/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 32
+      dims: 4
       dims: 3
       dims: 3
       dims: 3
@@ -148,12 +148,12 @@ nodes {
   }
   output_tensors {
     name: "conv/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
-      dims: 32
-      dims: 32
+      dims: 4
+      dims: 4
+      dims: 4
       layout: NCHW
     }
     data_format: Uncompressed
@@ -174,20 +174,20 @@ nodes {
   op: Data
   input_tensors {
     name: "data_2/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "data_2/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
@@ -198,20 +198,20 @@ nodes {
   op: Data
   input_tensors {
     name: "data_3/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "data_3/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
@@ -222,20 +222,20 @@ nodes {
   op: Data
   input_tensors {
     name: "data_4/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "data_4/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
@@ -246,20 +246,20 @@ nodes {
   op: Data
   input_tensors {
     name: "data_5/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "data_5/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
@@ -280,64 +280,64 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "conv/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
-      dims: 32
-      dims: 32
+      dims: 4
+      dims: 4
+      dims: 4
       layout: NCHW
     }
     data_format: Uncompressed
   }
   input_tensors {
     name: "data_2/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   input_tensors {
     name: "data_3/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   input_tensors {
     name: "data_4/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   input_tensors {
     name: "data_5/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "batch_norm/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
-      dims: 32
-      dims: 32
+      dims: 4
+      dims: 4
+      dims: 4
       layout: NCHW
     }
     data_format: Uncompressed
@@ -350,24 +350,24 @@ nodes {
   op: Data
   input_tensors {
     name: "data_6/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 32
+      dims: 4
       dims: 3
       dims: 3
-      dims: 32
+      dims: 4
       layout: NHWC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "data_6/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 32
+      dims: 4
       dims: 3
       dims: 3
-      dims: 32
+      dims: 4
       layout: NHWC
     }
     data_format: Uncompressed
@@ -380,22 +380,22 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "data_6/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 32
+      dims: 4
       dims: 3
       dims: 3
-      dims: 32
+      dims: 4
       layout: NHWC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "reorder_2/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 32
-      dims: 32
+      dims: 4
+      dims: 4
       dims: 3
       dims: 3
       layout: NCHW
@@ -412,22 +412,22 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "batch_norm/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
-      dims: 32
-      dims: 32
+      dims: 4
+      dims: 4
+      dims: 4
       layout: NCHW
     }
     data_format: Uncompressed
   }
   input_tensors {
     name: "reorder_2/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 32
-      dims: 32
+      dims: 4
+      dims: 4
       dims: 3
       dims: 3
       layout: NCHW
@@ -436,12 +436,12 @@ nodes {
   }
   output_tensors {
     name: "conv_1/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
-      dims: 32
-      dims: 32
+      dims: 4
+      dims: 4
+      dims: 4
       layout: NCHW
     }
     data_format: Uncompressed
@@ -464,24 +464,24 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "conv_1/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
-      dims: 32
-      dims: 32
+      dims: 4
+      dims: 4
+      dims: 4
       layout: NCHW
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "max_pool/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
-      dims: 16
-      dims: 16
+      dims: 4
+      dims: 2
+      dims: 2
       layout: NCHW
     }
     data_format: Uncompressed
@@ -500,20 +500,20 @@ nodes {
   op: Data
   input_tensors {
     name: "data_7/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "data_7/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
@@ -524,20 +524,20 @@ nodes {
   op: Data
   input_tensors {
     name: "data_8/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "data_8/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
@@ -548,20 +548,20 @@ nodes {
   op: Data
   input_tensors {
     name: "data_9/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "data_9/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
@@ -572,20 +572,20 @@ nodes {
   op: Data
   input_tensors {
     name: "data_10/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "data_10/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
@@ -606,64 +606,64 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "max_pool/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
-      dims: 16
-      dims: 16
+      dims: 4
+      dims: 2
+      dims: 2
       layout: NCHW
     }
     data_format: Uncompressed
   }
   input_tensors {
     name: "data_7/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   input_tensors {
     name: "data_8/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   input_tensors {
     name: "data_9/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   input_tensors {
     name: "data_10/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "batch_norm_1/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
-      dims: 16
-      dims: 16
+      dims: 4
+      dims: 2
+      dims: 2
       layout: NCHW
     }
     data_format: Uncompressed
@@ -676,24 +676,24 @@ nodes {
   op: Data
   input_tensors {
     name: "data_11/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 64
+      dims: 8
       dims: 3
       dims: 3
-      dims: 32
+      dims: 4
       layout: NHWC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "data_11/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 64
+      dims: 8
       dims: 3
       dims: 3
-      dims: 32
+      dims: 4
       layout: NHWC
     }
     data_format: Uncompressed
@@ -706,22 +706,22 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "data_11/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 64
+      dims: 8
       dims: 3
       dims: 3
-      dims: 32
+      dims: 4
       layout: NHWC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "reorder_3/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 64
-      dims: 32
+      dims: 8
+      dims: 4
       dims: 3
       dims: 3
       layout: NCHW
@@ -738,22 +738,22 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "batch_norm_1/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 32
-      dims: 16
-      dims: 16
+      dims: 4
+      dims: 2
+      dims: 2
       layout: NCHW
     }
     data_format: Uncompressed
   }
   input_tensors {
     name: "reorder_3/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 64
-      dims: 32
+      dims: 8
+      dims: 4
       dims: 3
       dims: 3
       layout: NCHW
@@ -762,12 +762,12 @@ nodes {
   }
   output_tensors {
     name: "conv_2/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
-      dims: 16
-      dims: 16
+      dims: 8
+      dims: 2
+      dims: 2
       layout: NCHW
     }
     data_format: Uncompressed
@@ -788,24 +788,24 @@ nodes {
   op: Data
   input_tensors {
     name: "data_12/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 64
+      dims: 8
       dims: 3
       dims: 3
-      dims: 64
+      dims: 8
       layout: NHWC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "data_12/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 64
+      dims: 8
       dims: 3
       dims: 3
-      dims: 64
+      dims: 8
       layout: NHWC
     }
     data_format: Uncompressed
@@ -818,22 +818,22 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "data_12/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 64
+      dims: 8
       dims: 3
       dims: 3
-      dims: 64
+      dims: 8
       layout: NHWC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "reorder_4/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 64
-      dims: 64
+      dims: 8
+      dims: 8
       dims: 3
       dims: 3
       layout: NCHW
@@ -850,22 +850,22 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "conv_2/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
-      dims: 16
-      dims: 16
+      dims: 8
+      dims: 2
+      dims: 2
       layout: NCHW
     }
     data_format: Uncompressed
   }
   input_tensors {
     name: "reorder_4/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 64
-      dims: 64
+      dims: 8
+      dims: 8
       dims: 3
       dims: 3
       layout: NCHW
@@ -874,12 +874,12 @@ nodes {
   }
   output_tensors {
     name: "conv_3/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
-      dims: 16
-      dims: 16
+      dims: 8
+      dims: 2
+      dims: 2
       layout: NCHW
     }
     data_format: Uncompressed
@@ -902,24 +902,24 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "conv_3/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
-      dims: 16
-      dims: 16
+      dims: 8
+      dims: 2
+      dims: 2
       layout: NCHW
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "max_pool_1/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
       dims: 8
-      dims: 8
+      dims: 1
+      dims: 1
       layout: NCHW
     }
     data_format: Uncompressed
@@ -938,20 +938,20 @@ nodes {
   op: Data
   input_tensors {
     name: "data_13/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
+      dims: 8
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "data_13/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
+      dims: 8
       layout: NC
     }
     data_format: Uncompressed
@@ -962,20 +962,20 @@ nodes {
   op: Data
   input_tensors {
     name: "data_14/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
+      dims: 8
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "data_14/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
+      dims: 8
       layout: NC
     }
     data_format: Uncompressed
@@ -986,20 +986,20 @@ nodes {
   op: Data
   input_tensors {
     name: "data_15/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
+      dims: 8
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "data_15/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
+      dims: 8
       layout: NC
     }
     data_format: Uncompressed
@@ -1010,20 +1010,20 @@ nodes {
   op: Data
   input_tensors {
     name: "data_16/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
+      dims: 8
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "data_16/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
+      dims: 8
       layout: NC
     }
     data_format: Uncompressed
@@ -1044,64 +1044,64 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "max_pool_1/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
       dims: 8
-      dims: 8
+      dims: 1
+      dims: 1
       layout: NCHW
     }
     data_format: Uncompressed
   }
   input_tensors {
     name: "data_13/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
+      dims: 8
       layout: NC
     }
     data_format: Uncompressed
   }
   input_tensors {
     name: "data_14/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
+      dims: 8
       layout: NC
     }
     data_format: Uncompressed
   }
   input_tensors {
     name: "data_15/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
+      dims: 8
       layout: NC
     }
     data_format: Uncompressed
   }
   input_tensors {
     name: "data_16/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
+      dims: 8
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "batch_norm_2/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
       dims: 8
-      dims: 8
+      dims: 1
+      dims: 1
       layout: NCHW
     }
     data_format: Uncompressed
@@ -1116,22 +1116,22 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "batch_norm_2/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 64
       dims: 8
-      dims: 8
+      dims: 1
+      dims: 1
       layout: NCHW
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "reorder_5/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 4096
+      dims: 8
       layout: NC
     }
     data_format: Uncompressed
@@ -1142,20 +1142,20 @@ nodes {
   op: Data
   input_tensors {
     name: "data_17/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 512
-      dims: 4096
+      dims: 4
+      dims: 8
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "data_17/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 512
-      dims: 4096
+      dims: 4
+      dims: 8
       layout: NC
     }
     data_format: Uncompressed
@@ -1168,20 +1168,20 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "data_17/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 512
-      dims: 4096
+      dims: 4
+      dims: 8
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "reorder_6/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 4096
-      dims: 512
+      dims: 8
+      dims: 4
       layout: CN
     }
     data_format: Uncompressed
@@ -1196,30 +1196,30 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "reorder_5/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 4096
+      dims: 8
       layout: NC
     }
     data_format: Uncompressed
   }
   input_tensors {
     name: "reorder_6/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 4096
-      dims: 512
+      dims: 8
+      dims: 4
       layout: CN
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "mat_mul/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 512
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
@@ -1235,20 +1235,20 @@ nodes {
   op: Data
   input_tensors {
     name: "data_18/input0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 10
-      dims: 512
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "data_18/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 10
-      dims: 512
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
@@ -1261,19 +1261,19 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "data_18/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 10
-      dims: 512
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   output_tensors {
     name: "reorder_7/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 512
+      dims: 4
       dims: 10
       layout: CN
     }
@@ -1289,19 +1289,19 @@ nodes {
   src_tensors_indices: 0
   input_tensors {
     name: "mat_mul/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
-      dims: 512
+      dims: 4
       layout: NC
     }
     data_format: Uncompressed
   }
   input_tensors {
     name: "reorder_7/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
-      dims: 512
+      dims: 4
       dims: 10
       layout: CN
     }
@@ -1309,7 +1309,7 @@ nodes {
   }
   output_tensors {
     name: "mat_mul_1/output0"
-    data_type: Float32
+    data_type: Float16
     shape {
       dims: 1
       dims: 10
