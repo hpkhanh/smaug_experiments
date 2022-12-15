@@ -7,8 +7,8 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
-      dims: 4
+      dims: 32
+      dims: 32
       dims: 3
       layout: NHWC
       alignment: 8
@@ -20,8 +20,8 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
-      dims: 4
+      dims: 32
+      dims: 32
       dims: 3
       layout: NHWC
       alignment: 8
@@ -36,7 +36,7 @@ nodes {
     name: "data_1/input0"
     data_type: Float16
     shape {
-      dims: 4
+      dims: 32
       dims: 3
       dims: 3
       dims: 3
@@ -49,7 +49,7 @@ nodes {
     name: "data_1/output0"
     data_type: Float16
     shape {
-      dims: 4
+      dims: 32
       dims: 3
       dims: 3
       dims: 3
@@ -71,8 +71,8 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
-      dims: 4
+      dims: 32
+      dims: 32
       dims: 3
       layout: NHWC
       alignment: 8
@@ -83,7 +83,7 @@ nodes {
     name: "data_1/output0"
     data_type: Float16
     shape {
-      dims: 4
+      dims: 32
       dims: 3
       dims: 3
       dims: 3
@@ -97,9 +97,9 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
-      dims: 4
-      dims: 4
+      dims: 32
+      dims: 32
+      dims: 32
       layout: NHWC
       alignment: 8
     }
@@ -124,7 +124,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -135,7 +135,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -150,7 +150,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -161,7 +161,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -176,7 +176,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -187,7 +187,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -202,7 +202,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -213,7 +213,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -238,9 +238,9 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
-      dims: 4
-      dims: 4
+      dims: 32
+      dims: 32
+      dims: 32
       layout: NHWC
       alignment: 8
     }
@@ -251,7 +251,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -262,7 +262,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -273,7 +273,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -284,7 +284,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -295,9 +295,9 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
-      dims: 4
-      dims: 4
+      dims: 32
+      dims: 32
+      dims: 32
       layout: NHWC
       alignment: 8
     }
@@ -313,10 +313,10 @@ nodes {
     name: "data_6/input0"
     data_type: Float16
     shape {
-      dims: 4
+      dims: 32
       dims: 3
       dims: 3
-      dims: 4
+      dims: 32
       layout: NHWC
       alignment: 8
     }
@@ -326,10 +326,10 @@ nodes {
     name: "data_6/output0"
     data_type: Float16
     shape {
-      dims: 4
+      dims: 32
       dims: 3
       dims: 3
-      dims: 4
+      dims: 32
       layout: NHWC
       alignment: 8
     }
@@ -348,9 +348,9 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
-      dims: 4
-      dims: 4
+      dims: 32
+      dims: 32
+      dims: 32
       layout: NHWC
       alignment: 8
     }
@@ -360,10 +360,10 @@ nodes {
     name: "data_6/output0"
     data_type: Float16
     shape {
-      dims: 4
+      dims: 32
       dims: 3
       dims: 3
-      dims: 4
+      dims: 32
       layout: NHWC
       alignment: 8
     }
@@ -374,9 +374,9 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
-      dims: 4
-      dims: 4
+      dims: 32
+      dims: 32
+      dims: 32
       layout: NHWC
       alignment: 8
     }
@@ -403,9 +403,9 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
-      dims: 4
-      dims: 4
+      dims: 32
+      dims: 32
+      dims: 32
       layout: NHWC
       alignment: 8
     }
@@ -416,9 +416,9 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 2
-      dims: 2
-      dims: 4
+      dims: 16
+      dims: 16
+      dims: 32
       layout: NHWC
       alignment: 8
     }
@@ -441,7 +441,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -452,7 +452,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -467,7 +467,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -478,7 +478,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -493,7 +493,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -504,7 +504,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -519,7 +519,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -530,7 +530,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -555,9 +555,9 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 2
-      dims: 2
-      dims: 4
+      dims: 16
+      dims: 16
+      dims: 32
       layout: NHWC
       alignment: 8
     }
@@ -568,7 +568,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -579,7 +579,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -590,7 +590,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -601,7 +601,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 32
       layout: NC
       alignment: 8
     }
@@ -612,9 +612,9 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 2
-      dims: 2
-      dims: 4
+      dims: 16
+      dims: 16
+      dims: 32
       layout: NHWC
       alignment: 8
     }
@@ -630,10 +630,10 @@ nodes {
     name: "data_11/input0"
     data_type: Float16
     shape {
-      dims: 8
+      dims: 64
       dims: 3
       dims: 3
-      dims: 4
+      dims: 32
       layout: NHWC
       alignment: 8
     }
@@ -643,10 +643,10 @@ nodes {
     name: "data_11/output0"
     data_type: Float16
     shape {
-      dims: 8
+      dims: 64
       dims: 3
       dims: 3
-      dims: 4
+      dims: 32
       layout: NHWC
       alignment: 8
     }
@@ -665,9 +665,9 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 2
-      dims: 2
-      dims: 4
+      dims: 16
+      dims: 16
+      dims: 32
       layout: NHWC
       alignment: 8
     }
@@ -677,10 +677,10 @@ nodes {
     name: "data_11/output0"
     data_type: Float16
     shape {
-      dims: 8
+      dims: 64
       dims: 3
       dims: 3
-      dims: 4
+      dims: 32
       layout: NHWC
       alignment: 8
     }
@@ -691,9 +691,9 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 2
-      dims: 2
-      dims: 8
+      dims: 16
+      dims: 16
+      dims: 64
       layout: NHWC
       alignment: 8
     }
@@ -717,10 +717,10 @@ nodes {
     name: "data_12/input0"
     data_type: Float16
     shape {
-      dims: 8
+      dims: 64
       dims: 3
       dims: 3
-      dims: 8
+      dims: 64
       layout: NHWC
       alignment: 8
     }
@@ -730,10 +730,10 @@ nodes {
     name: "data_12/output0"
     data_type: Float16
     shape {
-      dims: 8
+      dims: 64
       dims: 3
       dims: 3
-      dims: 8
+      dims: 64
       layout: NHWC
       alignment: 8
     }
@@ -752,9 +752,9 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 2
-      dims: 2
-      dims: 8
+      dims: 16
+      dims: 16
+      dims: 64
       layout: NHWC
       alignment: 8
     }
@@ -764,10 +764,10 @@ nodes {
     name: "data_12/output0"
     data_type: Float16
     shape {
-      dims: 8
+      dims: 64
       dims: 3
       dims: 3
-      dims: 8
+      dims: 64
       layout: NHWC
       alignment: 8
     }
@@ -778,9 +778,9 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 2
-      dims: 2
-      dims: 8
+      dims: 16
+      dims: 16
+      dims: 64
       layout: NHWC
       alignment: 8
     }
@@ -807,9 +807,9 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 2
-      dims: 2
-      dims: 8
+      dims: 16
+      dims: 16
+      dims: 64
       layout: NHWC
       alignment: 8
     }
@@ -820,9 +820,9 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 1
-      dims: 1
       dims: 8
+      dims: 8
+      dims: 64
       layout: NHWC
       alignment: 8
     }
@@ -845,7 +845,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 8
+      dims: 64
       layout: NC
       alignment: 8
     }
@@ -856,7 +856,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 8
+      dims: 64
       layout: NC
       alignment: 8
     }
@@ -871,7 +871,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 8
+      dims: 64
       layout: NC
       alignment: 8
     }
@@ -882,7 +882,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 8
+      dims: 64
       layout: NC
       alignment: 8
     }
@@ -897,7 +897,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 8
+      dims: 64
       layout: NC
       alignment: 8
     }
@@ -908,7 +908,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 8
+      dims: 64
       layout: NC
       alignment: 8
     }
@@ -923,7 +923,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 8
+      dims: 64
       layout: NC
       alignment: 8
     }
@@ -934,7 +934,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 8
+      dims: 64
       layout: NC
       alignment: 8
     }
@@ -959,9 +959,9 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 1
-      dims: 1
       dims: 8
+      dims: 8
+      dims: 64
       layout: NHWC
       alignment: 8
     }
@@ -972,7 +972,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 8
+      dims: 64
       layout: NC
       alignment: 8
     }
@@ -983,7 +983,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 8
+      dims: 64
       layout: NC
       alignment: 8
     }
@@ -994,7 +994,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 8
+      dims: 64
       layout: NC
       alignment: 8
     }
@@ -1005,7 +1005,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 8
+      dims: 64
       layout: NC
       alignment: 8
     }
@@ -1016,9 +1016,9 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 1
-      dims: 1
       dims: 8
+      dims: 8
+      dims: 64
       layout: NHWC
       alignment: 8
     }
@@ -1037,9 +1037,9 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 1
-      dims: 1
       dims: 8
+      dims: 8
+      dims: 64
       layout: NHWC
       alignment: 8
     }
@@ -1050,7 +1050,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 8
+      dims: 4096
       layout: NC
       alignment: 8
     }
@@ -1064,8 +1064,8 @@ nodes {
     name: "data_17/input0"
     data_type: Float16
     shape {
-      dims: 4
-      dims: 8
+      dims: 512
+      dims: 4096
       layout: NC
       alignment: 8
     }
@@ -1075,8 +1075,8 @@ nodes {
     name: "data_17/output0"
     data_type: Float16
     shape {
-      dims: 4
-      dims: 8
+      dims: 512
+      dims: 4096
       layout: NC
       alignment: 8
     }
@@ -1095,7 +1095,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 8
+      dims: 4096
       layout: NC
       alignment: 8
     }
@@ -1105,8 +1105,8 @@ nodes {
     name: "data_17/output0"
     data_type: Float16
     shape {
-      dims: 4
-      dims: 8
+      dims: 512
+      dims: 4096
       layout: NC
       alignment: 8
     }
@@ -1117,7 +1117,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 512
       layout: NC
       alignment: 8
     }
@@ -1137,7 +1137,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 10
-      dims: 4
+      dims: 512
       layout: NC
       alignment: 8
     }
@@ -1148,7 +1148,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 10
-      dims: 4
+      dims: 512
       layout: NC
       alignment: 8
     }
@@ -1167,7 +1167,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 1
-      dims: 4
+      dims: 512
       layout: NC
       alignment: 8
     }
@@ -1178,7 +1178,7 @@ nodes {
     data_type: Float16
     shape {
       dims: 10
-      dims: 4
+      dims: 512
       layout: NC
       alignment: 8
     }

@@ -25,5 +25,5 @@ ${gem5_dir}/build/X86/gem5.opt \
   --accel_cfg_file=gem5.cfg \
   --fast-forward=10000000000 \
   -c ${bmk_dir}/smaug \
-  -o "${topo_file} ${params_file} --sample-level=no -p stdout --gem5 --debug-level=1 --num-accels=1 --network-config=/workspace/smaug/smaug/layers.cfg" \
+  -o "${topo_file} ${params_file} --sample-level=no -p stdout --gem5 --debug-level=1 --num-threads --num-accels=1 --network-config=/workspace/smaug/smaug/layers_cifar10.cfg" \
   > stdout 2> stderr
